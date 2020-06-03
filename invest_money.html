@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>充值</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base64.js"></script>
+	<script src="js/API.js"></script>
+</head>
+<body class="chongzhi">
+	<div class="page">
+		<header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>充值</p>
+			<span></span>
+		</header>
+		<div class="empty"></div>
+		<div class="chongzhi">
+
+			<div class="copy">
+				<div class="png">
+					<p>收款户名: 王玉娟</p>
+					<p>收款银行: 交通银行</p>
+					<p>开户支行: 唐山高新技术开发区支行</p>
+					<p>收款账号: 000000000000000</p>
+				</div>
+			</div>
+			<div class="input">
+				<div class="copy">
+					<div class="png">
+						<p>收款户名: 王玉娟</p>
+						<p>收款银行: 交通银行</p>
+						<p>开户支行: 唐山高新技术开发区支行</p>
+						<p>收款账号: 000000000000000</p>
+					</div>
+				</div>
+				<div class="btn1" onclick="window.location.href='chongzhi_href.html'">
+					<button>确认充值</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+    $(function(){
+        $(".back").on('click', function()  {
+            window.location.href='my.html';
+        });
+    })
+
+//    let copy = $('.chongzhi .copy .png p');
+</script>
+</html>

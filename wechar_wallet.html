@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<link rel="stylesheet" href="css/font-awesome1.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap1.min.css">
+	<link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
+</head>
+<style>
+    .page header {
+    padding: 0 1rem;
+    height: 4.5rem;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    background-color: #FFFFff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f9f9f9;
+    }
+    .weixinxuanxiang{
+        width: 60%;
+        height: 41px;
+        margin: auto;
+        border-radius: 18px;
+        border: 1px solid #39af34;
+    }
+    .beijing{
+        width: 50%;
+        height: 40px;
+        border-radius: 17px;
+        background-color: #39af34;
+        font-size: 16px;
+        color: #FFF;
+        line-height: 40px;
+        text-align: center;
+        float: left;
+    }
+    .wubeijing{
+        width: 50%;
+        height: 40px;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+        float: left;
+    }
+    .judaoliebiao{
+        width: 85%;
+        height: 90px;
+        margin: auto;
+        border: 1px solid #e6e6e6;
+        border-radius: 10px;
+        margin-top: 40px;
+    }
+    .tupian{
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        background-color: #39af34;
+        margin-left: 25px;
+        margin-right: 25px;
+        margin-top: 20px;
+
+    }
+</style>
+<body>
+	<div class="page">
+        <header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>添加银行卡</p>
+			<span >
+				<i style="display: none;" class="fa fa-plus"></i>
+			</span>
+		</header>
+        <div class="contant" style='margin-top: 40px;'>
+            <div onclick="window.location.href='wechar_collectioncode.html'" class="judaoliebiao">
+                <div class="tupian" style="float: left;">
+                </div>
+                <div style="float: left; margin-top: 20px;">
+                    <span style="font-size:20px;">
+                        微信二维码收款
+                    </span>
+                    <br />
+                    <span style="font-size:15px; color: #CCC;">
+                        上传二维码即可
+                    </span>
+                </div>
+                <div style="height: 100%; width: 20px; float: right; margin-right: 10px; color: #CCC; font-size: 30px; line-height: 90px;">
+                    <i class="fa fa-angle-right"></i>
+                </div>
+            </div>
+            <!--div class="judaoliebiao">
+                <div class="tupian" style="float: left;">
+                </div>
+                <div style="float: left; margin-top: 20px;">
+                    <span style="font-size:20px;">
+                        微信二维码收款
+                    </span>
+                    <br />
+                    <span style="font-size:15px; color: #CCC;">
+                        上传二维码即可
+                    </span>
+                </div>
+            </div>
+            <div class="judaoliebiao">
+                <div class="tupian" style="float: left;">
+                </div>
+                <div style="float: left; margin-top: 20px;">
+                    <span style="font-size:20px;">
+                        微信二维码收款
+                    </span>
+                    <br />
+                    <span style="font-size:15px; color: #CCC;">
+                        上传二维码即可
+                    </span>
+                </div>
+            </div-->
+        </div>
+	</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".back").on('click', function()  {
+            history.back(-1);
+        });
+    })
+
+</script>
+</html>

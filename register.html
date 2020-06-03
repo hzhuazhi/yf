@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
+    <style>
+        .zhuce{
+            padding: 5rem 2rem;
+        }
+        .zhuce .input{
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .zhuce .input input{
+            width: 100%;
+            box-shadow: 0 0 5px #eee;
+            border: 1px solid #eee;
+            line-height: 2.5;
+            padding-left: 3rem;
+        }
+        .zhuce .input i{
+            position: absolute;
+            left: 1.2rem;
+            top: 1.3rem;
+            color: #999;
+            font-size: 1.5rem;
+        }
+        .zhuce .button button{
+            width: 100%;
+            line-height: 2.5;
+            border: 1px solid #eee;
+            background-color: #39af34;
+            color: #fff;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="zhuce">
+        <div class="input">
+            <input type="text" id="acNum" placeholder="请输入手机号">
+            <i class="fa fa-phone"></i>
+        </div>
+        <div class="input">
+            <input style="width: 66%;" disabled="disabled" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="4" type="text" id="vcode" placeholder="请输入验证码">
+            <button id="yanzhengma" style="line-height: 2.5; border: 1px solid #eee; background-color: #39af34; color: #fff; border-radius: 4px;">获取验证码</button>
+            <i class=" glyphicon glyphicon-random"></i>
+        </div>
+        <div class="input">
+            <input type="text" id="icode" placeholder="请输入邀请码">
+            <i class="glyphicon glyphicon-qrcode"></i>
+        </div>
+        <div class="input">
+            <input type="text" id="nickname" placeholder="请输入账号昵称">
+            <i class="glyphicon glyphicon-user"></i>
+        </div>
+        <div class="input">
+            <input type="password" id="passWd"  placeholder="请输入登录密码">
+            <i class="glyphicon glyphicon-lock"></i>
+        </div>
+        <div class="input">
+            <input type="password" id="operateWd"  placeholder="请输入操作密码">
+            <i class="glyphicon glyphicon-lock"></i>
+        </div>
+        <div class="button">
+            <button id="zhuce">注册</button>
+        </div>
+        <div class="button" style="margin-top: 20px">
+            <button >APP下载</button>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        // 注册接口调试
+        $("#zhuce").click(function () {
+            let nickname = $("#nickname").val();
+            let acNum = $("#acNum").val();
+            let passWd = $("#passWd").val();
+            let icode = $("#icode").val();
+            let vcode = $("#vcode").val();
+            let operateWd = $("#operateWd").val();
+            let timestamp = Date.parse(new Date());
+            if(nickname === ""){
+                alert('请输入账号昵称!');
+                return;
+            }
+            if(acNum === ""){
+                alert('请输入手机号!');
+                return;
+            }
+            if(passWd === ""){
+                alert('请输入登录密码!');
+                return;
+            }
+            if (passWd.length < 6) {
+                alert('对不起，您的密码小于六位!');
+                $("#passWd").val("");
+                return;
+            }
+            if(icode === ""){
+                alert('请输入邀请码!');
+                return;
+            }
+            if(vcode === "") {
+                alert('请输入验证码!');
+                return;
+            }
+            if(operateWd === "") {
+                alert('请输入操作密码!');
+                return;
+            }
+            let base64 = `{"nickname": "${nickname}","acNum": "${acNum}","passWd": "${passWd}","icode": "${icode}","vcode": "${vcode}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp},"operateWd": "${operateWd}"}`;
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData":result});
+
+
+            $.ajax({
+                url: API+'/fine/did/register',
+                type: 'post',
+                dataType: 'json',
+                contentType:"application/json",
+                data:jsonData,
+                // 成功执行
+                success (data) {
+                    let zhuangtai = data.resultCode;
+                    if(zhuangtai !== "0"){
+                        alert(data.message);
+                    }else {
+                        alert('注册成功!');
+                        window.location.href='login.html'
+                    }
+                },
+            })
+        });
+
+
+        // 邀请码接口调试
+        $("#yanzhengma").click(function () {
+            let acNum = $("#acNum").val();
+            let timestamp = Date.parse(new Date());
+            let base64 = `{"phoneNum": "${acNum}","vType": 1,"ctime": ${timestamp},${Json}}`;
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData":result});
+            if(null === acNum || "" === acNum || undefined === acNum){
+                alert("请输入手机号！");
+            }else{
+                var RegCellPhone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+                var  falg=acNum.search(RegCellPhone);
+                if (falg===-1){
+                    alert("手机号格式不正确");
+                    $("#acNum").val("");
+                    return false;
+                }else{
+                    $.ajax({
+                        url: API+'/fine/cd/getCd',
+                        type: 'post',
+                        dataType: 'json',
+                        contentType:"application/json",
+                        data:jsonData,
+                        // 成功执行
+                        success (data) {
+                            let zhuangtai = data.resultCode;
+                            if(zhuangtai !== "0"){
+                                alert(data.message);
+                            }else{
+                                alert('邀请码已发送到您的手机,请注意查收!');
+                                $("#vcode").removeAttr("disabled");
+                            }
+                        },
+                    })
+                }
+            }
+        });
+    })
+</script>
+</html>

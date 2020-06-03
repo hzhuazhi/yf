@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>资金日志</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>资金日志</p>
+			<span></span>
+		</header>
+		<div class="empty"></div>
+		<div class="zijin">
+			<div class="demo">
+				<div class="left active">佣金</div>
+				<div class="right">保证金</div>
+			</div>
+		</div>
+		<div class="contant zijin_con">
+			<div class="data_null active">
+				<img src="img/demo.jpg" >
+				<span>1暂无数据</span>
+			</div>
+			<div class="data_null">
+				<img src="img/demo.jpg" >
+				<span>2暂无数据</span>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		let tab = $(".zijin .demo>div");
+		let con = $('.zijin_con>div')
+		tab.click(function(){
+			let that = $(this)
+			let index = that.index();
+			that.addClass('active').siblings().removeClass('active')
+			con.eq(index).addClass('active').siblings().removeClass('active')
+		})
+	})
+</script>
+</html>

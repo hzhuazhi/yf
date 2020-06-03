@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微信收款码</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/radio-checkbox.css"/>
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
+</head>
+<body>
+<div class="page">
+    <header>
+        <div class="back">
+            <i class="fa fa-angle-left"></i>
+        </div>
+        <p>二维码列表</p>
+        <span></span>
+    </header>
+    <div class="empty"></div>
+    <div class="shoukuan">
+        <!-- <div class="up">
+            <i class="fa fa-qrcode"></i>
+        </div> -->
+        <!-- <div class="link">
+            <div class="list">
+                <div class="item"><i class="fa fa-book"></i>教程攻略</div>
+                <div class="item"><i class="fa fa-lock"></i>安全密码</div>
+            </div>
+        </div> -->
+        <div class="down">
+            <div class="con">
+                <div class="tab">
+                    <div class="item" onclick="window.location.href='wechar_collectioncode.html'">上传二维码</div>
+                    <div class="item active" onclick="window.location.href='wechar_collectioncode_list.html'">二维码列表</div>
+                </div>
+                <br>
+                <div class="content">
+
+                    <div class="upload active" id="tableList">
+
+                        <!--<table class="table" id="datas" >-->
+                                <!--<tr>-->
+                                    <!--<th >微信名</th>-->
+                                    <!--<th>备注</th>-->
+                                    <!--<th>审核状态</th>-->
+                                    <!--<th>开启状态</th>-->
+                                    <!--<th>操作</th>-->
+                                <!--</tr>-->
+                                <!--<tr id="template">-->
+                                    <!--<td id="acNum"></td>-->
+                                    <!--<td id="acName"></td>-->
+                                    <!--<td id="checkStatus"></td>-->
+                                    <!--<td id="daySwitch"></td>-->
+                                    <!--<td id="operation"></td>-->
+                                <!--</tr>-->
+                        <!--</table>-->
+                    </div>
+                </div>
+            </div>
+            <!--<div class="jieshi">-->
+                <!--<p>* 1.收款码请务必添加一张不设置金额的通用二维码，通用二维码支持个人码,商用码，聚合码</p>-->
+                <!--<p>* 2.同一微信收款码切勿重复上传，若造成金额损失，平台概不负责</p>-->
+                <!--<p>* 3.为提高成功率，连续收款失败四次及以上，系统将自动删除对应二维码，请及时检查</p>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(".back").on('click', function()  {
+//            history.back(-1);
+            window.location.href='homepage.html';
+        });
+        loadList();
+        
+    })
+
+
+    function  loadList() {
+        if(null==storage.getItem("yf_token")||storage.getItem("yf_token")==""){
+            window.location.href='login.html';
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        console.log("参数："+base64);
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/collAc/getDataList',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code !== "0"){
+                    alert(data.message);
+                }else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData= base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+
+                    Callback(rsDataJson.dataList);
+//                        alert('保存成功!');
+                }
+            },
+        })
+    }
+
+    function Callback(data) {
+
+        let  table ="<table class=\"table\" id=\"datas\" >";
+            table+="<tr>";
+                table+="<th>微信名</th>";
+                table+="<th>备注</th>";
+                table+="<th>审核状态</th>";
+                table+="<th>开启状态</th>";
+                table+="<th>操作</th>";
+            table+="</tr>";
+
+
+
+        if(data.length!=0){
+            let row =$("#template").clone();
+            for(let i =0;i<data.length;i++){
+                table+="<tr>";
+                let   inpName ="inp"+i;
+                let inp_acNumHtml ='<input type="text" id='+inpName+' size="8" value='+data[i].payee+'>';
+
+                let  checkStatus ="";
+                if(data[i].checkStatus==1){
+                    checkStatus+="<td bgcolor='#eb6411'>待审核</td>";
+                }else if(data[i].checkStatus==2){
+                    checkStatus+="<td bgcolor='#ebeb3f'>"+data[i].checkInfo+"</td>";
+                }else if(data[i].checkStatus==3){
+                    checkStatus+="<td bgcolor='#48eb23'>审核通过</td>";
+                }
+
+
+                if(data[i].useStatus==1){
+                    var checkboxHTML ='<div class="part3">';
+                    checkboxHTML+='<div class="btn_list">';
+                    checkboxHTML+='<div class="item">';
+                    checkboxHTML+='<label class="bui-switch-label bui-switch-anim">';
+                    checkboxHTML+='  <input type="checkbox" name="s" checked onchange="updateStatus('+data[i].id+',2)"/><i class="bui-switch"></i>';
+                    checkboxHTML+='</label>';
+                    checkboxHTML+='</div>';
+                    checkboxHTML+='</div>';
+                    checkboxHTML+='</div>';
+
+                    row.find("#daySwitch").html(checkboxHTML);
+
+                }else if(data[i].useStatus==2){
+                    var checkboxHTML ='<div class="part3">';
+                    checkboxHTML+='<div class="btn_list">';
+                    checkboxHTML+='<div class="item">';
+                    checkboxHTML+='<label class="bui-switch-label bui-switch-anim">';
+                    checkboxHTML+='  <input type="checkbox" name="s" onchange="updateStatus('+data[i].id+',1)" /><i class="bui-switch"></i>';
+                    checkboxHTML+='</label>';
+                    checkboxHTML+='</div>';
+                    checkboxHTML+='</div>';
+                    checkboxHTML+='</div>';
+                }
+                let  html ="";
+                html+=' <i class="glyphicon glyphicon-check"  onclick="updateInfn('+data[i].id+','+inpName+')"></i>';
+                html+=' <i class="glyphicon glyphicon-remove" onclick="deleteInfn('+data[i].id+')"></i>';
+                    table+="<td>"+inp_acNumHtml+"</td>";
+                    table+="<td>"+data[i].acName+"</td>";
+                    table+=checkStatus;
+                    table+="<td>"+checkboxHTML+"</td>";
+                    table+="<td>"+html+"</td>";
+                table+="</tr>";
+//                row.find("#operation").html(html);
+//                row.appendTo("#datas");
+            }
+            table+="</table>";
+            $("#tableList").html(table);
+        }
+
+    }
+
+    //操作删除记录
+    function deleteInfn(id) {
+        if (!confirm("确定要删除吗?")) {
+            return;
+        }
+
+        if(id==0||id==""){
+            alert("没有合适数据进行删除！");
+            return;
+        }
+
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/collAc/updateUse',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code !== "0"){
+                    alert(data.message);
+                }else {
+                    loadList();
+                }
+            },
+        })
+    }
+
+    //操作保存按钮
+    var updateInfn = function (id,wecharName) {
+            if(wecharName.defaultValue==wecharName.value){
+                alert("该微信名没有进行修改，不能进行保存");
+                return;
+            }
+            let timestamp = Date.parse(new Date());
+            let base64 = `{"token": "${storage.getItem("yf_token")}","id": ${id},"payee":"${wecharName.value}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            console.log("参数："+base64);
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData":result});
+            $.ajax({
+                url: API+'/fine/collAc/update',
+                type: 'post',
+                dataType: 'json',
+                contentType:"application/json",
+                data:jsonData,
+                // 成功执行
+                success (data) {
+                    let code = data.resultCode;
+                    if(code !== "0"){
+                        alert(data.message);
+                    }else {
+                        alert('保存成功!');
+                        let base64 = data.data.jsonData;
+                        let base = new Base64();
+                        let rsData= base.decode(base64);
+                        let rsDataJson = JSON.parse(rsData);
+                        loadList(rsDataJson.dataList);
+
+                    }
+                },
+            })
+    }
+    
+    
+    
+    function  updateStatus(id,type) {
+        if (!confirm("确定要修改吗?")) {
+            return;
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"useStatus": ${type},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        console.log(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/collAc/updateUse',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code !== "0"){
+                    alert(data.code);
+                    alert(data.message);
+                }else {
+                    loadList();
+                }
+            },
+        })
+    }
+</script>
+</html>

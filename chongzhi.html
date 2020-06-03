@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>充值</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body class="chongzhi">
+	<div class="page">
+		<header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>充值</p>
+			<span></span>
+		</header>
+		<div class="empty"></div>
+		<div class="chongzhi">
+			<div class="choose_bank">
+				<div class="img">
+					<i class="fa fa-bank"></i>
+				</div>
+				<select>
+					<option value="">
+						交通银行
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						尾号5029
+					</option>
+				</select>
+			</div>
+			<div class="copy">
+				<div class="png">
+					<p>收款户名: 王玉娟</p>
+					<p>收款银行: 交通银行</p>
+					<p>开户支行: 唐山高新技术开发区支行</p>
+					<p>收款账号: 000000000000000</p>
+				</div>
+				<p>点击任意一行文字可复制</p>
+			</div>
+			<div class="input">
+				<div class="item">
+					<span>充值金额:</span>
+					<!-- <input type="text" placeholder="最小充值金额2000.0元"> -->
+					<select>
+						<option value="">2000</option>
+						<option value="">3000</option>
+					</select>
+				</div>
+				<div class="item">
+					<span>转账户名:</span>
+					<input type="text" placeholder="请输入真实姓名">
+				</div>
+				<div class="item">
+					<span>银行卡后四位数:</span>
+					<input type="text" placeholder="请输入四位数">
+				</div>
+				<div class="btn1">
+					<button>确认充值</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	let copy = $('.chongzhi .copy .png p');
+</script>
+</html>

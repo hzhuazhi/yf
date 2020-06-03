@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>云闪付收款码</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>云闪付收款码</p>
+			<span></span>
+		</header>
+		<div class="empty"></div>
+		<div class="shoukuan">
+			<div class="up">
+				<i class="fa fa-qrcode"></i>
+			</div>
+			<div class="link">
+				<div class="list">
+					<div class="item"><i class="fa fa-book"></i>教程攻略</div>
+					<div class="item"><i class="fa fa-lock"></i>安全密码</div>
+				</div>
+			</div>
+			<div class="down">
+				<div class="con">
+					<div class="tab">
+						<div class="item active">上传二维码</div>
+						<div class="item">二维码列表</div>
+					</div>
+					<div class="content">
+						<div class="upload active">
+							<div class="img">
+								
+							</div>
+							<div class="input">
+								<span>云闪付账号:</span>
+								<input type="" placeholder="请输入云闪付账号"/>
+							</div>
+							<div class="input">
+								<span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</span>
+								<input type="" placeholder="请输入姓名"/>
+							</div>
+							<div class="input">
+								<span>安&nbsp;全&nbsp;密&nbsp;码:</span>
+								<input type="password" placeholder="请输入安全密码"/>
+							</div>
+							<button type="button">提交</button>
+						</div>
+						<div class="list">
+							123
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		let tab = $(".shoukuan .down .tab .item");
+		let con = $('.shoukuan .down .content>div')
+		tab.click(function(){
+			let that = $(this)
+			let index = that.index();
+			that.addClass('active').siblings().removeClass('active')
+			con.eq(index).addClass('active').siblings().removeClass('active')
+		})
+	})
+</script>
+</html>

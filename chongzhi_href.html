@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>充值</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body class="chongzhi">
+	<div class="page">
+		<header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>充值</p>
+			<span></span>
+		</header>
+		<div class="empty"></div>
+		<div class="chongzhi">
+			<!--<div class="choose_bank">-->
+				<!--<div class="img">-->
+					<!--<i class="fa fa-bank"></i>-->
+				<!--</div>-->
+				<!--&lt;!&ndash;<select>&ndash;&gt;-->
+					<!--&lt;!&ndash;<option value="">&ndash;&gt;-->
+						<!--&lt;!&ndash;交通银行&ndash;&gt;-->
+						<!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+						<!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+						<!--&lt;!&ndash;尾号5029&ndash;&gt;-->
+					<!--&lt;!&ndash;</option>&ndash;&gt;-->
+				<!--&lt;!&ndash;</select>&ndash;&gt;-->
+			<!--</div>-->
+			<div class="copy">
+				<div class="png">
+					<p>收款户名: 王玉娟</p>
+					<p>收款银行: 交通银行</p>
+                    <p>收款账号: 000000000000000</p>
+                    <p>充值金额: 1000</p>
+                    <p>系统匹配金额: 999.1</p>
+				</div>
+			</div>
+			<div class="input">
+				<div class="upload_img">
+                    <h4>提交图片</h4>
+                    <div class="img">
+                        
+                    </div>
+                </div>
+				<div class="btn1">
+					<button>提交</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(function(){
+            $(".back").on('click', function()  {
+                history.back(-1);
+            });
+        })
+    })
+	let copy = $('.chongzhi .copy .png p');
+</script>
+</html>

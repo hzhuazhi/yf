@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        .button>#zhuce{
+          border-radius: 2rem;
+        }
+        .zhuce{
+            padding: 5rem 2rem;
+        }
+        .zhuce .input{
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .zhuce .input input{
+            width: 100%;
+            box-shadow: 0 0 5px #eee;
+            border: 1px solid #eee;
+            line-height: 2.5;
+            padding-left: 3rem;
+        }
+        .zhuce .input i{
+            position: absolute;
+            left: 1.2rem;
+            top: 1.3rem;
+            color: #999;
+            font-size: 1.5rem;
+        }
+        .zhuce .button button{
+            width: 100%;
+            line-height: 2.5;
+            border: 1px solid #eee;
+            background-color: #39af34;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .biaoti{
+            text-align: center;
+            
+        }
+    </style>
+</head>
+<body>
+    <h3 class="biaoti">Login</h3>
+    <div class="zhuce">
+        <div class="input">
+            <input type="text" id="acNum" placeholder="请输入手机号">
+            <i class="fa fa-phone"></i>
+        </div>
+        <div class="input">
+            <input type="password" id="passWd"  placeholder="请输入登录密码">
+            <i class="glyphicon glyphicon-lock"></i>
+        </div>
+        <div class="button">
+            <button id="zhuce">登录</button>
+        </div>
+        <br>
+        <div class="img-circle" align="right">
+            <a href="forget_password.html">忘记密码</a>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+
+        // 注册接口调试
+        $("#zhuce").click(function () {
+
+            let acNum = $("#acNum").val();
+            let passWd = $("#passWd").val();
+            let timestamp = Date.parse(new Date());
+
+            if(acNum === ""){
+                alert('请输入手机号!');
+                return;
+            }
+            if(passWd === ""){
+                alert('请输入登录密码!');
+                return;
+            }
+            let base64 = `{"acNum": "${acNum}","passWd": "${passWd}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            console.log(base64);
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData":result});
+
+
+            $.ajax({
+                url: API+'/fine/did/logOn',
+                type: 'post',
+                dataType: 'json',
+                contentType:"application/json",
+                data:jsonData,
+                // 成功执行
+                success (data) {
+                    let zhuangtai = data.resultCode;
+                    if(zhuangtai !== "0"){
+                        alert(data.message);
+                    }else {
+//                        alert('登录成功!');
+                        let base64 = data.data.jsonData;
+                        let base = new Base64();
+                        let result2 = base.decode(base64);
+                        let result_Json = JSON.parse(result2)
+                        token = result_Json.token;
+                        storage.setItem("yf_token",token);
+                        window.location.href='homepage.html'
+                    }
+                },
+            })
+        });
+    })
+</script>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>钱包</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base64.js"></script>
+	<script src="js/API.js"></script>
+</head>
+<body class="qianbao">
+	<div class="qianbao">
+		<div class="top">
+			<div class="con">
+				<h4>钱包余额</h4>
+				<span id="balance">0.0</span>
+				<div class="posi_con">
+					<p>冻结金额</p>
+					<label id="lockMoney">0.0元</label>
+				</div>
+			</div>
+		</div>
+		<div class="list">
+			<div class="item"  onclick="window.location.href='total_money.html'">
+				<span >总充值</span>
+				<span id="totalMoney">0.0</span>
+			</div>
+			<div class="item" onclick="window.location.href='total_profit.html'">
+				<span>总收益</span>
+				<span id="totalProfit" >0.0</span>
+			</div>
+			<div class="item" onclick="window.location.href='today_profit.html'">
+				<span >今日收益</span>
+				<span id="todayExchange"  >0.0</span>
+
+			</div>
+			<div class="item"  onclick="window.location.href='today_list.html'" >
+				<span >今日兑换</span>
+				<span id="todayProfit">0.0</span>
+			</div>
+		</div>
+	</div>
+	<div class="qianbao_down" >
+		<marquee width="90%" height="50px" direction="left" scrollamount="3">
+			<span style="font-size: 1.2rem;"><i class="fa fa-volume-up"></i>保证金提现需要24小时到账，若有不便敬请谅解!</span>
+		</marquee>
+		<div class="part">
+			<div class="part_con">
+				<div onclick="window.location.href='invest_money.html'" class="item">
+					<div class="img"></div>
+					<span>充值</span>
+				</div>
+				<!--<div onclick="window.location.href='record.html'" class="item">-->
+					<!--<div class="img"></div>-->
+					<!--<span>提现记录</span>-->
+				<!--</div>-->
+				<div onclick="window.location.href='order.html'" class="item">
+					<div class="img"></div>
+					<span>订单记录</span>
+				</div>
+				<div class="item">
+					<div class="img"></div>
+					<span>资金日志</span>
+				</div>
+
+				<div class="item">
+					<div class="img"></div>
+					<span>在线客服</span>
+				</div>
+
+				<div class="item">
+					<div class="img"  onclick="window.location.href='safe_password.html'"></div>
+					<span>安全密码</span>
+				</div>
+
+				<div class="item">
+					<div class="img"  onclick="window.location.href='password.html'"></div>
+					<span>修改密码</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="emtpy_footer"></div>
+	<footer>
+		<div class="item" onclick="window.location.href='homepage.html'">
+			<i class="fa fa-home"></i>
+			<span>首页</span>
+		</div>
+		<div class="item " onclick="window.location.href='rob_order.html'">
+			<i class="fa fa-user-secret"></i>
+			<span>抢单</span>
+		</div>
+		<div class="item active" onclick="window.location.href='my.html'">
+			<i class="fa fa-user-o"></i>
+			<span>我的</span>
+		</div>
+	</footer>
+</body>
+<script type="text/javascript">
+    $(function(){
+
+        indexInit();
+    })
+
+    function  indexInit(){
+//        ${totalMoney'}.innerHTML="100";
+//        $("#totalMoney").html("11111");
+		let timestamp = Date.parse(new Date());
+		let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+		console.log("参数："+base64);
+		let base = new Base64();
+		let result = base.encode(base64);
+		let jsonData = JSON.stringify({"jsonData":result});
+		$.ajax({
+			url: API+'/fine/did/getData',
+			type: 'post',
+			dataType: 'json',
+			contentType:"application/json",
+			data:jsonData,
+			// 成功执行
+			success (data) {
+				let code = data.resultCode;
+				if(code !== "0"){
+					alert(data.message);
+				}else {
+					let base64 = data.data.jsonData;
+					let base = new Base64();
+					let rsData= base.decode(base64);
+					let rsDataJson = JSON.parse(rsData);
+					Callback(rsDataJson.dataModel);
+				}
+			}
+     })
+    }
+
+    function Callback(data) {
+        if(data.length!=0){
+            $("#balance").html(data.balance);
+            $("#lockMoney").val(data.lockMoney);
+            $("#totalMoney").html(data.totalMoney);
+            $("#totalProfit").html(data.totalProfit);
+            $("#todayExchange").html(data.todayExchange);
+            $("#todayProfit").html(data.todayProfit);
+		}
+	}
+</script>
+</html>

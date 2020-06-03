@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>微信收款码</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base64.js"></script>
+	<script src="js/API.js"></script>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<div class="back">
+				<i class="fa fa-angle-left"></i>
+			</div>
+			<p>微信收款码</p>
+			<span></span>
+		</header>
+		<div class="empty"></div>
+		<div class="shoukuan">
+			<!-- <div class="up">
+				<i class="fa fa-qrcode"></i>
+			</div> -->
+			<!-- <div class="link">
+				<div class="list">
+					<div class="item"><i class="fa fa-book"></i>教程攻略</div>
+					<div class="item"><i class="fa fa-lock"></i>安全密码</div>
+				</div>
+			</div> -->
+			<div class="down">
+				<div class="con">
+					<div class="tab">
+						<div class="item active" onclick="window.location.href='wechar_collectioncode.html'">上传二维码</div>
+						<div class="item" onclick="window.location.href='wechar_collectioncode_list.html'">二维码列表</div>
+					</div>
+					<div class="content">
+						<div class="upload active">
+							<div class="img">
+								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
+									<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="uploadWechat(1)" />
+									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()" />
+								</from>
+								<div id="mmQrCode" onclick="jQuery('#image').click()">上传微信收款
+
+									<!--<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>-->
+								</div>
+								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
+									<input type="file" hidden name="imag1" id="imag1" style="display:none;width:1px; " onchange="uploadWechat(this,2)" />
+									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()" />
+								</from>
+								<div id="wxQrCodeAds" onclick="jQuery('#imag1').click()">上传小薇店员
+
+								</div>
+							</div>
+							<div class="input">
+								<span>微&nbsp;&nbsp;信&nbsp;&nbsp;名:</span>
+								<input type="" id="payee" placeholder="请输入微信名"/>
+							</div>
+							<div class="input">
+								<span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</span>
+								<input type="" id="acNum" placeholder="请输入姓名"/>
+							</div>
+							<div class="input">
+								<span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</span>
+								<input type="" id="acName" placeholder="备注名字"/>
+							</div>
+							<div class="input">
+								<span>安全密码:</span>
+								<input type="password" id="password" placeholder="请输入安全密码"/>
+							</div>
+							<!--<input type="file"  multiple="multiple" accept="image/*"  multiple id="files" values="上传微信收款">-->
+							<!--<input type="file"   value="上传微信收款">-->
+							<!--<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >-->
+								<!--<div class="btn">-->
+										<!---->
+
+										<!--<input type="file" hidden name="imag1" id="imag1" style="display:none;width:1px; " onchange="uploadWechat(this,2)" />-->
+										<!--<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()" />-->
+										<!--<button type="submit" onclick="jQuery('#imag1').click()">上传小薇店员</button>-->
+								<!--</div>-->
+							<!--</from>-->
+
+							<div class="btn" >
+								<button type="button" id="btn_sava">保存</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="jieshi">
+					<p>* 1.收款码请务必添加一张不设置金额的通用二维码，通用二维码支持个人码,商用码，聚合码</p>
+					<p>* 2.同一微信收款码切勿重复上传，若造成金额损失，平台概不负责</p>
+					<p>* 3.为提高成功率，连续收款失败四次及以上，系统将自动删除对应二维码，请及时检查</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+        $(function(){
+            $(".back").on('click', function()  {
+                window.location.href='homepage.html';
+            });
+
+            if(null==storage.getItem("yf_token")||storage.getItem("yf_token")==""){
+                window.location.href='login.html'
+			}
+
+            $("#btn_sava").click(function () {
+//				alert(1);
+				alert("======"+publicMap.get("agtVer"));
+				let  mmQrCode ="http://www.baidu.com";//暂时没有获取七牛云地址
+				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
+
+                let payee = $("#payee").val();
+                let acType = 1;
+                let businessType = 1;
+                let acNum = $("#acNum").val();
+                let acName = $("#acName").val();
+                let password = $("#password").val();
+                let timestamp = Date.parse(new Date());
+
+                let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+                console.log("参数："+base64);
+                let base = new Base64();
+                let result = base.encode(base64);
+                let jsonData = JSON.stringify({"jsonData":result});
+                $.ajax({
+                    url: API+'/fine/collAc/add',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType:"application/json",
+                    data:jsonData,
+                    // 成功执行
+                    success (data) {
+                        let code = data.resultCode;
+                        if(code !== "0"){
+                            alert(data.message);
+                        }else {
+                       		 alert('保存成功!');
+                            cleanfrom();
+                        }
+                    },
+                })
+
+            })
+
+			//清空数据
+			function   cleanfrom(){
+                $("#mmQrCode").val("");
+                $("#wxQrCodeAds").val("");
+                $("#acNum").val("");
+                $("#acName").val("");
+                $("#payee").val("");
+                $("#password").val("");
+			}
+			
+			
+
+        })
+
+        //上传微信的方法
+        function  uploadWechat(type) {
+
+            var form = $("#fileForm").submit();
+//            var options  = {
+//                url:API+'/fine/stg/qiniuUploadMany',
+//                type:'post',
+//                contentType:"multipart/form-data",
+//                success:function(data)
+//                {
+//                    debugger ;
+//                    data;
+////                    var jsondata = eval("("+data+")");
+////                    if(jsondata.error == "0"){
+////                        var url = jsondata.url;
+////                        alert(url)
+////                        $("#img").attr("src",url);
+////                    }else{
+////                        var message = jsondata.message;
+////                        alert(message);
+////                    }
+//                }
+//            };
+//            form.ajaxSubmit(options);
+
+//            var files = obj.$refs.files ;
+//            var formData = new FormData();
+//            formData.append(files);
+//            $.ajax({
+//                url: API+'/fine/stg/qiniuUploadMany',
+//                type: 'post',
+////                dataType: 'json',
+//                contentType:"multipart/form-data",
+//                data:$('#fileForm').data,
+//                // 成功执行
+//                success (data) {
+//                    debugger;
+//                    let code = data.resultCode;
+//                    if(code !== "0"){
+//                        alert(data.message);
+//                    }else {
+//                        alert('保存成功!');
+//                        cleanfrom();
+//                    }
+//                },
+//            })
+
+
+//            $('#fileForm').submit(function(e) {
+//                url: API+'/fine/stg/qiniuUpload',
+//                onSubmit: function () {        //表单提交前的回调函数
+////                    var isValid = $(this).form('validate');//验证表单中的一些控件的值是否填写正确，比如某些文本框中的内容必须是数字
+////                    return isValid; // 如果验证不通过，返回false终止表单提交
+//                },
+//                success: function (data) {
+//                    debugger
+//                    let code = data.resultCode;
+//                    if(code !== "0"){
+//                        alert(data.message);
+//                    }else {
+//                        alert('保存成功!');
+//                    }
+//                }
+//            });
+
+//            if(type==1){
+//
+//            }else{
+//
+//            }
+        }
+</script>
+</html>
