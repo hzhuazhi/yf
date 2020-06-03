@@ -12,6 +12,29 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/base64.js"></script>
 	<script src="js/API.js"></script>
+	<style>
+		.h_wrap{
+			display: flex;flex-wrap: wrap;justify-content: space-between;padding: 10px;text-align: center;margin-top: 25px;
+		}
+		.h_item{
+			width:48%;height:7rem;line-height:7rem;background-color: white;margin-bottom: 10px;
+		}
+		.h_item1{
+			position: relative;
+			border: 1px solid #39af34;
+		}
+		.h_item1_left{
+			position: absolute;
+			top:0;
+			left: 0;
+			background-color: #39af34;
+			color: white;
+			text-align: center;
+			height: 2rem;
+			line-height: 2rem;
+			padding: 0 4px;
+		}
+	</style>
 </head>
 <body class="chongzhi">
 	<div class="page">
@@ -34,14 +57,32 @@
 				</div>
 			</div>
 			<div class="input">
-				<div class="copy">
-					<div class="png">
-						<p>收款户名: 王玉娟</p>
-						<p>收款银行: 交通银行</p>
-						<p>开户支行: 唐山高新技术开发区支行</p>
-						<p>收款账号: 000000000000000</p>
-					</div>
+				<!--<div class="copy">-->
+					<!--<div class="png">-->
+						<!--<p>收款户名: 王玉娟</p>-->
+						<!--<p>收款银行: 交通银行</p>-->
+						<!--<p>开户支行: 唐山高新技术开发区支行</p>-->
+						<!--<p>收款账号: 000000000000000</p>-->
+					<!--</div>-->
+				<!--</div>-->
+			<div class="h_wrap">
+				<div class="h_item h_item1">
+					<div class="h_item1_left">新用户专享</div>
+					￥1.00
 				</div>
+				<div class="h_item">
+					￥10.00
+				</div>
+				<div class="h_item">
+					￥20.00
+				</div>
+				<div class="h_item">
+					￥50.00
+				</div>
+				<div class="h_item">
+					￥100.00
+				</div>
+			</div>
 				<div class="btn1" onclick="window.location.href='chongzhi_href.html'">
 					<button>确认充值</button>
 				</div>
