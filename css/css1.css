@@ -1,0 +1,156 @@
+/* public */
+* {
+  color: #333;
+}
+body.index {
+  background-color: #f5f5f5;
+}
+.index .empty {
+  height: 4.5rem;
+  width: 100%;
+}
+.index header {
+  padding: 0 1rem;
+  height: 4.5rem;
+  line-height: 4.5rem;
+  position: fixed;
+  left: 0px;
+  text-align: center;
+  top: 0px;
+  width: 100%;
+  font-size: 1.5rem;
+  background-color: #FFFFff;
+  border-bottom: 1px solid #f9f9f9;
+}
+.index .method {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+}
+.index .method .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.index .method .item .img {
+  width: 5rem;
+  height: 5rem;
+  background-color: #39af34;
+  border-radius: 40%;
+  margin-bottom: 1rem;
+}
+.index .adver {
+  background-color: #fff;
+  padding: 0 1.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.index .adver .img {
+  background-color: #39af34;
+  width: 100%;
+  height: 6rem;
+  text-align: center;
+  line-height: 6rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.index .adver .notice_active {
+  height: 2.6rem;
+  overflow: hidden;
+}
+.index .adver .notice_active .rela a {
+  line-height: 2.6rem;
+  display: block;
+  color: #333;
+}
+.index .adver .notice_active .rela a span {
+  color: red;
+}
+.index .adver .notice_active .rela a i {
+  margin-right: 1rem;
+  color: #333;
+}
+.index div.caozuo {
+  padding: 3rem 1.5rem;
+  background-color: #fff;
+}
+.index div.caozuo h4 {
+  padding-left: 1rem;
+  position: relative;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+.index div.caozuo h4::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #39af34;
+  height: 1.8rem;
+  width: 4px;
+  border-radius: 2px;
+}
+.index div.caozuo .list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.index div.caozuo .list .item {
+  background-color: #f5f5f5;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  width: 48%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+.index div.caozuo .list .item .img {
+  width: 5rem;
+  height: 5rem;
+  background-color: #39af34;
+  border-radius: 1rem;
+  margin-right: 0.5rem;
+}
+.index div.caozuo .list .item .word h5 {
+  font-size: 1.5rem;
+  margin-top: 0px;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+.index div.caozuo .list .item .word span {
+  color: #666;
+  font-size: 1rem;
+}
+.empty_footer {
+  height: 6rem;
+  width: 100%;
+}
+footer {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 6rem;
+  background-color: #fff;
+  border-top: 1px solid #e7e7e7;
+  display: flex;
+  align-items: center;
+}
+footer .item {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+footer .item span {
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+footer .item i {
+  font-size: 2rem;
+}
+footer .item.item.active i,
+footer .item.item.active span {
+  color: #ec5759;
+}
