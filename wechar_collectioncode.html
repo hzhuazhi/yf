@@ -44,18 +44,18 @@
 							<div class="img">
 								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
 									<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="uploadWechat(1)" />
-									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()" />
+									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>
 								</from>
-								<div id="mmQrCode" onclick="jQuery('#image').click()">上传微信收款
-
+								<div id="mmQrCode" onclick="jQuery('#image').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
+									<div style="height: 3rem;line-height: 3rem">上传微信收款</div>
 									<!--<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>-->
 								</div>
 								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
 									<input type="file" hidden name="imag1" id="imag1" style="display:none;width:1px; " onchange="uploadWechat(this,2)" />
 									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()" />
 								</from>
-								<div id="wxQrCodeAds" onclick="jQuery('#imag1').click()">上传小薇店员
-
+								<div id="wxQrCodeAds" onclick="jQuery('#imag1').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
+									<div style="height: 3rem;line-height: 3rem">上传小薇店员</div>
 								</div>
 							</div>
 							<div class="input">
@@ -86,7 +86,7 @@
 								<!--</div>-->
 							<!--</from>-->
 
-							<div class="btn" >
+							<div class="btn" style="display: flex;justify-content: center;">
 								<button type="button" id="btn_sava">保存</button>
 							</div>
 
