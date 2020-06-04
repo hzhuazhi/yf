@@ -124,7 +124,7 @@
         <footer class="setFoorter">
             <div class="footernav">
                 <div style="position: fixed;bottom: 0;right: 15px;">
-                    <span style="padding-right: 20px;">汇总:</span><span>10034443300元</span>
+                    <span style="padding-right: 20px;">汇总:</span><span id="count">0元</span>
                 </div>
             </div>
         </footer>
@@ -210,6 +210,7 @@
     }
 
     function Callback(data) {
+        var count =0;
       let divHtml = "";
       for (let i = 0; i < data.length; i++) {
         divHtml += "<div  style=\"display: flex; justify-content: center;\">";
@@ -226,8 +227,9 @@
 //                divHtml+="<div class=\"item1\" >"+data[i].orderStatus+"</div>";
         divHtml += "<div class=\"item3\" >" + data[i].orderMoney + "</div>";
         divHtml += "</div>";
+        count =  count+ data[i].orderMoney*1;
       }
-
+      $("#count").html(count+"元");
       $("#divData").html(divHtml);
     }
   })

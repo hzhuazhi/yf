@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/css.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
     <style>
         .tabs-underline1 {
             /*padding: 30px;*/
@@ -108,9 +110,9 @@
     </header>
 </div>
 <div class="h_border">
-    <div class="h_border_item">充值总收益 ￥0.0</div>
-    <div class="h_border_item">档次总收益 ￥0.0</div>
-    <div class="h_border_item" style="border: none">直推总收益 ￥0.0</div>
+    <div class="h_border_item">充值总收益 ￥<span id="totalRechargeProfit">0.0</span></div>
+    <div class="h_border_item">档次总收益 ￥<span id="totalGradeProfit">0.0</span></div>
+    <div class="h_border_item" style="border: none">直推总收益 ￥<span id="totalDirectProfit">0.0</span></div>
 </div>
 <div class="h_tab">
     <div class="tabs-underline1">
@@ -151,18 +153,102 @@
     </div>
 </div>
 <script type="text/javascript">
+
   $(function () {
     $(function () {
       $(".back").on('click', function () {
         history.back(-1);
       });
+
+      queryUserInfo();
+
+      function queryUserInfo(){
+          let timestamp = Date.parse(new Date());
+          let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+          console.log("参数："+base64);
+          let base = new Base64();
+          let result = base.encode(base64);
+          let jsonData = JSON.stringify({"jsonData":result});
+          $.ajax({
+              url: API+'/fine/did/getData',
+              type: 'post',
+              dataType: 'json',
+              contentType:"application/json",
+              data:jsonData,
+              // 成功执行
+              success (data) {
+                  let code = data.resultCode;
+                  if(code !== "0"){
+                      alert(data.message);
+                  }else {
+                      let base64 = data.data.jsonData;
+                      let base = new Base64();
+                      let rsData= base.decode(base64);
+                      let rsDataJson = JSON.parse(rsData);
+                      Callback(rsDataJson.dataModel);
+                  }
+              }
+          })
+      }
+
+
+
+      function   Callback(data){
+          console.log(data);
+          if(data.length!=0){
+              $("#totalRechargeProfit").html(data.totalRechargeProfit);
+              $("#totalGradeProfit").html(data.totalGradeProfit);
+              $("#totalDirectProfit").html(data.totalDirectProfit);
+          }
+      }
+
+
+
+
+        function queryRechargeList(){
+            let timestamp = Date.parse(new Date());
+            let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            console.log("参数："+base64);
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData":result});
+            $.ajax({
+                url: API+'/fine/recharge/getDataList',
+                type: 'post',
+                dataType: 'json',
+                contentType:"application/json",
+                data:jsonData,
+                // 成功执行
+                success (data) {
+                    let code = data.resultCode;
+                    if(code !== "0"){
+                        alert(data.message);
+                    }else {
+                        let base64 = data.data.jsonData;
+                        let base = new Base64();
+                        let rsData= base.decode(base64);
+                        let rsDataJson = JSON.parse(rsData);
+                        Callback(rsDataJson.dataModel);
+                    }
+                }
+            })
+        }
+
+
+
+
+
     })
   })
+
+
   $(document).ready(function () {
     let widget = $('.tabs-underline1');
     let tabs = widget.find('ul a'),
       content = widget.find('.tabs-content-placeholder1 > div');
-    tabs.on('click', function (e) {
+      tabs.on('click', function (e) {
       e.preventDefault();
       let index = $(this).data('index');
       tabs.removeClass('tab-active1');
