@@ -70,20 +70,21 @@
         /*-------------*/
         .h_border {
             display: flex;
-            border: 1px solid #5e5e5e;
-            width: 33rem;
+            background-color: rgb(220, 93, 71);;
             height: 12rem;
-            margin: 45px auto 0;
+            margin: 60px 10px 30px 10px;
+            border-radius: 1rem;
             text-align: center;
         }
 
         .h_border_item {
-            height: 83%;
-            line-height: 4rem;
             flex: 1;
-            padding: 10px;
-            margin-top: 10px;
-            border-right: 1px solid #5e5e5e;
+            margin: 5px 0 5px 0;
+            border-right: 1px solid white;
+            color:white;
+        }
+        .h_border_item>h5{
+            margin: 20px 0 30px 0;
         }
         .h_tab{
             width: 33rem;
@@ -103,16 +104,25 @@
 <div class="page">
     <header>
         <div class="back">
-            <!--<i class="fa fa-angle-left"></i>-->
+            <i class="fa fa-angle-left"></i>
         </div>
         <p>总收益明细</p>
         <span></span>
     </header>
 </div>
 <div class="h_border">
-    <div class="h_border_item">充值总收益 ￥<span id="totalRechargeProfit">0.0</span></div>
-    <div class="h_border_item">档次总收益 ￥<span id="totalGradeProfit">0.0</span></div>
-    <div class="h_border_item" style="border: none">直推总收益 ￥<span id="totalDirectProfit">0.0</span></div>
+    <div class="h_border_item">
+        <h5>充值总收益</h5>
+        <span style="font-size: 2rem;color: white" id="totalRechargeProfit">￥0.0</span>
+    </div>
+    <div class="h_border_item">
+        <h5>档次总收益</h5>
+        <span style="font-size: 2rem;color: white" id="totalGradeProfit">￥0.0</span>
+    </div>
+    <div class="h_border_item" style="border: none">
+        <h5>直推总收益</h5>
+        <span style="font-size: 2rem;color: white" id="totalDirectProfit">￥0.0</span>
+    </div>
 </div>
 <div class="h_tab">
     <div class="tabs-underline1">
@@ -197,9 +207,9 @@
       function   Callback(data){
           console.log(data);
           if(data.length!=0){
-              $("#totalRechargeProfit").html(data.totalRechargeProfit);
-              $("#totalGradeProfit").html(data.totalGradeProfit);
-              $("#totalDirectProfit").html(data.totalDirectProfit);
+              $("#totalRechargeProfit").html("￥"+data.totalRechargeProfit);
+              $("#totalGradeProfit").html("￥"+data.totalGradeProfit);
+              $("#totalDirectProfit").html("￥"+data.totalDirectProfit);
           }
       }
 
