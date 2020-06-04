@@ -110,55 +110,59 @@
 <!--中间-->
 <div class="h_wrap">
     <div class="h_t">直推列表</div>
-    <div class="h_list">
-        <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
-        <div class="h_list_bottom">
-            <div class="h_list_left">
-                <img class="list_item">
-            </div>
-            <div class="h_list_center">
-                <div class="h_title">孔明</div>
-                <div class="h_desc">我是描述啊</div>
-            </div>
-            <div class="h_list_right">
-                <div class="h_title">我已得收益</div>
-                <div class="h_desc">2000元</div>
-            </div>
-        </div>
-    </div>
-    <div class="h_list">
-        <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
-        <div class="h_list_bottom">
-            <div class="h_list_left">
-                <img class="list_item">
-            </div>
-            <div class="h_list_center">
-                <div class="h_title">孔明</div>
-                <div class="h_desc">我是描述</div>
-            </div>
-            <div class="h_list_right">
-                <div class="h_title">我已得收益</div>
-                <div class="h_desc">2000元</div>
-            </div>
-        </div>
-    </div>
 
-    <div class="h_list">
-        <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
-        <div class="h_list_bottom">
-            <div class="h_list_left">
-                <img class="list_item">
-            </div>
-            <div class="h_list_center">
-                <div class="h_title">孔明</div>
-                <div class="h_desc">我是描述</div>
-            </div>
-            <div class="h_list_right">
-                <div class="h_title">我已得收益</div>
-                <div class="h_desc">2000元</div>
-            </div>
-        </div>
+    <div class="h_list" id="divData">
+
     </div>
+    <!--<div class="h_list">-->
+        <!--<p class="h_list_top">推荐时间：1920.11.09 12:11</p>-->
+        <!--<div class="h_list_bottom">-->
+            <!--<div class="h_list_left">-->
+                <!--<img class="list_item">-->
+            <!--</div>-->
+            <!--<div class="h_list_center">-->
+                <!--<div class="h_title">孔明</div>-->
+                <!--<div class="h_desc">我是描述啊</div>-->
+            <!--</div>-->
+            <!--<div class="h_list_right">-->
+                <!--<div class="h_title">我已得收益</div>-->
+                <!--<div class="h_desc">2000元</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="h_list">-->
+        <!--<p class="h_list_top">推荐时间：1920.11.09 12:11</p>-->
+        <!--<div class="h_list_bottom">-->
+            <!--<div class="h_list_left">-->
+                <!--<img class="list_item">-->
+            <!--</div>-->
+            <!--<div class="h_list_center">-->
+                <!--<div class="h_title">孔明</div>-->
+                <!--<div class="h_desc">我是描述</div>-->
+            <!--</div>-->
+            <!--<div class="h_list_right">-->
+                <!--<div class="h_title">我已得收益</div>-->
+                <!--<div class="h_desc">2000元</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="h_list">-->
+        <!--<p class="h_list_top">推荐时间：1920.11.09 12:11</p>-->
+        <!--<div class="h_list_bottom">-->
+            <!--<div class="h_list_left">-->
+                <!--<img class="list_item">-->
+            <!--</div>-->
+            <!--<div class="h_list_center">-->
+                <!--<div class="h_title">孔明</div>-->
+                <!--<div class="h_desc">我是描述</div>-->
+            <!--</div>-->
+            <!--<div class="h_list_right">-->
+                <!--<div class="h_title">我已得收益</div>-->
+                <!--<div class="h_desc">2000元</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 </div>
 <!--尾部-->
 <div class="empty_footer"></div>
@@ -190,6 +194,7 @@
     })
 
       queryUserInfo();
+      queryTeamInfo();
 
       function queryUserInfo(){
           let timestamp = Date.parse(new Date());
@@ -232,7 +237,7 @@
       }
 
 
-      function queryUserInfo(){
+      function queryTeamInfo(){
           let timestamp = Date.parse(new Date());
           let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
 //	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
@@ -241,7 +246,7 @@
           let result = base.encode(base64);
           let jsonData = JSON.stringify({"jsonData":result});
           $.ajax({
-              url: API+'/fine/did/getData',
+              url: API+'/fine/reward/getShareDataList',
               type: 'post',
               dataType: 'json',
               contentType:"application/json",
@@ -256,10 +261,37 @@
                       let base = new Base64();
                       let rsData= base.decode(base64);
                       let rsDataJson = JSON.parse(rsData);
-                      Callback(rsDataJson.dataModel);
+                      CallbackTeam(rsDataJson);
                   }
               }
           })
+      }
+
+      function  CallbackTeam(dataModel) {
+          let  html ="";
+          if(dataModel.rowCount!=0){
+             for(let i=0;i<dataModel.rowCount;i++){
+                 html+="<div class=\"h_list\">";
+                     html+="<p class=\"h_list_top\">推荐时间："+dataModel.shareList[i].shareTime+"</p>";
+                     html+="<div class=\"h_list_bottom\">";
+                         html+="<div class=\"h_list_left\">";
+                             html+="<img class=\"list_item\">";
+                         html+="</div>";
+                         html+="<div class=\"h_list_center\">";
+                             html+="<div class=\"h_title\">"+dataModel.shareList[i].acNum+"</div>";
+                             html+="<div class=\"h_desc\">"+dataModel.shareList[i].nickname+"</div>";
+                         html+="</div>";
+                         html+="<div class=\"h_list_right\">";
+                             html+="<div class=\"h_title\">我已得收益</div>";
+                             html+="<div class=\"h_desc\">"+dataModel.shareList[i].profit+"</div>";
+                         html+="</div>";
+                     html+="</div>";
+                 html+="</div>";
+             }
+          }
+
+          $("#divData").html(html);
+
       }
 
 
