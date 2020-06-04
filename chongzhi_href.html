@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="css/css.css">
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base64.js"></script>
+	<script src="js/API.js"></script>
 </head>
 <body class="chongzhi">
 	<div class="page">
@@ -37,18 +39,17 @@
 			<!--</div>-->
 			<div class="copy">
 				<div class="png">
-					<p>收款户名: 王玉娟</p>
-					<p>收款银行: 交通银行</p>
-                    <p>收款账号: 000000000000000</p>
-                    <p>充值金额: 1000</p>
-                    <p>系统匹配金额: 999.1</p>
+					<p>收款户名: <span id="accountName"> &nbsp;</span></p>
+					<p>收款银行: <span id="bankName"> &nbsp;</span></p>
+					<p>收款账号: <span id="bankCard"> &nbsp;</span>&nbsp;&nbsp;&nbsp;<button >复制</button></button></p>
+                    <p>充值金额: <span id="orderMoney"> &nbsp;</span></p>
+                    <p>匹配金额: <span id="distributionMoney"> &nbsp;</span><span style="color: #c91e1c;size: 50px">  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;    ***按该金额进行充值</span></p>
 				</div>
 			</div>
 			<div class="input">
 				<div class="upload_img">
                     <h4>提交图片</h4>
                     <div class="img">
-                        
                     </div>
                 </div>
 				<div class="btn1">
@@ -60,11 +61,63 @@
 </body>
 <script type="text/javascript">
     $(function(){
+        var test =window.location.href;
+        var money=test.split("?money=");
+        if(money[1]==undefined||money[1]=="undefined"){
+			alert("请选择需要充值的金额，再进行信息拉取");
+            window.location.href='invest_money.html';
+		}else{
+            queryBankInfo(money[1]);
+		}
+
         $(function(){
             $(".back").on('click', function()  {
                 history.back(-1);
             });
         })
+
+
+		function queryBankInfo(money) {
+            let timestamp = Date.parse(new Date());
+            let base64 = `{"token": "111111","orderMoney":"${money}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            console.log("参数："+base64);
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData":result});
+            $.ajax({
+                url: API+'/fine/recharge/add',
+                type: 'post',
+                dataType: 'json',
+                contentType:"application/json",
+                data:jsonData,
+                // 成功执行
+                success (data) {
+                    let code = data.resultCode;
+                    if(code !== "0"){
+                        alert(data.message);
+                    }else {
+                        let base64 = data.data.jsonData;
+                        let base = new Base64();
+                        let rsData= base.decode(base64);
+                        let rsDataJson = JSON.parse(rsData);
+
+                        Callback(rsDataJson.recharge);
+                    }
+                }
+            })
+        }
+
+
+        function Callback(data) {
+            if(data.length!=0){
+                $("#accountName").html(data.accountName);
+                $("#bankName").val(data.bankName);
+                $("#bankCard").html(data.bankCard);
+                $("#orderMoney").html(data.orderMoney);
+                $("#distributionMoney").html(data.distributionMoney);
+            }
+        }
     })
 	let copy = $('.chongzhi .copy .png p');
 </script>
