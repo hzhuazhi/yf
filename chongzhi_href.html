@@ -43,7 +43,7 @@
 					<p>收款银行: <span id="bankName"> &nbsp;</span></p>
 					<p>收款账号: <span id="bankCard"> &nbsp;</span>&nbsp;&nbsp;&nbsp;<button >复制</button></button></p>
                     <p>充值金额: <span id="orderMoney"> &nbsp;</span></p>
-                    <p>匹配金额: <span id="distributionMoney"> &nbsp;</span><span style="color: #c91e1c;size: 50px">  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;    ***按该金额进行充值</span></p>
+                    <p>匹配金额: <span style="color: #c91e1c;size: 50px" id="distributionMoney"> &nbsp;</span><span style="color: #c91e1c;size: 50px">  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;    ***按该金额进行充值</span></p>
 				</div>
 			</div>
 			<div class="input">
@@ -110,9 +110,10 @@
 
 
         function Callback(data) {
+            console.log(data);
             if(data.length!=0){
                 $("#accountName").html(data.accountName);
-                $("#bankName").val(data.bankName);
+                $("#bankName").html(data.bankName);
                 $("#bankCard").html(data.bankCard);
                 $("#orderMoney").html(data.orderMoney);
                 $("#distributionMoney").html(data.distributionMoney);
