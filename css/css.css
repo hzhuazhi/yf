@@ -884,8 +884,8 @@ div.qianbao .list .item span:nth-child(2) {
   margin-bottom: 1rem;
   width: 4rem;
   height: 4rem;
-  border-radius: 50%;
-  background-color: #FF4A44;
+  /*border-radius: 50%;*/
+  /*background-color: #FF4A44;*/
 }
 .empty_footer {
   height: 6rem;
