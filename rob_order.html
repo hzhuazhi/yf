@@ -1,125 +1,173 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title></title>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/radio-checkbox.css"/>
-	<link rel="stylesheet" href="css/css.css">
-	<script src="js/jquery-3.4.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/radio-checkbox.css"/>
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        .h_wrap {
+            background-color: rgb(247, 244, 242);
+            padding: 10px;
+        }
+
+        .h_list_top {
+            padding: 10px 0 0 10px;
+        }
+
+        .h_t {
+            margin: 10px 0;
+            padding-bottom: 10px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .h_list {
+            width: 100%;
+            height: 11rem;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+
+        .h_list_bottom {
+            display: flex;
+        }
+
+        .h_list_left {
+            width: 8rem;
+            padding: 0 10px;
+        }
+
+        .list_item {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            background: url("img/recommend_bg.jpg") no-repeat -62px -108px;
+        }
+
+        .h_list_center {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .h_title {
+            margin-bottom: 20px;
+        }
+
+        .h_list_right {
+            width: 10rem;
+            text-align: right;
+            padding: 0 10px;
+        }
+    </style>
 </head>
 <body style="background-color: #fafafa;">
 <div class="alert">
-	<div class="con">
-		<h4>抢单攻略</h4>
-		<div class="p">
-			<p>1.充值金额越多，抢单金额会越大，抢单成功率更高</p>
-			<p>2.成功收款后请及时确认订单，认准对应收款账号和金额.</p>
-			<p>3.若长时间无订单或收款失败，请及时更换收款账号或收款二维码，规避风险</p>
-			<p>4.请勿相信任何非官方人员言辞，提高防骗意识，如果有问题及时联系客服</p>
-			<p>5.夜间抢单会有额外的收益</p>
-		</div>
-		<span>确定</span>
-	</div>
+    <div class="con">
+        <h4>抢单攻略</h4>
+        <div class="p">
+            <p>1.充值金额越多，抢单金额会越大，抢单成功率更高</p>
+            <p>2.成功收款后请及时确认订单，认准对应收款账号和金额.</p>
+            <p>3.若长时间无订单或收款失败，请及时更换收款账号或收款二维码，规避风险</p>
+            <p>4.请勿相信任何非官方人员言辞，提高防骗意识，如果有问题及时联系客服</p>
+            <p>5.夜间抢单会有额外的收益</p>
+        </div>
+        <span>确定</span>
+    </div>
 </div>
+<!--头部-->
 <div class="page3">
-	<header>
-		<span>抢单</span>
-		<div >
-			<i class="fa fa-wpforms" onclick="window.location.href='order.html'"></i>
-			<i class="fa fa-question-circle-o"></i>
-		</div>
-	</header>
-	<div class="empty"></div>
-	<div class="contant">
-		<!--div class="part1">
-            <img src="img/demo1.png" >
-        </div -->
-		<div class="part2">
-			<div class="left">
-				<h4>抢单额度</h4>
-				<span>￥0.0</span>
-			</div>
-			<div class="right">
-				<h4>冻结金额</h4>
-				<span>￥0.0</span>
-			</div>
-		</div>
-		<div class="part3">
-			<div class="title">
-				<h4>抢单通道</h4>
-				<div>
-					<a href="">申诉记录</a> |
-					<a href="">订单审核</a>
-				</div>
-			</div>
-			<div class="btn_list">
-				<div class="item">
-					<p>微信</p>
-					<span>1.5%</span>
-					<label class="bui-switch-label bui-switch-anim">
-						<input type="checkbox" name="s"/><i class="bui-switch"></i>
-					</label>
-
-				</div>
-				<div class="item">
-					<p>支付宝</p>
-					<span>1.5%</span>
-					<label class="bui-switch-label bui-switch-anim">
-						<input type="checkbox" name="s"/><i class="bui-switch"></i>
-					</label>
-
-				</div>
-				<div class="item">
-					<p>云闪付</p>
-					<span>1.5%</span>
-					<label class="bui-switch-label bui-switch-anim">
-						<input type="checkbox" name="s"/><i class="bui-switch"></i>
-					</label>
-
-				</div>
-				<div class="item">
-					<p>银行卡</p>
-					<span>1.5%</span>
-					<label class="bui-switch-label bui-switch-anim">
-						<input type="checkbox" name="s"/><i class="bui-switch"></i>
-					</label>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="empty_footer"></div>
-	<footer>
-		<div class="item" onclick="window.location.href='homepage.html'">
-			<i class="fa fa-home"></i>
-			<span>首页</span>
-		</div>
-		<div class="item active" onclick="window.location.href='rob_order.html'">
-			<i class="fa fa-user-secret"></i>
-			<span>抢单</span>
-		</div>
-		<div class="item" onclick="window.location.href='my.html'">
-			<i class="fa fa-user-o"></i>
-			<span>我的</span>
-		</div>
-	</footer>
+    <header>
+        <div class="back"></div>
+        <p style="margin: 0">分享好友</p>
+        <div>
+            <i class="fa fa-wpforms" onclick="window.location.href='order.html'"></i>
+            <i class="fa fa-question-circle-o"></i>
+        </div>
+    </header>
+    <div class="contant">
+        <div class="part2" style="background-color: rgb(220, 93, 71);border-radius: 1rem;margin: 45px 0 0 0">
+            <div class="left" style="border: none;color: white">
+                <h5>直推总人数</h5>
+                <span style="font-size: 2rem;color: white">￥0.0</span>
+            </div>
+            <div class="right" style="color: white">
+                <h5>直推奖励总金额</h5>
+                <span style="font-size: 2rem;color: white">￥0.0</span>
+            </div>
+        </div>
+    </div>
 </div>
+<!--中间-->
+<div class="h_wrap">
+    <div class="h_t">直播列表</div>
+    <div class="h_list">
+        <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
+        <div class="h_list_bottom">
+            <div class="h_list_left">
+                <img class="list_item">
+            </div>
+            <div class="h_list_center">
+                <div class="h_title">孔明</div>
+                <div class="h_desc">我是描述啊</div>
+            </div>
+            <div class="h_list_right">
+                <div class="h_title">我已得收益</div>
+                <div class="h_desc">2000元</div>
+            </div>
+        </div>
+    </div>
+    <div class="h_list">
+        <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
+        <div class="h_list_bottom">
+            <div class="h_list_left">
+                <img class="list_item">
+            </div>
+            <div class="h_list_center">
+                <div class="h_title">孔明</div>
+                <div class="h_desc">我是描述啊</div>
+            </div>
+            <div class="h_list_right">
+                <div class="h_title">我已得收益</div>
+                <div class="h_desc">2000元</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--尾部-->
+<div class="empty_footer"></div>
+<footer>
+    <div class="item" onclick="window.location.href='homepage.html'">
+        <i class="fa fa-home"></i>
+        <span>首页</span>
+    </div>
+    <div class="item active" onclick="window.location.href='rob_order.html'">
+        <i class="fa fa-user-secret"></i>
+        <span>抢单</span>
+    </div>
+    <div class="item" onclick="window.location.href='my.html'">
+        <i class="fa fa-user-o"></i>
+        <span>我的</span>
+    </div>
+</footer>
 </body>
 <script>
-  $(function(){
+  $(function () {
     let btn = $('.page3 header div i:last-child')
     let obj = $('.alert');
     let yes = $('.alert .con span')
-    btn.click(function(){
-      obj.css('display','flex')
+    btn.click(function () {
+      obj.css('display', 'flex')
     })
-    yes.click(function(){
-      obj.css('display','none')
+    yes.click(function () {
+      obj.css('display', 'none')
     })
   })
 </script>
