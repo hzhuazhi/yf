@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="css/css.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
     <style>
         .h_wrap {
             background-color: rgb(247, 244, 242);
@@ -86,7 +88,7 @@
 <div class="page3">
     <header>
         <div class="back"></div>
-        <p style="margin: 0">分享好友</p>
+        <p style="margin: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团队信息</p>
         <div>
             <i class="fa fa-wpforms" onclick="window.location.href='order.html'"></i>
             <i class="fa fa-question-circle-o"></i>
@@ -96,18 +98,18 @@
         <div class="part2" style="background-color: rgb(220, 93, 71);border-radius: 1rem;margin: 45px 0 0 0">
             <div class="left" style="border: none;color: white">
                 <h5>直推总人数</h5>
-                <span style="font-size: 2rem;color: white">￥0.0</span>
+                <span style="font-size: 2rem;color: white" id="totalDirectNum">￥0.0</span>
             </div>
             <div class="right" style="color: white">
                 <h5>直推奖励总金额</h5>
-                <span style="font-size: 2rem;color: white">￥0.0</span>
+                <span style="font-size: 2rem;color: white" id="totalDirectProfit">￥0.0</span>
             </div>
         </div>
     </div>
 </div>
 <!--中间-->
 <div class="h_wrap">
-    <div class="h_t">直播列表</div>
+    <div class="h_t">直推列表</div>
     <div class="h_list">
         <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
         <div class="h_list_bottom">
@@ -124,6 +126,23 @@
             </div>
         </div>
     </div>
+    <div class="h_list">
+        <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
+        <div class="h_list_bottom">
+            <div class="h_list_left">
+                <img class="list_item">
+            </div>
+            <div class="h_list_center">
+                <div class="h_title">孔明</div>
+                <div class="h_desc">我是描述</div>
+            </div>
+            <div class="h_list_right">
+                <div class="h_title">我已得收益</div>
+                <div class="h_desc">2000元</div>
+            </div>
+        </div>
+    </div>
+
     <div class="h_list">
         <p class="h_list_top">推荐时间：1920.11.09 12:11</p>
         <div class="h_list_bottom">
@@ -169,6 +188,81 @@
     yes.click(function () {
       obj.css('display', 'none')
     })
+
+      queryUserInfo();
+
+      function queryUserInfo(){
+          let timestamp = Date.parse(new Date());
+          let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+          console.log("参数："+base64);
+          let base = new Base64();
+          let result = base.encode(base64);
+          let jsonData = JSON.stringify({"jsonData":result});
+          $.ajax({
+              url: API+'/fine/did/getData',
+              type: 'post',
+              dataType: 'json',
+              contentType:"application/json",
+              data:jsonData,
+              // 成功执行
+              success (data) {
+                  let code = data.resultCode;
+                  if(code !== "0"){
+                      alert(data.message);
+                  }else {
+                      let base64 = data.data.jsonData;
+                      let base = new Base64();
+                      let rsData= base.decode(base64);
+                      let rsDataJson = JSON.parse(rsData);
+                      Callback(rsDataJson.dataModel);
+                  }
+              }
+          })
+      }
+
+
+
+      function   Callback(data){
+          console.log(data);
+          if(data.length!=0){
+              $("#totalDirectNum").html("￥"+data.totalRechargeProfit);
+              $("#totalDirectProfit").html("￥"+data.totalGradeProfit);
+          }
+      }
+
+
+      function queryUserInfo(){
+          let timestamp = Date.parse(new Date());
+          let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+          console.log("参数："+base64);
+          let base = new Base64();
+          let result = base.encode(base64);
+          let jsonData = JSON.stringify({"jsonData":result});
+          $.ajax({
+              url: API+'/fine/did/getData',
+              type: 'post',
+              dataType: 'json',
+              contentType:"application/json",
+              data:jsonData,
+              // 成功执行
+              success (data) {
+                  let code = data.resultCode;
+                  if(code !== "0"){
+                      alert(data.message);
+                  }else {
+                      let base64 = data.data.jsonData;
+                      let base = new Base64();
+                      let rsData= base.decode(base64);
+                      let rsDataJson = JSON.parse(rsData);
+                      Callback(rsDataJson.dataModel);
+                  }
+              }
+          })
+      }
+
+
   })
 </script>
 </html>
