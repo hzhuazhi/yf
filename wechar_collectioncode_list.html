@@ -80,7 +80,6 @@
             window.location.href='homepage.html';
         });
         loadList();
-        
     })
 
 
@@ -89,8 +88,8 @@
             window.location.href='login.html';
         }
         let timestamp = Date.parse(new Date());
-        let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-        console.log("参数："+base64);
+//        let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base64 = `{"token": "111111","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
         let base = new Base64();
         let result = base.encode(base64);
         let jsonData = JSON.stringify({"jsonData":result});
