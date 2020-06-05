@@ -1,181 +1,197 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>订单记录</title>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/css.css">
-	<script src="js/jquery-3.4.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/base64.js"></script>
-	<script src="js/API.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>订单记录</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
 </head>
 <style>
-	.item{
-		width: 400px;
-		text-align: center;
-		padding-bottom: 10px;
-	}
+    body {
+        box-sizing: border-box;
+    }
 
-	.item1{
-		width: 200px;
-		text-align: center;
-		padding-bottom: 10px;
-	}
+    .item1 {
+        width: 35%;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .item2 {
+        width: 35%;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .item3 {
+        width: 20%;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .item4 {
+        width: 20%;
+        text-align: center;
+        padding-bottom: 10px;
+    }
 </style>
 <body>
-	<div class="page">
-		<header>
-			<div class="back">
-				<i class="fa fa-angle-left"></i>
-			</div>
-			<p>订单记录</p>
-			<span></span>
-		</header>
-		<div class="empty"></div>
-		<div class="order">
-			<div class="demo">
-				<div class="active">发起订单</div>
-				<div class="">超时关闭</div>
-				<div class="">有质疑订单</div>
-				<div class="">已成功订单</div>
-			</div>
-		</div>
+<div class="page">
+    <header>
+        <div class="back">
+            <i class="fa fa-angle-left"></i>
+        </div>
+        <p>订单记录</p>
+        <span></span>
+    </header>
+    <div class="empty"></div>
+    <div class="order">
+        <div class="demo">
+            <div class="active">发起订单</div>
+            <div class="">超时关闭</div>
+            <div class="">有质疑订单</div>
+            <div class="">已成功订单</div>
+        </div>
+    </div>
 
 
-		<div class="demo" style="width: 100%; display: flex; justify-content: center; align-items: center;">
-			<div class="item" >订单号</div>
-			<div class="item1"  >时间</div>
-			<div class="item1" >类型</div>
-			<div class="item1" >金额</div>
-		</div>
-		<div id="divData"></div>
-		<!--<div class="contant order_con">-->
-			<!--&lt;!&ndash;<div class="data_null active" id="divData">&ndash;&gt;-->
-				<!--<img src="./img/demo.jpg" alt="">-->
-				<!--<p>暂无数据</p>-->
-			<!--</div>-->
-		<!--</div>-->
-	</div>
+    <div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">
+        <div class="item1">订单号</div>
+        <div class="item2">时间</div>
+        <div class="item3">类型</div>
+        <div class="item4">金额</div>
+    </div>
+    <div id="divData" style="margin-right: 10px"></div>
+    <!--<div class="contant order_con">-->
+    <!--&lt;!&ndash;<div class="data_null active" id="divData">&ndash;&gt;-->
+    <!--<img src="./img/demo.jpg" alt="">-->
+    <!--<p>暂无数据</p>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
 </body>
 <script type="text/javascript">
-	$(function(){
+  $(function () {
 
-        queryOrdeyList(1);
+    queryOrdeyList(1);
 
-        let tab = $(".order .demo>div");
+    let tab = $(".order .demo>div");
 //        let con = $('.order_con .data_null')
-        tab.click(function(){
-            let that = $(this)
-            let index = that.index()+1;
-            that.addClass('active').siblings().removeClass('active')
+    tab.click(function () {
+      let that = $(this)
+      let index = that.index() + 1;
+      that.addClass('active').siblings().removeClass('active')
 //            con.eq(index).addClass('active').siblings().removeClass('active')
 
-            queryOrdeyList(index);
-        })
+      queryOrdeyList(index);
+    })
 
-        $(function(){
-            $(".back").on('click', function()  {
-                history.back(-1);
-            });
-        })
+    $(function () {
+      $(".back").on('click', function () {
+        history.back(-1);
+      });
+    })
 
 
-		function queryOrdeyList(type){
-            let beginTime   = new Date();
+    function queryOrdeyList(type) {
+      let beginTime = new Date();
 
-            let todayTime="";
-            let month="";
-            let day="";
+      let todayTime = "";
+      let month = "";
+      let day = "";
 
-            if(beginTime.getMonth().toString().length=1){
-                month="0"+(beginTime.getMonth()+1);
-            }else{
-                month=(beginTime.getMonth()+1);
-            }
+      if (beginTime.getMonth().toString().length = 1) {
+        month = "0" + (beginTime.getMonth() + 1);
+      } else {
+        month = (beginTime.getMonth() + 1);
+      }
 
-            if(beginTime.getDay().toString().length=1){
-                day="0"+(beginTime.getDay());
-            }else{
-                day=beginTime.getDay();
-            }
-            todayTime=beginTime.getFullYear()+month+day;
+      if (beginTime.getDay().toString().length = 1) {
+        day = "0" + (beginTime.getDay());
+      } else {
+        day = beginTime.getDay();
+      }
+      todayTime = beginTime.getFullYear() + month + day;
 
-            let timestamp = Date.parse(new Date());
+      let timestamp = Date.parse(new Date());
 //            let base64 = `{"token": "111111","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            let base64 = `{"token": "111111","orderStatus": ${type},"curdayStart": 20200508,"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            console.log("参数："+base64);
+      let base64 = `{"token": "111111","orderStatus": ${type},"curdayStart": 20200508,"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+      //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+      console.log("参数：" + base64);
+      let base = new Base64();
+      let result = base.encode(base64);
+      let jsonData = JSON.stringify({"jsonData": result});
+      $.ajax({
+        url: API + '/fine/order/getDataList',
+        type: 'post',
+        dataType: 'json',
+        contentType: "application/json",
+        data: jsonData,
+        // 成功执行
+        success(data) {
+          let code = data.resultCode;
+          if (code !== "0") {
+            alert(data.message);
+          } else {
+            let base64 = data.data.jsonData;
             let base = new Base64();
-            let result = base.encode(base64);
-            let jsonData = JSON.stringify({"jsonData":result});
-            $.ajax({
-                url: API+'/fine/order/getDataList',
-                type: 'post',
-                dataType: 'json',
-                contentType:"application/json",
-                data:jsonData,
-                // 成功执行
-                success (data) {
-                    let code = data.resultCode;
-                    if(code !== "0"){
-                        alert(data.message);
-                    }else {
-                        let base64 = data.data.jsonData;
-                        let base = new Base64();
-                        let rsData= base.decode(base64);
-                        let rsDataJson = JSON.parse(rsData);
-                        if(rsDataJson.rowCount==0){
-                            onDataCallBack();
-                            return;
-                        }
-                        Callback(rsDataJson.dataList);
-                    }
-                }
-            })
-		}
-
-        function  onDataCallBack() {
-            let  divHtml="";
-            divHtml+="<div class=\"contant order_con\">";
-            divHtml+="<div class=\"data_null active\">";
-            divHtml+="<img src=\"./img/demo.jpg\" alt=\"\">";
-            divHtml+="<p>暂无数据</p>";
-            divHtml+="</div>";
-            divHtml+="</div>";
-            $("#divData").html(divHtml);
-        }
-
-        function  Callback(data){
-            let  divHtml="";
-            for(let i=0;i<data.length;i++){
-                divHtml+="<div  style=\"display: flex; justify-content: center;\">";
-//                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
-                divHtml+="<div class=\"item\" >"+data[i].orderNo.substr(0,15)+"</div>";
-                divHtml+="<div class=\"item1\" >"+data[i].curday+""+data[i].curhour+""+data[i].curminute+"</div>";
-                if(data[i].orderStatus==1){
-                    divHtml+="<div class=\"item1\" >初始化</div>";
-                }else if(data[i].orderStatus==2){
-                    divHtml+="<div class=\"item1\" >超时</div>";
-                }else if(data[i].orderStatus==3){
-                    divHtml+="<div class=\"item1\" >有质疑</div>";
-                }else if(data[i].orderStatus==4){
-                    divHtml+="<div class=\"item1\" >成功</div>";
-                }else{
-                    divHtml+="<div class=\"item1\" >未知</div>";
-                }
-                divHtml+="<div class=\"item1\" >"+data[i].orderMoney+"</div>";
-                divHtml+="</div>";
+            let rsData = base.decode(base64);
+            let rsDataJson = JSON.parse(rsData);
+            if (rsDataJson.rowCount == 0) {
+              onDataCallBack();
+              return;
             }
-
-            //缺少汇总
-            $("#divData").html(divHtml);
+            Callback(rsDataJson.dataList);
+          }
         }
+      })
+    }
+
+    function onDataCallBack() {
+      let divHtml = "";
+      divHtml += "<div class=\"contant order_con\">";
+      divHtml += "<div class=\"data_null active\">";
+      divHtml += "<img src=\"./img/demo.jpg\" alt=\"\">";
+      divHtml += "<p>暂无数据</p>";
+      divHtml += "</div>";
+      divHtml += "</div>";
+      $("#divData").html(divHtml);
+    }
+
+    function Callback(data) {
+      let divHtml = "";
+      for (let i = 0; i < data.length; i++) {
+        divHtml += "<div  style=\"display: flex; justify-content: center;\">";
+//                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
+        divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 15) + "</div>";
+        divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour + "" + data[i].curminute + "</div>";
+        if (data[i].orderStatus == 1) {
+          divHtml += "<div class=\"item3\" >初始化</div>";
+        } else if (data[i].orderStatus == 2) {
+          divHtml += "<div class=\"item3\" >超时</div>";
+        } else if (data[i].orderStatus == 3) {
+          divHtml += "<div class=\"item3\" >有质疑</div>";
+        } else if (data[i].orderStatus == 4) {
+          divHtml += "<div class=\"item3\" >成功</div>";
+        } else {
+          divHtml += "<div class=\"item3\" >未知</div>";
+        }
+        divHtml += "<div class=\"item4\" >" + data[i].orderMoney + "</div>";
+        divHtml += "</div>";
+      }
+
+      //缺少汇总
+      $("#divData").html(divHtml);
+    }
 
 
-	})
+  })
 </script>
 </html>
