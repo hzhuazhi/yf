@@ -42,23 +42,23 @@
 					<div class="content">
 						<div class="upload active">
 							<div class="img">
-								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
-									<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="uploadWechat(1)" />
+								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >
+									<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="excptions(1)" />
 									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()" id="mmQrCode"/>
 								</from>
-								<div  style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
-									<img src=""  width="120px" height="120px"  onclick="jQuery('#image').click()" />
+
+								<div  style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center" onclick="jQuery('#image').click()">
+									<img src="" id="imgwechar" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"  />
 								</div>
 
-								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
-									<input type="file" hidden name="imag1" id="imag1" style="display:none;width:1px; " onchange="uploadWechat(this,2)" />
-									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()"  id="wxQrCodeAds"/>
+								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >
+									<input type="file" hidden name="image1" id="image1" style="display:none;width:1px; " onchange="excptions(2)" />
+									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#image1').click()"  id="wxQrCodeAds"/>
 								</from>
-								<div   style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
-									<img src=""  width="120px" height="120px"  onclick="jQuery('#image').click()" value="xxxxx"/>
+								<div   style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center" onclick="jQuery('#image1').click()">
+									<img src="" id="imgsmall"  style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"  />
 								</div>
 							</div>
-
 
 							<div class="input">
 								<span>微&nbsp;&nbsp;信&nbsp;&nbsp;名:</span>
@@ -97,6 +97,7 @@
 <script type="text/javascript">
    		 let  mmQrCode ="";
    		 let  wxQrCodeAds ="";
+//         $('#imgwechar').attr("src", "https://t11.baidu.com/it/u=3989969920,3929699066&fm=76");
         $(function(){
             $(".back").on('click', function()  {
                 window.location.href='homepage.html';
@@ -159,39 +160,18 @@
 
         })
 
-        //上传微信的方法
-        function excptionWechar() {
-            var formData = new FormData();
-            formData.append("image", $("#image").get(0).files[0]);
-            $.ajax({
-                url: API + '/fine/stg/qiniuUpload',
-                type: 'POST',
-                contentType: "multipart/form-data",
-                data: formData,
-                cache: false,
-                contentType: false,    //不可缺
-                processData: false,    //
-                success: function (data) {
-                    let code = data.resultCode;
-                    if (code !== "0") {
-                        alert(data.message);
-                    } else {
-                        let base64 = data.data.jsonData;
-                        let base = new Base64();
-                        let rsData = base.decode(base64);
-                        let rsDataJson = JSON.parse(rsData);
-//                    $(".upload_img").src=rsDataJson.qiNiu.url;
-                        mmQrCode=rsDataJson.qiNiu.url;
-                        $('.img').find('img').attr("src", rsDataJson.qiNiu.url);
-                    }
-                }
-            });
-        }
 
 
-         function excptions() {
+
+         function excptions(type) {
+            debugger;
              var formData = new FormData();
-             formData.append("image", $("#image").get(0).files[0]);
+              if(type==1){
+                  formData.append("image", $("#image").get(0).files[0]);
+			  }else if(type==2){
+                  formData.append("image", $("#image1").get(0).files[0]);
+			  }
+
              $.ajax({
                  url: API + '/fine/stg/qiniuUpload',
                  type: 'POST',
@@ -210,8 +190,15 @@
                          let rsData = base.decode(base64);
                          let rsDataJson = JSON.parse(rsData);
 //                    $(".upload_img").src=rsDataJson.qiNiu.url;
-                         mmQrCode=rsDataJson.qiNiu.url;
-                         $('.img').find('img').attr("src", rsDataJson.qiNiu.url);
+						 if(type==1){
+                             mmQrCode=rsDataJson.qiNiu.url;
+                             $('#image').src=mmQrCode;
+//                             $('#image').attr("src", mmQrCode);
+                             $('.img').find("#imgwechar").attr("src", mmQrCode);
+						 }else if(type==2){
+                             wxQrCodeAds=rsDataJson.qiNiu.url;
+                             $('.img').find("#imgsmall").attr("src", wxQrCodeAds);
+						 }
                      }
                  }
              });

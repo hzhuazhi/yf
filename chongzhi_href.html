@@ -50,16 +50,17 @@
 				<div class="upload_img">
                     <h4>提交异常图片</h4>
                     <div class="img">
-						<img src=""  width="250px" height="250px"  onclick="jQuery('#image').click()" />
-						<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">
-							<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="excptionImage()" />
-							<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>
-						</from>
-						<div id="mmQrCode" onclick="jQuery('#image').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
-							<div style="height: 3rem;line-height: 3rem">上传异常信息</div>
-							<!--<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>-->
-						</div>
+						<img src=""  style="display: flex;justify-content: center;align-items: center;height: 24rem;text-align: center"  onclick="jQuery('#image').click()" />
+
+						<!--<div id="mmQrCode" onclick="jQuery('#image').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">-->
+							<!--<div style="height: 3rem;line-height: 3rem">上传异常信息</div>-->
+							<!--&lt;!&ndash;<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>&ndash;&gt;-->
+						<!--</div>-->
                     </div>
+					<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">
+						<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="excptionImage()" />
+						<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>
+					</from>
                 </div>
 
 				<div class="btn1">
