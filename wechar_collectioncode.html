@@ -44,20 +44,22 @@
 							<div class="img">
 								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
 									<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="uploadWechat(1)" />
-									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>
+									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()" id="mmQrCode"/>
 								</from>
-								<div id="mmQrCode" onclick="jQuery('#image').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
-									<div style="height: 3rem;line-height: 3rem">上传微信收款</div>
-									<!--<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>-->
+								<div  style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
+									<img src=""  width="120px" height="120px"  onclick="jQuery('#image').click()" />
 								</div>
+
 								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >
 									<input type="file" hidden name="imag1" id="imag1" style="display:none;width:1px; " onchange="uploadWechat(this,2)" />
-									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()" />
+									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()"  id="wxQrCodeAds"/>
 								</from>
-								<div id="wxQrCodeAds" onclick="jQuery('#imag1').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
-									<div style="height: 3rem;line-height: 3rem">上传小薇店员</div>
+								<div   style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">
+									<img src=""  width="120px" height="120px"  onclick="jQuery('#image').click()" value="xxxxx"/>
 								</div>
 							</div>
+
+
 							<div class="input">
 								<span>微&nbsp;&nbsp;信&nbsp;&nbsp;名:</span>
 								<input type="" id="payee" placeholder="请输入微信名"/>
@@ -74,17 +76,7 @@
 								<span>安全密码:</span>
 								<input type="password" id="password" placeholder="请输入安全密码"/>
 							</div>
-							<!--<input type="file"  multiple="multiple" accept="image/*"  multiple id="files" values="上传微信收款">-->
-							<!--<input type="file"   value="上传微信收款">-->
-							<!--<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" action="http://192.168.1.44:8086/fine/stg/qiniuUploadMany" >-->
-								<!--<div class="btn">-->
-										<!---->
 
-										<!--<input type="file" hidden name="imag1" id="imag1" style="display:none;width:1px; " onchange="uploadWechat(this,2)" />-->
-										<!--<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#imag1').click()" />-->
-										<!--<button type="submit" onclick="jQuery('#imag1').click()">上传小薇店员</button>-->
-								<!--</div>-->
-							<!--</from>-->
 
 							<div class="btn" style="display: flex;justify-content: center;">
 								<button type="button" id="btn_sava">保存</button>
@@ -103,6 +95,8 @@
 	</div>
 </body>
 <script type="text/javascript">
+   		 let  mmQrCode ="";
+   		 let  wxQrCodeAds ="";
         $(function(){
             $(".back").on('click', function()  {
                 window.location.href='homepage.html';
@@ -115,8 +109,8 @@
             $("#btn_sava").click(function () {
 //				alert(1);
 				alert("======"+publicMap.get("agtVer"));
-				let  mmQrCode ="http://www.baidu.com";//暂时没有获取七牛云地址
-				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
+//				let  mmQrCode ="http://www.baidu.com";//暂时没有获取七牛云地址
+//				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
 
                 let payee = $("#payee").val();
                 let acType = 1;
@@ -166,75 +160,61 @@
         })
 
         //上传微信的方法
-        function  uploadWechat(type) {
-
-            var form = $("#fileForm").submit();
-//            var options  = {
-//                url:API+'/fine/stg/qiniuUploadMany',
-//                type:'post',
-//                contentType:"multipart/form-data",
-//                success:function(data)
-//                {
-//                    debugger ;
-//                    data;
-////                    var jsondata = eval("("+data+")");
-////                    if(jsondata.error == "0"){
-////                        var url = jsondata.url;
-////                        alert(url)
-////                        $("#img").attr("src",url);
-////                    }else{
-////                        var message = jsondata.message;
-////                        alert(message);
-////                    }
-//                }
-//            };
-//            form.ajaxSubmit(options);
-
-//            var files = obj.$refs.files ;
-//            var formData = new FormData();
-//            formData.append(files);
-//            $.ajax({
-//                url: API+'/fine/stg/qiniuUploadMany',
-//                type: 'post',
-////                dataType: 'json',
-//                contentType:"multipart/form-data",
-//                data:$('#fileForm').data,
-//                // 成功执行
-//                success (data) {
-//                    debugger;
-//                    let code = data.resultCode;
-//                    if(code !== "0"){
-//                        alert(data.message);
-//                    }else {
-//                        alert('保存成功!');
-//                        cleanfrom();
-//                    }
-//                },
-//            })
-
-
-//            $('#fileForm').submit(function(e) {
-//                url: API+'/fine/stg/qiniuUpload',
-//                onSubmit: function () {        //表单提交前的回调函数
-////                    var isValid = $(this).form('validate');//验证表单中的一些控件的值是否填写正确，比如某些文本框中的内容必须是数字
-////                    return isValid; // 如果验证不通过，返回false终止表单提交
-//                },
-//                success: function (data) {
-//                    debugger
-//                    let code = data.resultCode;
-//                    if(code !== "0"){
-//                        alert(data.message);
-//                    }else {
-//                        alert('保存成功!');
-//                    }
-//                }
-//            });
-
-//            if(type==1){
-//
-//            }else{
-//
-//            }
+        function excptionWechar() {
+            var formData = new FormData();
+            formData.append("image", $("#image").get(0).files[0]);
+            $.ajax({
+                url: API + '/fine/stg/qiniuUpload',
+                type: 'POST',
+                contentType: "multipart/form-data",
+                data: formData,
+                cache: false,
+                contentType: false,    //不可缺
+                processData: false,    //
+                success: function (data) {
+                    let code = data.resultCode;
+                    if (code !== "0") {
+                        alert(data.message);
+                    } else {
+                        let base64 = data.data.jsonData;
+                        let base = new Base64();
+                        let rsData = base.decode(base64);
+                        let rsDataJson = JSON.parse(rsData);
+//                    $(".upload_img").src=rsDataJson.qiNiu.url;
+                        mmQrCode=rsDataJson.qiNiu.url;
+                        $('.img').find('img').attr("src", rsDataJson.qiNiu.url);
+                    }
+                }
+            });
         }
+
+
+         function excptions() {
+             var formData = new FormData();
+             formData.append("image", $("#image").get(0).files[0]);
+             $.ajax({
+                 url: API + '/fine/stg/qiniuUpload',
+                 type: 'POST',
+                 contentType: "multipart/form-data",
+                 data: formData,
+                 cache: false,
+                 contentType: false,    //不可缺
+                 processData: false,    //
+                 success: function (data) {
+                     let code = data.resultCode;
+                     if (code !== "0") {
+                         alert(data.message);
+                     } else {
+                         let base64 = data.data.jsonData;
+                         let base = new Base64();
+                         let rsData = base.decode(base64);
+                         let rsDataJson = JSON.parse(rsData);
+//                    $(".upload_img").src=rsDataJson.qiNiu.url;
+                         mmQrCode=rsDataJson.qiNiu.url;
+                         $('.img').find('img').attr("src", rsDataJson.qiNiu.url);
+                     }
+                 }
+             });
+         }
 </script>
 </html>
