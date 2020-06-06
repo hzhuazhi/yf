@@ -8,10 +8,12 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/toast.css">
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/base64.js"></script>
 	<script src="js/API.js"></script>
+	<script src="js/toast.js"></script>
 </head>
 <body>
 	<div class="page">
@@ -113,9 +115,11 @@
 //				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
 
 				if(mmQrCode==""){
-
-				}else
-                let payee = $("#payee").val();
+                    showMessage('保存成功!');
+				}else{
+                    showMessage('保存成功!');
+				}
+//                let payee = $("#payee").val();
                 let acType = 1;
                 let businessType = 1;
                 let acNum = $("#acNum").val();
