@@ -12,6 +12,8 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/base64.js"></script>
 	<script src="js/API.js"></script>
+	<link rel="stylesheet" href="css/toast.css">
+	<script src="js/toast.js"></script>
 </head>
 <body class="chongzhi">
 	<div class="page">
@@ -76,7 +78,7 @@
         var test =window.location.href;
         var money=test.split("?money=");
         if(money[1]==undefined||money[1]=="undefined"){
-			alert("请选择需要充值的金额，再进行信息拉取");
+            showMessage("请选择需要充值的金额，再进行信息拉取");
             window.location.href='invest_money.html';
 		}else{
             queryBankInfo(money[1]);
@@ -107,7 +109,7 @@
                 success (data) {
                     let code = data.resultCode;
                     if(code !== "0"){
-                        alert(data.message);
+                        showMessage(data.message);
                     }else {
                         let base64 = data.data.jsonData;
                         let base = new Base64();
@@ -136,7 +138,7 @@
     function copy() {
         let  bankCard =$("#bankCard").html();
         if(bankCard==""||bankCard==undefined||bankCard=="undefined"){
-            alert("卡号信息缺失不能复制！");
+            showMessage("卡号信息缺失不能复制！");
             return;
 		}
 
@@ -147,7 +149,7 @@
         document.execCommand("Copy"); // 执行浏览器复5261制4102命令
         oInput.className = 'oInput';
         oInput.style.display='none';
-        alert("复制成功!");
+        showMessage("复制成功!");
     }
 
 
@@ -166,7 +168,7 @@
             success: function (data) {
                 let code = data.resultCode;
                 if(code !== "0"){
-                    alert(data.message);
+                    showMessage(data.message);
                 }else {
                     let base64 = data.data.jsonData;
                     let base = new Base64();

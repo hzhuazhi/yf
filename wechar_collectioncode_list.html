@@ -13,6 +13,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
+    <link rel="stylesheet" href="css/toast.css">
+    <script src="js/toast.js"></script>
 </head>
 <body>
 <div class="page">
@@ -103,7 +105,7 @@
             success (data) {
                 let code = data.resultCode;
                 if(code !== "0"){
-                    alert(data.message);
+                    showMessage(data.message);
                 }else {
                     let base64 = data.data.jsonData;
                     let base = new Base64();
@@ -111,7 +113,7 @@
                     let rsDataJson = JSON.parse(rsData);
 
                     Callback(rsDataJson.dataList);
-//                        alert('保存成功!');
+//                        showMessage('保存成功!');
                 }
             },
         })
@@ -196,7 +198,7 @@
         }
 
         if(id==0||id==""){
-            alert("没有合适数据进行删除！");
+            showMessage("没有合适数据进行删除！");
             return;
         }
 
@@ -215,7 +217,7 @@
             success (data) {
                 let code = data.resultCode;
                 if(code !== "0"){
-                    alert(data.message);
+                    showMessage(data.message);
                 }else {
                     loadList();
                 }
@@ -226,7 +228,7 @@
     //操作保存按钮
     var updateInfn = function (id,wecharName) {
             if(wecharName.defaultValue==wecharName.value){
-                alert("该微信名没有进行修改，不能进行保存");
+                showMessage("该微信名没有进行修改，不能进行保存");
                 return;
             }
             let timestamp = Date.parse(new Date());
@@ -245,9 +247,9 @@
                 success (data) {
                     let code = data.resultCode;
                     if(code !== "0"){
-                        alert(data.message);
+                        showMessage(data.message);
                     }else {
-                        alert('保存成功!');
+                        showMessage('保存成功!');
                         let base64 = data.data.jsonData;
                         let base = new Base64();
                         let rsData= base.decode(base64);
@@ -281,8 +283,8 @@
             success (data) {
                 let code = data.resultCode;
                 if(code !== "0"){
-                    alert(data.code);
-                    alert(data.message);
+//                    showMessage(data.code);
+                    showMessage(data.message);
                 }else {
                     loadList();
                 }

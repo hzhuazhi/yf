@@ -82,6 +82,11 @@
 				<div class="img"  onclick="window.location.href='password.html'"><img class="item_img" src="img/order/six.svg" alt="" width="100%" height="100%"></div>
 				<span>修改密码</span>
 			</div>
+
+			<div class="item">
+				<div class="img"  onclick="signout()"><img class="item_img" src="img/order/six.svg" alt="" width="100%" height="100%"></div>
+				<span>退出登陆</span>
+			</div>
 		</div>
 	</div>
 </div>
@@ -107,6 +112,12 @@
     indexInit();
   })
 
+
+  function  signout(){
+      alert("确认退出吗！")
+      storage.setItem("yf_token","");
+      window.location.href='login.html'
+  }
   function  indexInit(){
 //        ${totalMoney'}.innerHTML="100";
 //        $("#totalMoney").html("11111");
@@ -127,7 +138,7 @@
       success (data) {
         let code = data.resultCode;
         if(code !== "0"){
-          alert(data.message);
+            showMessage(data.message);
         }else {
           let base64 = data.data.jsonData;
           let base = new Base64();

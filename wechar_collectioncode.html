@@ -43,7 +43,7 @@
 						<div class="upload active">
 							<div class="img">
 								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >
-									<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="excptions(1)" />
+									<input type="file"  hidden name="image" accept="image/*"  id="image" style="display:none;" onchange="excptions(1)" autofocus="autofocus"/>
 									<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()" id="mmQrCode"/>
 								</from>
 
@@ -52,7 +52,7 @@
 								</div>
 
 								<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >
-									<input type="file" hidden name="image1" id="image1" style="display:none;width:1px; " onchange="excptions(2)" />
+									<input type="file" hidden name="image1" id="image1" style="display:none;width:1px; "  onchange="excptions(2)"  accept="image/*"  />
 									<input type="text" hidden name="path1" id="path1" onfocus="jQuery('#image1').click()"  id="wxQrCodeAds"/>
 								</from>
 								<div   style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center" onclick="jQuery('#image1').click()">
@@ -108,11 +108,13 @@
 			}
 
             $("#btn_sava").click(function () {
-//				alert(1);
-				alert("======"+publicMap.get("agtVer"));
+//
 //				let  mmQrCode ="http://www.baidu.com";//暂时没有获取七牛云地址
 //				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
 
+				if(mmQrCode==""){
+
+				}else
                 let payee = $("#payee").val();
                 let acType = 1;
                 let businessType = 1;
@@ -136,9 +138,9 @@
                     success (data) {
                         let code = data.resultCode;
                         if(code !== "0"){
-                            alert(data.message);
+                            showMessage(data.message);
                         }else {
-                       		 alert('保存成功!');
+                            showMessage('保存成功!');
                             cleanfrom();
                         }
                     },
@@ -183,7 +185,7 @@
                  success: function (data) {
                      let code = data.resultCode;
                      if (code !== "0") {
-                         alert(data.message);
+                         showMessage(data.message);
                      } else {
                          let base64 = data.data.jsonData;
                          let base = new Base64();

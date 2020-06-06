@@ -13,6 +13,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
+    <link rel="stylesheet" href="css/toast.css">
+    <script src="js/toast.js"></script>
     <style>
         .h_wrap {
             background-color: rgb(247, 244, 242);
@@ -214,7 +216,7 @@
               success (data) {
                   let code = data.resultCode;
                   if(code !== "0"){
-                      alert(data.message);
+                      showMessage(data.message);
                   }else {
                       let base64 = data.data.jsonData;
                       let base = new Base64();
@@ -255,7 +257,7 @@
               success (data) {
                   let code = data.resultCode;
                   if(code !== "0"){
-                      alert(data.message);
+                      showMessage(data.message);
                   }else {
                       let base64 = data.data.jsonData;
                       let base = new Base64();

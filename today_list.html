@@ -12,6 +12,8 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/base64.js"></script>
 	<script src="js/API.js"></script>
+	<link rel="stylesheet" href="css/toast.css">
+	<script src="js/toast.js"></script>
 </head>
 <style>
 	html, body {
@@ -180,7 +182,7 @@
                 success(data) {
                     let code = data.resultCode;
                     if (code !== "0") {
-                        alert(data.message);
+                        showMessage(data.message);
                     } else {
 
                         let base64 = data.data.jsonData;

@@ -6,10 +6,13 @@
     <title>登陆</title>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/toast.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
+    <link rel="stylesheet" href="css/toast.css">
+    <script src="js/toast.js"></script>
     <style>
         *{
             padding: 0px;
@@ -74,11 +77,19 @@
     </div>
 </body>
 <script>
+
     $(function () {
 
         // 注册接口调试
+//        alert(1);
+//        showMessage("登陆失败！");
+//        return;
 
+//        alert(storage.getItem("yf_token"));
 
+        if(storage.getItem("yf_token")!=""){
+            window.location.href='homepage.html'
+        }
         $("#passWd").keyup(function(event){
             if(event.keyCode ==13){
                 savaLogin();
@@ -91,15 +102,14 @@
             let timestamp = Date.parse(new Date());
 
             if(acNum === ""){
-                alert('请输入手机号!');
+                showMessage('请输入手机号!');
                 return;
             }
             if(passWd === ""){
-                alert('请输入登录密码!');
+                showMessage('请输入登录密码!');
                 return;
             }
             let base64 = `{"acNum": "${acNum}","passWd": "${passWd}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            console.log(base64);
             let base = new Base64();
             let result = base.encode(base64);
             let jsonData = JSON.stringify({"jsonData":result});
@@ -115,9 +125,9 @@
                 success (data) {
                     let zhuangtai = data.resultCode;
                     if(zhuangtai !== "0"){
-                        alert(data.message);
+                        showMessage(data.message);
                     }else {
-//                        alert('登录成功!');
+//                        showMessage('登录成功!');
                         let base64 = data.data.jsonData;
                         let base = new Base64();
                         let result2 = base.decode(base64);

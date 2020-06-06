@@ -10,6 +10,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
+    <link rel="stylesheet" href="css/toast.css">
+    <script src="js/toast.js"></script>
     <style>
         .zhuce{
             padding: 5rem 2rem;
@@ -49,7 +51,7 @@
             <i class="fa fa-phone"></i>
         </div>
         <div class="input">
-            <input style="width: 66%;" disabled="disabled" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="4" type="text" id="vcode" placeholder="请输入验证码">
+            <input style="width: 66%;"  oninput = "value=value.replace(/[^\d]/g,'')" maxlength="4" type="text" id="vcode" placeholder="请输入验证码">
             <button id="yanzhengma" style="line-height: 2.5; border: 1px solid #eee; background-color: #39af34; color: #fff; border-radius: 4px;">获取验证码</button>
             <i class=" glyphicon glyphicon-random"></i>
         </div>
@@ -89,32 +91,32 @@
             let operateWd = $("#operateWd").val();
             let timestamp = Date.parse(new Date());
             if(nickname === ""){
-                alert('请输入账号昵称!');
+                showMessage('请输入账号昵称!');
                 return;
             }
             if(acNum === ""){
-                alert('请输入手机号!');
+                showMessage('请输入手机号!');
                 return;
             }
             if(passWd === ""){
-                alert('请输入登录密码!');
+                showMessage('请输入登录密码!');
                 return;
             }
             if (passWd.length < 6) {
-                alert('对不起，您的密码小于六位!');
+                showMessage('对不起，您的密码小于六位!');
                 $("#passWd").val("");
                 return;
             }
             if(icode === ""){
-                alert('请输入邀请码!');
+                showMessage('请输入邀请码!');
                 return;
             }
             if(vcode === "") {
-                alert('请输入验证码!');
+                showMessage('请输入验证码!');
                 return;
             }
             if(operateWd === "") {
-                alert('请输入操作密码!');
+                showMessage('请输入操作密码!');
                 return;
             }
             let base64 = `{"nickname": "${nickname}","acNum": "${acNum}","passWd": "${passWd}","icode": "${icode}","vcode": "${vcode}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp},"operateWd": "${operateWd}"}`;
@@ -133,9 +135,9 @@
                 success (data) {
                     let zhuangtai = data.resultCode;
                     if(zhuangtai !== "0"){
-                        alert(data.message);
+                        showMessage(data.message);
                     }else {
-                        alert('注册成功!');
+                        showMessage('注册成功!');
                         window.location.href='login.html'
                     }
                 },

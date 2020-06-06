@@ -12,6 +12,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
+    <link rel="stylesheet" href="css/toast.css">
+    <script src="js/toast.js"></script>
     <style>
         .tabs-underline1 {
             /*padding: 30px;*/
@@ -199,7 +201,7 @@
               success (data) {
                   let code = data.resultCode;
                   if(code !== "0"){
-                      alert(data.message);
+                      showMessage(data.message);
                   }else {
                       let base64 = data.data.jsonData;
                       let base = new Base64();
@@ -269,7 +271,7 @@
           success (data) {
               let code = data.resultCode;
               if(code !== "0"){
-                  alert(data.message);
+                  showMessage(data.message);
               }else {
                   let base64 = data.data.jsonData;
                   let base = new Base64();
@@ -307,7 +309,7 @@
       tabs.on('click', function (e) {
            e.preventDefault();
            let index = $(this).data('index');
-//           alert(index+1);
+//           showMessage(index+1);
           queryRechargeList(index+1);
            tabs.removeClass('tab-active1');
            content.removeClass('tab-content-active1');
