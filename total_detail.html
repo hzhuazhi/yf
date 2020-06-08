@@ -216,7 +216,7 @@
 
 
       function   Callback(data){
-          console.log(data);
+//          console.log(data);
           if(data.length!=0){
               $("#totalRechargeProfit").html("￥"+data.totalRechargeProfit);
               $("#totalGradeProfit").html("￥"+data.totalGradeProfit);
@@ -294,7 +294,7 @@
           }
 
           html+="<section class=\"h_item\">"+data[i].curday+""+data[i].curhour+""+data[i].curminute+"</section>";
-          html+="<section class=\"h_item\">"+data[i].money+"</section>";
+          html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
           html+="</section>";
       }
       html+="</div>";

@@ -185,7 +185,8 @@
         } else {
           divHtml += "<div class=\"item3\" >未知</div>";
         }
-        divHtml += "<div class=\"item4\" >" + data[i].orderMoney + "</div>";
+//          Number(data[i].orderMoney.toString().match(/^\d+(?:\.\d{0,2})?/));
+          divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
         divHtml += "</div>";
       }
 

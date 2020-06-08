@@ -14,6 +14,8 @@
 	<script src="js/base64.js"></script>
 	<script src="js/API.js"></script>
 	<script src="js/toast.js"></script>
+	<script src="js/analyticCode.js"></script>
+	<script src="js/llqrcode.js"></script>
 </head>
 <body>
 	<div class="page">
@@ -62,6 +64,7 @@
 								</div>
 							</div>
 
+							<input type="hidden" id="wxAdd" />
 							<div class="input">
 								<span>微&nbsp;&nbsp;信&nbsp;&nbsp;名:</span>
 								<input type="" id="payee" placeholder="请输入微信名"/>
@@ -88,21 +91,23 @@
 					</div>
 				</div>
 				<div class="jieshi">
-					<p>* 1.收款码请务必添加一张不设置金额的通用二维码，通用二维码支持个人码,商用码，聚合码</p>
-					<p>* 2.同一微信收款码切勿重复上传，若造成金额损失，平台概不负责</p>
-					<p>* 3.为提高成功率，连续收款失败四次及以上，系统将自动删除对应二维码，请及时检查</p>
+					<p>* 1.收款码请务必添加一张不设置金额的通用二维码，通用二维码支持个人码,个体工商户</p>
+					<p>* 2.微信名一定要和上传的微信名保持一致,名称不能有符号和表情,使用期间不能修改微信名称,如果修改造成金额损失，平台概不负责</p>
+					<p>* 3.同一微信收款码切勿重复上传，若造成金额损失，平台概不负责</p>
+					<p>* 4.为提高成功率，连续收款失败四次及以上，系统将自动删除对应二维码，请及时检查</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
+	     let  errorCode ="error decoding QR Code";
    		 let  mmQrCode ="";
    		 let  wxQrCodeAds ="";
 //         $('#imgwechar').attr("src", "https://t11.baidu.com/it/u=3989969920,3929699066&fm=76");
         $(function(){
             $(".back").on('click', function()  {
-                window.location.href='homepage.html';
+                window.location.href='wechar_wallet.html';
             });
 
             if(null==storage.getItem("yf_token")||storage.getItem("yf_token")==""){
@@ -113,19 +118,27 @@
 //
 //				let  mmQrCode ="http://www.baidu.com";//暂时没有获取七牛云地址
 //				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
-
-				if(mmQrCode==""){
-                    showMessage('保存成功!');
-				}else{
-                    showMessage('保存成功!');
-				}
-//                let payee = $("#payee").val();
                 let acType = 1;
                 let businessType = 1;
                 let acNum = $("#acNum").val();
                 let acName = $("#acName").val();
                 let password = $("#password").val();
+                let wxAdd = $("#wxAdd").val();
                 let timestamp = Date.parse(new Date());
+				if(mmQrCode==""){
+                    showMessage('微信二维码不能为空！');
+                    return;
+				}else if(wxQrCodeAds==""){
+                    showMessage('小微二维码不能为空！');
+                    return;
+				}else if(acNum==""){
+                    showMessage('微信名不能为空！');
+                    return;
+				}else if(password==""){
+                    showMessage('安全密码不能为空！');
+                    return;
+                }
+//                let payee = $("#payee").val();
 
                 let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
                 console.log("参数："+base64);
@@ -166,18 +179,69 @@
 
         })
 
+         var getObjectURL = function(file){
 
+             var url = null ;
+
+             if (window.createObjectURL!=undefined) { // basic
+
+                 url = window.createObjectURL(file) ;
+
+             } else if (window.URL!=undefined) { // mozilla(firefox)
+
+                 url = window.URL.createObjectURL(file) ;
+
+             } else if (window.webkitURL!=undefined) { // webkit or chrome
+
+                 url = window.webkitURL.createObjectURL(file) ;
+
+             }
+
+             return url ;
+
+         }
 
 
          function excptions(type) {
-            debugger;
+             let  url ="";
              var formData = new FormData();
               if(type==1){
                   formData.append("image", $("#image").get(0).files[0]);
+                  url =getObjectURL($("#image").get(0).files[0]);
 			  }else if(type==2){
                   formData.append("image", $("#image1").get(0).files[0]);
+                  url =getObjectURL($("#image1").get(0).files);
 			  }
 
+             analyticCode.getUrl('file-url',$("#image").get(0),function(url1,url2){
+                 if(url1==errorCode){
+                     showMessage("请上传正确的二维码！");
+                     return;
+				 }else{
+                     $("#wxAdd").val(url1);
+				 }
+             });
+
+//             let    qrcodeIntn =document.getElementById("qrcode");
+//             var qrcode = new QRCode(qrcodeIntn, {
+//                 width : 200,//设置宽高
+//                 height : 200
+//             });
+//             qrcode.decode(url);
+//             qrcode.callback = function(imgMsg){
+//                 fn(imgMsg,url);
+//             }
+
+
+//             qrcode.decode(url);
+//
+//             qrcode.callback = function(imgMsg){
+//                 console.log("imgMsg",imgMsg);
+//             }
+
+ 
+
+			  return;
              $.ajax({
                  url: API + '/fine/stg/qiniuUpload',
                  type: 'POST',
