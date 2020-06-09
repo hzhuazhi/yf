@@ -69,6 +69,7 @@
         <div class="item2">时间</div>
         <div class="item3">类型</div>
         <div class="item4">金额</div>
+        <!--<div class="item4">操作</div>-->
     </div>
     <div id="divData" style="margin-right: 10px"></div>
     <!--<div class="contant order_con">-->
@@ -150,7 +151,7 @@
               onDataCallBack();
               return;
             }
-            Callback(rsDataJson.dataList);
+            Callback(rsDataJson.dataList,type);
           }
         }
       })
@@ -167,7 +168,7 @@
       $("#divData").html(divHtml);
     }
 
-    function Callback(data) {
+    function Callback(data,type) {
       let divHtml = "";
       for (let i = 0; i < data.length; i++) {
         divHtml += "<div  style=\"display: flex; justify-content: center;\">";
@@ -187,6 +188,13 @@
         }
 //          Number(data[i].orderMoney.toString().match(/^\d+(?:\.\d{0,2})?/));
           divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
+//        if(type!=2){
+//            divHtml += "<div class=\"item4\" > 无 </div>";
+//        }else{
+//            let   appealUrl="invest_abnormal.html?orderNo="+data[i].orderNo;
+////            divHtml += "<div class=\"item4\" ><a src=''  onclick=\"appealHerf('"+appealUrl+"')\">申诉</a></div>";
+//        }
+
         divHtml += "</div>";
       }
 
@@ -195,6 +203,11 @@
     }
 
 
+
   })
+
+  function appealHerf(url){
+      window.location.href=url;
+  }
 </script>
 </html>

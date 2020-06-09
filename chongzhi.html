@@ -4,71 +4,458 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>充值</title>
+	<title>订单记录</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/css.css">
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base64.js"></script>
+	<script src="js/API.js"></script>
+	<link rel="stylesheet" href="css/toast.css">
+	<script src="js/toast.js"></script>
 </head>
-<body class="chongzhi">
-	<div class="page">
-		<header>
-			<div class="back">
-				<i class="fa fa-angle-left"></i>
+<style>
+	.tabs-underline1 {
+		/*padding: 30px;*/
+		padding-left: 0;
+		padding-top: 20px;
+	}
+
+	/* The content */
+	.tabs-underline1 .tabs-content-placeholder1 {
+		font-weight: normal;
+	}
+
+	.tabs-underline1 .tabs-content-placeholder1 div {
+		display: none;
+	}
+
+	.tabs-underline1 .tabs-content-placeholder1 div.tab-content-active1 {
+		display: block;
+	}
+
+	.tabs-underline1 .tabs-content-placeholder1 div p {
+		color: #565a5c;
+		line-height: 1.5;
+		text-align: left;
+		margin: 5px 0 20px;
+	}
+
+	/*The tab*/
+	.tabs-underline1 ul {
+		list-style: none;
+		text-align: left;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	.tabs-underline1 ul li {
+		display: inline-block;
+		width: 32.5%;
+		text-align: center;
+	}
+
+	.tabs-underline1 ul li a {
+		display: block;
+		text-decoration: none;
+		font-size: 16px;
+		color: #2B3039;
+		padding-bottom: 5px;
+	}
+
+	.tabs-underline1 ul li a.tab-active1 {
+		font-size: 16px;
+		color: #FF4D43;
+		border-bottom: 2px solid #FF4D43;
+	}
+
+	/*-------------*/
+	.h_border {
+		display: flex;
+		background-color: rgb(220, 93, 71);;
+		height: 12rem;
+		margin: 60px 10px 10px 10px;
+		border-radius: 1rem;
+		text-align: center;
+	}
+
+	.h_border_item {
+		flex: 1;
+		margin: 5px 0 5px 0;
+		border-right: 1px solid white;
+		color:white;
+	}
+	.h_border_item>h5{
+		margin: 20px 0 30px 0;
+	}
+	.h_tab{
+		width: 33rem;
+		height: 12rem;
+		margin:0 auto;
+	}
+	.h_wrap{
+		display: flex;
+		text-align: center;
+	}
+	.h_item{
+		flex: 1;
+		margin-bottom: 10px;
+	}
+</style>
+<body>
+<div class="h_tab">
+	<div class="tabs-underline1">
+		<ul>
+			<li>
+				<a class="tab-active1" data-index="1" href="#" id="data0">发起订单</a>
+			</li>
+			<li>
+				<a data-index="2" href="#" id="data1">超时订单</a>
+			</li>
+			<li>
+				<a data-index="3" href="#" id="data2">成功订单</a>
+			</li>
+			<li>
+				<a data-index="-1" href="#" id="data3">申诉订单</a>
+			</li>
+		</ul>
+		<div class="tabs-content-placeholder1">
+			<div class="tab-content-active1">
+				<section class="h_wrap" >
+					<section class="h_item">订单号</section>
+					<section class="h_item">时间</section>
+					<section class="h_item">类型</section>
+					<section class="h_item">金额</section>
+				</section>
 			</div>
-			<p>充值</p>
-			<span></span>
-		</header>
-		<div class="empty"></div>
-		<div class="chongzhi">
-			<div class="choose_bank">
-				<div class="img">
-					<i class="fa fa-bank"></i>
-				</div>
-				<select>
-					<option value="">
-						交通银行
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						尾号5029
-					</option>
-				</select>
+			<div>
+				<section class="h_wrap">
+					<section class="h_item">订单号</section>
+					<section class="h_item">时间</section>
+					<section class="h_item">类型</section>
+					<section class="h_item">金额</section>
+					<section class="h_item">操作</section>
+				</section>
 			</div>
-			<div class="copy">
-				<div class="png">
-					<p>收款户名: 王玉娟</p>
-					<p>收款银行: 交通银行</p>
-					<p>开户支行: 唐山高新技术开发区支行</p>
-					<p>收款账号: 000000000000000</p>
-				</div>
-				<p>点击任意一行文字可复制</p>
+			<div>
+				<section class="h_wrap">
+					<section class="h_item">订单号</section>
+					<section class="h_item">发起时间</section>
+					<section class="h_item">类型</section>
+					<section class="h_item">金额</section>
+				</section>
 			</div>
-			<div class="input">
-				<div class="item">
-					<span>充值金额:</span>
-					<!-- <input type="text" placeholder="最小充值金额2000.0元"> -->
-					<select>
-						<option value="">2000</option>
-						<option value="">3000</option>
-					</select>
-				</div>
-				<div class="item">
-					<span>转账户名:</span>
-					<input type="text" placeholder="请输入真实姓名">
-				</div>
-				<div class="item">
-					<span>银行卡后四位数:</span>
-					<input type="text" placeholder="请输入四位数">
-				</div>
-				<div class="btn1">
-					<button>确认充值</button>
-				</div>
+			<div>
+				<section class="h_wrap">
+					<section class="h_item">订单号</section>
+					<section class="h_item">时间</section>
+					<section class="h_item">类型</section>
+					<section class="h_item">失败原因</section>
+					<section class="h_item">金额</section>
+				</section>
 			</div>
 		</div>
+		<div id="divData">
+			<!--<section class="h_wrap">-->
+			<!--<section class="h_item">用户昵称</section>-->
+			<!--<section class="h_item">发起时间</section>-->
+			<!--<section class="h_item">奖励金额</section>-->
+			<!--</section>-->
+		</div>
 	</div>
+</div>
 </body>
 <script type="text/javascript">
-	let copy = $('.chongzhi .copy .png p');
+    $(function () {
+        $(".back").on('click', function () {
+            window.location.href = 'my.html';
+        });
+
+//        queryOrdeyList(1);
+        let widget = $('.tabs-underline1');
+        let tabs = widget.find('ul a'),
+			content = widget.find('.tabs-content-placeholder1 > div');
+        tabs.on('click', function (e) {
+            e.preventDefault();
+            let index = $(this).data('index');
+           showMessage(index);
+//            queryOrdeyList(index);
+            tabs.removeClass('tab-active1');
+            content.removeClass('tab-content-active1');
+            $(this).addClass('tab-active1');
+            content.eq(index).addClass('tab-content-active1');
+        });
+
+        $(function () {
+            $(".back").on('click', function () {
+                history.back(-1);
+            });
+        })
+
+
+        function queryOrdeyList(type) {
+            let beginTime = new Date();
+
+            let todayTime = "";
+            let month = "";
+            let day = "";
+
+            if (beginTime.getMonth().toString().length = 1) {
+                month = "0" + (beginTime.getMonth() + 1);
+            } else {
+                month = (beginTime.getMonth() + 1);
+            }
+
+            if (beginTime.getDate().toString().length = 1) {
+                day = "0" + beginTime.getDate().toString();
+            } else {
+                day = beginTime.getDate().toString();
+            }
+            todayTime = beginTime.getFullYear() + month + day;
+
+            let timestamp = Date.parse(new Date());
+            if(type==4){
+                type=-1;
+			}
+//            let base64 = `{"token": "111111","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            let base64 = `{"token": "111111","orderStatus": ${type},"curdayStart": 20200609,"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            console.log("参数：" + base64);
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData": result});
+            $.ajax({
+                url: API + '/fine/recharge/getDataList',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                data: jsonData,
+                // 成功执行
+                success(data) {
+                    let code = data.resultCode;
+                    if (code !== "0") {
+                        showMessage(data.message);
+                    } else {
+//                        debugger
+                        let base64 = data.data.jsonData;
+                        let base = new Base64();
+                        let rsData = base.decode(base64);
+                        let rsDataJson = JSON.parse(rsData);
+                        if (rsDataJson.dataList == undefined||rsDataJson.dataList =="undefined") {
+                            onDataCallBack();
+                            return;
+                        }
+                        if(type==1){
+                            callbackType1(rsDataJson.dataList);
+						}else if(type==2){
+                            callbackType2(rsDataJson.dataList);
+						}else if(type==3){
+                            callbackType3(rsDataJson.dataList);
+						}else if(type==-1){
+                            callbackType4(rsDataJson.dataList);
+						}
+
+//                        debugger;
+//                        if (rsDataJson.dataList == undefined||rsDataJson.dataList =="undefined") {
+//                            onDataCallBack();
+//                            return;
+//                        }
+//                        Callback(rsDataJson.dataList,type);
+                    }
+                }
+            })
+        }
+
+        function onDataCallBack() {
+            let divHtml = "";
+            divHtml += "<div class=\"contant order_con\">";
+            divHtml += "<div class=\"data_null active\">";
+            divHtml += "<img src=\"./img/demo.jpg\" alt=\"\">";
+            divHtml += "<p>暂无数据</p>";
+            divHtml += "</div>";
+            divHtml += "</div>";
+            $("#divData").html(divHtml);
+        }
+
+
+
+        function callbackType1(data,type){
+            let   html ="<div id=\"divData\">";
+            for(let  i=0;i<data.length;i++){
+                html+="<section class=\"h_wrap\">";
+                html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+                html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
+                html+="<section class=\"h_item\">初始化</section>";
+                html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+                html+="</section>";
+            }
+            html+="</div>";
+            $("#divData").html(html);
+        }
+
+
+//        function callbackType1(data) {
+//            let divHtml = '<div style="display:flex;width: 94%;margin: 20px auto 0">';
+//					 divHtml+= '<div class="item1">订单号</div>';
+//					 divHtml+= '<div class="item2">时间</div>';
+//					 divHtml+= '<div class="item3">类型</div>';
+//					 divHtml+= '<div class="item4">金额</div>';
+//				 divHtml+= '</div>';
+//            for (let i = 0; i < data.length; i++) {
+//                divHtml +='<div  style="display: flex; justify-content: center;">';
+//					divHtml += '<div class="item1" >'+ data[i].orderNo.substr(0, 10) +'</div>';
+//					divHtml += '<div class="item2" >' + data[i].curday + "" + data[i].curhour  + '</div>';
+//					divHtml += '<div class="item3" >初始化</div>';
+//					divHtml += '<div class="item4" >' +  returnFloat(data[i].orderMoney) +'</div>';
+//                divHtml += '</div>';
+//            }
+//            //缺少汇总
+//            $("#divData").html(divHtml);
+//        }
+
+
+
+
+
+        function callbackType2(data,type){
+            let   html ="<div id=\"divData\">";
+            for(let  i=0;i<data.length;i++){
+                html+="<section class=\"h_wrap\">";
+					html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+					html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
+					html+="<section class=\"h_item\">初始化</section>";
+					html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+					let   appealUrl="invest_abnormal.html?orderNo="+data[i].orderNo;
+					html+="<section class=\"h_item\"><a src=''  onclick=\"appealHerf('"+appealUrl+"')\">申诉</a></section>";
+                html+="</section>";
+            }
+            html+="</div>";
+            $("#divData").html(html);
+        }
+
+
+//        function callbackType2(data) {
+//            let divHtml = '<div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">';
+//					divHtml+= '<div class="item1">订单号</div>';
+//					divHtml+= '<div class="item2">时间</div>';
+//					divHtml+= '<div class="item3">类型</div>';
+//					divHtml+= '<div class="item4">金额</div>';
+//					divHtml+= '<div class="item4">操作</div>';
+//				divHtml+= "</div>";
+//            for (let i = 0; i < data.length; i++) {
+//                divHtml += "<div  style=\"display: flex; justify-content: center;\">";
+////                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
+//					divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 10) + "</div>";
+//					divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour  + "</div>";
+//					divHtml += "<div class=\"item3\" >超时</div>";
+//					divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
+//					let   appealUrl="invest_abnormal.html?orderNo="+data[i].orderNo;
+//					divHtml += "<div class=\"item4\" ><a src=''  onclick=\"appealHerf('"+appealUrl+"')\">申诉</a></div>";
+//                divHtml += "</div>";
+//            }
+//            //缺少汇总
+//            $("#demo").html(divHtml);
+//        }
+
+
+        function callbackType3(data,type){
+            let   html ="<div id=\"divData\">";
+            for(let  i=0;i<data.length;i++){
+                html+="<section class=\"h_wrap\">";
+					html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+					html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
+					html+="<section class=\"h_item\">成功</section>";
+					html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+                html+="</section>";
+            }
+            html+="</div>";
+            $("#divData").html(html);
+        }
+
+//        function callbackType3(data) {
+//            let divHtml = '<div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">';
+//            divHtml+= '<div class="item1">订单号</div>';
+//            divHtml+= '<div class="item2">时间</div>';
+//            divHtml+= '<div class="item3">类型</div>';
+//            divHtml+= '<div class="item4">金额</div>';
+//            divHtml+= "</div>";
+//            for (let i = 0; i < data.length; i++) {
+//                divHtml += "<div  style=\"display: flex; justify-content: center;\">";
+////                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
+//                divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 10) + "</div>";
+//                divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour  + "</div>";
+//                divHtml += "<div class=\"item3\" >成功</div>";
+//                divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
+//                divHtml += "</div>";
+//            }
+//            //缺少汇总
+//            $("#demo").html(divHtml);
+//        }
+
+        function callbackType4(data,type){
+            let   html ="<div id=\"divData\">";
+            for(let  i=0;i<data.length;i++){
+                html+="<section class=\"h_wrap\">";
+                html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+                html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
+                if(data[i].appealStatus==1){
+                    html+="<section class=\"h_item\">初始化</section>";
+				}else if(data[i].appealStatus==2){
+                    html+="<section class=\"h_item\">申诉中</section>";
+				}else if(data[i].appealStatus==3){
+                    html+="<section class=\"h_item\">申诉失败</section>";
+                }else if(data[i].appealStatus==4){
+                    html+="<section class=\"h_item\">申诉成功</section>";
+                }
+                html+="<section class=\"h_item\">" + data[i].appealOrigin + "</section>";
+                html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+                html+="</section>";
+            }
+            html+="</div>";
+            $("#divData").html(html);
+        }
+
+//        function callbackType4(data) {
+//            let divHtml = '<div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">';
+//            divHtml+= '<div class="item1">订单号</div>';
+//            divHtml+= '<div class="item2">时间</div>';
+//            divHtml+= '<div class="item3">类型</div>';
+//            divHtml+= '<div class="item4">失败原因</div>';
+//            divHtml+= '<div class="item4">金额</div>';
+//            divHtml+= "</div>";
+//            for (let i = 0; i < data.length; i++) {
+//                divHtml += "<div  style=\"display: flex; justify-content: center;\">";
+////                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
+//                divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 10) + "</div>";
+//                divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour  + "</div>";
+//                if(data[i].appealStatus==1){
+//                    divHtml += "<div class=\"item3\" >初始化</div>";
+//				}else if(data[i].appealStatus==2){
+//                    divHtml += "<div class=\"item3\" >申诉中</div>";
+//				}else if(data[i].appealStatus==3){
+//                    divHtml += "<div class=\"item3\" >申诉失败</div>";
+//                }else if(data[i].appealStatus==4){
+//                    divHtml += "<div class=\"item3\" >申诉成功</div>";
+//                }
+//                divHtml += "<div class=\"item4\" >" + data[i].appealOrigin + "</div>";
+//                divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
+//                divHtml += "</div>";
+//            }
+//            //缺少汇总
+//            $("#demo").html(divHtml);
+//        }
+
+
+
+
+
+
+
+    })
+
+    function appealHerf(url){
+        window.location.href=url;
+    }
 </script>
 </html>
