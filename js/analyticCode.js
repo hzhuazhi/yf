@@ -24,7 +24,6 @@
             }else if(type === 'file-url' && elem.files.length > 0){
                 url = getObjectURL(elem.files[0]);
             }
-            alert(url);
             qrcode.decode(url);
             qrcode.callback = function(imgMsg){
                 fn(imgMsg,url);

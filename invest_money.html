@@ -60,6 +60,8 @@
 					<!--<p>充值金额: xxxx 元</p>-->
 					<!--<p>匹配金额: xxxx 元 <span style="color: #c91e1c;size: 50px">  &nbsp;&nbsp;&nbsp;   ***要按照这个金额充值</span> </p>-->
 				</div>
+
+				<!--<div><span style="color: #c91e1c;size: 50px">  请按照"匹配金额" 进行充值，导致账号充值不成功的损失，平台概不负责。</span></div>-->
 			</div>
 			<div class="input">
 
@@ -107,7 +109,6 @@
 
 		function  queryList() {
             let timestamp = Date.parse(new Date());
-//            let base64 = `{"token": "111111","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             let base64 = `{"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             let base = new Base64();
@@ -175,6 +176,7 @@
 
 
     })
+
 
 //    let copy = $('.chongzhi .copy .png p');
 </script>

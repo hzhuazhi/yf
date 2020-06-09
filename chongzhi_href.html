@@ -54,24 +54,24 @@
 
 			<!--</div>-->
 			<div class="input">
-				<div class="upload_img">
-                    <h4>提交异常图片</h4>
-                    <div class="img">
-						<img src=""  style="display: flex;justify-content: center;align-items: center;height: 24rem;text-align: center"  onclick="jQuery('#image').click()" />
+				<!--<div class="upload_img">-->
+                    <!--<h4>提交异常图片</h4>-->
+                    <!--<div class="img">-->
+						<!--<img src=""  style="display: flex;justify-content: center;align-items: center;height: 24rem;text-align: center"  onclick="jQuery('#image').click()" />-->
 
-						<!--<div id="mmQrCode" onclick="jQuery('#image').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">-->
-							<!--<div style="height: 3rem;line-height: 3rem">上传异常信息</div>-->
-							<!--&lt;!&ndash;<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>&ndash;&gt;-->
-						<!--</div>-->
-                    </div>
-					<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">
-						<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="excptionImage()" />
-						<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>
-					</from>
-                </div>
+						<!--&lt;!&ndash;<div id="mmQrCode" onclick="jQuery('#image').click()" style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center">&ndash;&gt;-->
+							<!--&lt;!&ndash;<div style="height: 3rem;line-height: 3rem">上传异常信息</div>&ndash;&gt;-->
+							<!--&lt;!&ndash;&lt;!&ndash;<button type="submit"  onclick="jQuery('#image').click()">上传微信收款</button>&ndash;&gt;&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+					<!--<from  id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">-->
+						<!--<input type="file"  hidden name="image" accept="image/*" id="image" style="display:none;" onchange="excptionImage()" />-->
+						<!--<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>-->
+					<!--</from>-->
+                <!--</div>-->
 
 				<div class="btn1">
-					<button>提交</button>
+					<button>确认充值提交</button>
 				</div>
 			</div>
 		</div>
@@ -93,12 +93,22 @@
             $(".back").on('click', function()  {
                 history.back(-1);
             });
+
+
+            $(".btn1").on('click', function()  {
+                showMessage('提交成功，请等待管理员审核！');
+                return;
+            });
         })
 
 
 		function queryBankInfo(money) {
+            if(storage.getItem("yf_token")==""){
+                showMessage('token 失效，请重新登陆！');
+                signout();
+			}
             let timestamp = Date.parse(new Date());
-            let base64 = `{"token": "111111","orderMoney":"${money}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            let base64 = `{"token": "${storage.getItem("yf_token")}","orderMoney":"${money}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             console.log("参数："+base64);
             let base = new Base64();
@@ -113,6 +123,11 @@
                 // 成功执行
                 success (data) {
                     let code = data.resultCode;
+                    if(code==-1){
+                        showMessage('token 失效，请重新登陆！');
+                        storage.setItem("yf_token","");
+                        signout();
+                    }
                     if(code !== "0"){
                         showMessage(data.message);
                     }else {
@@ -172,6 +187,11 @@
 			processData: false,    //
             success: function (data) {
                 let code = data.resultCode;
+                if(code==-1){
+                    showMessage('token 失效，请重新登陆！');
+                    storage.setItem("yf_token","");
+                    signout();
+                }
                 if(code !== "0"){
                     showMessage(data.message);
                 }else {
@@ -184,9 +204,7 @@
                 }
 			}
 
-
         });
-
     }
 
 //    let copy = $('.chongzhi .copy .png p');

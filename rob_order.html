@@ -231,8 +231,12 @@
       queryTeamInfo();
 
       function queryUserInfo(){
+          if(storage.getItem("yf_token")==""){
+              showMessage('token 失效，请重新登陆！');
+              signout();
+          }
           let timestamp = Date.parse(new Date());
-          let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+          let base64 = `{"token": "${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
 //	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
           console.log("参数："+base64);
           let base = new Base64();
@@ -263,17 +267,23 @@
 
 
       function   Callback(data){
-          console.log(data);
           if(data.length!=0){
               $("#totalDirectNum").html("￥"+data.totalRechargeProfit);
               $("#totalDirectProfit").html("￥"+data.totalGradeProfit);
+          }else{
+              $("#totalDirectNum").html("￥ 0");
+              $("#totalDirectProfit").html("￥ 0");
           }
       }
 
 
       function queryTeamInfo(){
+          if(storage.getItem("yf_token")==""){
+              showMessage('token 失效，请重新登陆！');
+              signout();
+          }
           let timestamp = Date.parse(new Date());
-          let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+          let base64 = `{"token": "${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
 //	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
           console.log("参数："+base64);
           let base = new Base64();

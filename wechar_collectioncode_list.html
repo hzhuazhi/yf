@@ -94,54 +94,54 @@
                             <th width="20%">开启状态</th>
                             <th width="20%">操作</th>
                         </tr>
-                        <tr>
-                            <td><input class="h_name" type="text" size="8" value="11111"></td>
-                            <td title="actName1"><span class="h_nameTwo">actName1</span></td>
-                            <td title="通过" class="h_status">通过</td>
-                            <td>
-                                <label class="bui-switch-label bui-switch-anim">
-                                <input type="checkbox" name="s" checked /><i class="bui-switch"></i>
+                        <!--<tr>-->
+                            <!--<td><input class="h_name" type="text" size="8" value="11111"></td>-->
+                            <!--<td title="actName1"><span class="h_nameTwo">actName1</span></td>-->
+                            <!--<td title="通过" class="h_status">通过</td>-->
+                            <!--<td>-->
+                                <!--<label class="bui-switch-label bui-switch-anim">-->
+                                <!--<input type="checkbox" name="s" checked /><i class="bui-switch"></i>-->
 
-                            </td>
-                            <td>
-                                <span class="h_opt">
-                                <i class="glyphicon glyphicon-check"></i>
-                                <i class="glyphicon glyphicon-remove"></i>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input class="h_name" type="text" size="8"></td>
-                            <td><span class="h_nameTwo">actName1</span></td>
-                            <td class="h_status">通过</td>
-                            <td>
-                                <label class="bui-switch-label bui-switch-anim">
-                                    <input type="checkbox" name="s" checked /><i class="bui-switch"></i>
-                                </label>
-                            </td>
-                            <td>
-                                <span class="h_opt">
-                                <i class="glyphicon glyphicon-check"></i>
-                                <i class="glyphicon glyphicon-remove"></i>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input class="h_name" type="text" size="8"></td>
-                            <td title="actName1"><span class="h_nameTwo">actName1</span></td>
-                            <td title="待审核" class="h_status">待审核</td>
-                            <td>
-                                <label class="bui-switch-label bui-switch-anim">
-                                    <input type="checkbox" name="s" checked /><i class="bui-switch"></i>
-                                </label>
-                            </td>
-                            <td>
-                                <span class="h_opt">
-                                <i class="glyphicon glyphicon-check"></i>
-                                <i class="glyphicon glyphicon-remove"></i>
-                                </span>
-                            </td>
-                        </tr>
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<span class="h_opt">-->
+                                <!--<i class="glyphicon glyphicon-check"></i>-->
+                                <!--<i class="glyphicon glyphicon-remove"></i>-->
+                                <!--</span>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td><input class="h_name" type="text" size="8"></td>-->
+                            <!--<td><span class="h_nameTwo">actName1</span></td>-->
+                            <!--<td class="h_status">通过</td>-->
+                            <!--<td>-->
+                                <!--<label class="bui-switch-label bui-switch-anim">-->
+                                    <!--<input type="checkbox" name="s" checked /><i class="bui-switch"></i>-->
+                                <!--</label>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<span class="h_opt">-->
+                                <!--<i class="glyphicon glyphicon-check"></i>-->
+                                <!--<i class="glyphicon glyphicon-remove"></i>-->
+                                <!--</span>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td><input class="h_name" type="text" size="8"></td>-->
+                            <!--<td title="actName1"><span class="h_nameTwo">actName1</span></td>-->
+                            <!--<td title="待审核" class="h_status">待审核</td>-->
+                            <!--<td>-->
+                                <!--<label class="bui-switch-label bui-switch-anim">-->
+                                    <!--<input type="checkbox" name="s" checked /><i class="bui-switch"></i>-->
+                                <!--</label>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<span class="h_opt">-->
+                                <!--<i class="glyphicon glyphicon-check"></i>-->
+                                <!--<i class="glyphicon glyphicon-remove"></i>-->
+                                <!--</span>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                     </table>
                 </div>
                 <div>
@@ -186,7 +186,7 @@
   $(function () {
     $(".back").on('click', function () {
 //            history.back(-1);
-      window.location.href = 'homepage.html';
+      window.location.href = 'wechar_wallet.html';
     });
     loadList();
   })
@@ -197,8 +197,7 @@
       window.location.href = 'login.html';
     }
     let timestamp = Date.parse(new Date());
-//        let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-    let base64 = `{"token": "111111","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+    let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     let base = new Base64();
     let result = base.encode(base64);
     let jsonData = JSON.stringify({"jsonData": result});
@@ -218,6 +217,9 @@
           let base = new Base64();
           let rsData = base.decode(base64);
           let rsDataJson = JSON.parse(rsData);
+          if(rsDataJson.dataList==undefined||rsDataJson.dataList==""){
+                return;
+          }
 
           Callback(rsDataJson.dataList);
 //                        showMessage('保存成功!');
@@ -324,8 +326,7 @@
     }
 
     let timestamp = Date.parse(new Date());
-//    let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-    let base64 = `{"token": "111111","id":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+    let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     let base = new Base64();
     let result = base.encode(base64);
     let jsonData = JSON.stringify({"jsonData": result});
@@ -354,8 +355,7 @@
       return;
     }
     let timestamp = Date.parse(new Date());
-//    let base64 = `{"token": "${storage.getItem("yf_token")}","id": ${id},"payee":"${wecharName.value}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-    let base64 = `{"token": "111111","id": ${id},"payee":"${wecharName.value}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+    let base64 = `{"token": "${storage.getItem("yf_token")}","id": ${id},"payee":"${wecharName.value}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     console.log("参数：" + base64);
     let base = new Base64();
     let result = base.encode(base64);
@@ -372,7 +372,6 @@
         if (code !== "0") {
           showMessage(data.message);
         } else {
-            debugger;
           showMessage('保存成功!');
           let base64 = data.data.jsonData;
           let base = new Base64();

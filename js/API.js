@@ -11,6 +11,10 @@ publicMap.set("clientType",1);
 
 let storage = window.localStorage;
 
+function  signout(){
+    storage.setItem("yf_token","");
+    window.location.href='login.html'
+};
 
 function returnFloat(value){
     var value=Math.round(parseFloat(value)*100)/100;
@@ -25,4 +29,9 @@ function returnFloat(value){
         }
         return value;
     }
-}
+};
+
+
+
+
+

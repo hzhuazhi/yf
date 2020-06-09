@@ -144,36 +144,56 @@
     indexInit();
 
     function indexInit() {
-      let beginTime = new Date();
+        if(storage.getItem("yf_token")==""){
+            showMessage('token 失效，请重新登陆！');
+            signout();
+        }
+        let time = new Date();
+        let btime = new Date();
+        let beginTimeDate = time.getTime();
+        btime.setTime(beginTimeDate);
+        let curdayStart = "";
+        let curdayStartMonth = "";
+        let curdayStartDay = "";
 
-      let todayTime = "";
-      let month = "";
-      let day = "";
+        let curdayEnd = "";
+        let curdayEndMonth = "";
+        let curdayEndDay = "";
 
-      if (beginTime.getMonth().toString().length = 1) {
-        month = "0" + (beginTime.getMonth() + 1);
-      } else {
-        month = (beginTime.getMonth() + 1);
-      }
+        if (time.getMonth().toString().length = 1) {
+            curdayEndMonth = "0" + (time.getMonth() + 1);
+        } else {
+            curdayEndMonth = (time.getMonth() + 1);
+        }
+        if (time.getDate().toString().length = 1) {
+            curdayEndDay = "0" + time.getDate().toString();
+        } else {
+            curdayEndDay = time.getDate().toString();
+        }
 
-      if (beginTime.getDay().toString().length = 1) {
-        day = "0" + (beginTime.getDay());
-      } else {
-        day = beginTime.getDay();
-      }
-      todayTime = beginTime.getFullYear() + month + day;
+        if (btime.getMonth().toString().length = 1) {
+            curdayStartMonth = "0" + (btime.getMonth() + 1);
+        } else {
+            curdayStartMonth = (btime.getMonth() + 1);
+        }
 
-      let timestamp = Date.parse(new Date());
+        if (btime.getDate().toString().length = 1) {
+            curdayStartDay = "0" + btime.getDate().toString();
+        } else {
+            curdayStartDay = btime.getDate().toString();
+        }
+        let timestamp = Date.parse(new Date());
 
-      let base64 = `{"token": "${storage.getItem("yf_token")}","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-//            let base64 = `{"token": "111111","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-      //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
+        curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
+        let base64 = `{"token": "${storage.getItem("yf_token")}","curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+
       console.log("参数：" + base64);
       let base = new Base64();
       let result = base.encode(base64);
       let jsonData = JSON.stringify({"jsonData": result});
       $.ajax({
-        url: API + '/fine/recharge/getDataList',
+        url: API + '/fine/reward/getDataList',
         type: 'post',
         dataType: 'json',
         contentType: "application/json",
@@ -181,6 +201,10 @@
         // 成功执行
         success(data) {
           let code = data.resultCode;
+            if(code==-1){
+                storage.setItem("yf_token","");
+                signout();
+            }
           if (code !== "0") {
               showMessage(data.message);
           } else {
@@ -218,18 +242,22 @@
         divHtml += "<div  style=\"display: flex; justify-content: center;\">";
 //                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
         divHtml += "<div class=\"item\" >" + data[i].orderNo.substr(0, 10) + "</div>";
-        divHtml += "<div class=\"item1\" >" + data[i].curday + "" + data[i].curhour + "</div>";
-        if (data[i].orderStatus == 1) {
-          divHtml += "<div class=\"item2\" >初始化</div>";
-        } else if (data[i].orderStatus == 2) {
-          divHtml += "<div class=\"item2\" >超时</div>";
-        } else if (data[i].orderStatus == 3) {
-          divHtml += "<div class=\"item2\" >成功</div>";
+        divHtml += "<div class=\"item1\" >" + data[i].curday + "</div>";
+        if (data[i].rewardType == 1) {
+          divHtml += "<div class=\"item2\" >充值奖励</div>";
+        } else if (data[i].rewardType == 2) {
+          divHtml += "<div class=\"item2\" >档次奖励</div>";
+        } else if (data[i].rewardType == 3) {
+            divHtml += "<div class=\"item2\" >直推奖励</div>";
+        } else if (data[i].rewardType == 4) {
+            divHtml += "<div class=\"item2\" >裂变奖励</div>";
+        } else if (data[i].rewardType == 5) {
+            divHtml += "<div class=\"item2\" >团队奖励</div>";
         }
 //                divHtml+="<div class=\"item1\" >"+data[i].orderStatus+"</div>";
-        divHtml += "<div class=\"item3\" >" + returnFloat(data[i].orderMoney) + "</div>";
+        divHtml += "<div class=\"item3\" >" + returnFloat(data[i].money) + "</div>";
         divHtml += "</div>";
-        count =  count+ data[i].orderMoney*1;
+        count =  count+ data[i].money*1;
       }
       $("#count").html(count+"元");
       $("#divData").html(divHtml);

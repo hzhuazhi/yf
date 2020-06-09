@@ -165,8 +165,11 @@
 
     
     function   queryShareCode() {
+        if(storage.getItem("yf_token")==""){
+            signout();
+        }
         let timestamp = Date.parse(new Date());
-        let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base64 = `{"token":"${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
         let base = new Base64();
         let result = base.encode(base64);
         let jsonData = JSON.stringify({"jsonData":result});
@@ -190,7 +193,7 @@
 //                    showMessage(rsDataJson.share.shareAddress);
 //                    $("#icode").html(rsDataJson.share.icode);
                     //需要协议加字段
-                    $("#icode").html("邀请码："+"0001");
+                    $("#icode").html("邀请码："+rsDataJson.share.icode);
                     obj.css('display', 'flex');
                     let  html ='<div id="qrcode" align="center" width="50%" ></div>';
                     $("#qrcode").html(html);
@@ -199,6 +202,7 @@
                         width : 200,//设置宽高
                         height : 200
                     });
+
                     qrcode.makeCode(url);
 
 //                    Callback(rsDataJson.share.shareAddress);
@@ -207,16 +211,16 @@
     })
     }
 
-  function  signout(){
-      alert("确认退出吗！");
-      storage.setItem("yf_token","");
-      window.location.href='login.html'
-  }
+
   function  indexInit(){
 //        ${totalMoney'}.innerHTML="100";
 //        $("#totalMoney").html("11111");
+	  if(storage.getItem("yf_token")==""){
+		  signout();
+	  }
     let timestamp = Date.parse(new Date());
-    let base64 = `{"token": "111111","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+      let base64 = `{"token":"${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+    console.log(base64)
 //	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     let base = new Base64();
     let result = base.encode(base64);

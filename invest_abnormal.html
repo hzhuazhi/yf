@@ -129,14 +129,14 @@
 				}
 
                 let timestamp = Date.parse(new Date());
-                let base64 = `{"token": "111111","orderNo":"${order_no}","pictureAds":"${url}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+                let base64 = `{"token": ${storage.getItem("yf_token")},"orderNo":"${order_no}","pictureAds":"${url}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
                 //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
                 console.log("参数："+base64);
                 let base = new Base64();
                 let result = base.encode(base64);
                 let jsonData = JSON.stringify({"jsonData":result});
                 $.ajax({
-                    url: API+'/fine/recharge/loadPicture',
+                    url: API+'/fine/recharge/appeal',
                     type: 'post',
                     dataType: 'json',
                     contentType:"application/json",
@@ -144,6 +144,10 @@
                     // 成功执行
                     success (data) {
                         let code = data.resultCode;
+                        if(code==-1){
+                            storage.setItem("yf_token","");
+                            signout();
+                        }
                         if(code !== "0"){
                             showMessage(data.message);
                         }else {
@@ -203,6 +207,10 @@
 			processData: false,    //
             success: function (data) {
                 let code = data.resultCode;
+                if(code==-1){
+                    storage.setItem("yf_token","");
+                    signout();
+                }
                 if(code !== "0"){
                     showMessage(data.message);
                 }else {

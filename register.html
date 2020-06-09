@@ -45,6 +45,15 @@
     </style>
 </head>
 <body>
+<div id="pageHead">
+    <!--<img src="img/H5-2.png" style="width:100%">-->
+<img src="img/a2.png" style="position:fixed;top:10px;right:15px;width:50%;z-index:101" v-show="systype==1&&showtip">
+<img src="img/a1.png" style="position:fixed;top:10px;right:15px;width:50%;z-index:101" v-show="systype==2&&showtip">
+<div  v-show="showtip" style="height:100%;width:100%;position:fixed;top:0px;left:0px;background-color: rgba(0, 0, 0, 0.7);z-index:100">
+</div>
+</div>
+
+<!--<input type="button" value="close" onclick="WeixinJSBridge.call('closeWindow');" />-->
     <div class="zhuce">
         <div class="input">
             <input type="text" id="acNum" placeholder="请输入手机号">
@@ -71,21 +80,41 @@
             <input type="password" id="operateWd"  placeholder="请输入操作密码">
             <i class="glyphicon glyphicon-lock"></i>
         </div>
+
+
         <div class="button">
             <button id="zhuce">注册</button>
         </div>
         <div class="button" style="margin-top: 20px">
             <button >APP下载</button>
         </div>
+
+        <div >
+            <a onclick="window.location.href='login.html'"> 已有账号跳转到登录</a>
+        </div>
     </div>
 </body>
 <script>
     $(function () {
+        var ua = navigator.userAgent.toLowerCase();
+        var isWeixin = ua.indexOf('micromessenger') != -1;
+        if (!isWeixin) {
+            $("#pageHead").html("");
+        }
+
         var test =window.location.href;
+        storage.setItem("yf_token","");
         var money=test.split("?icode=");
-        $("#icode").val(money[1]);
+        if(money.length>=2){
+            if(money[1].length>=6){
+                $("#icode").val(money[1].substr(0,6));
+            }
+        }
+
         // 注册接口调试
         $("#zhuce").click(function () {
+
+
             let nickname = $("#nickname").val();
             let acNum = $("#acNum").val();
             let passWd = $("#passWd").val();

@@ -74,8 +74,8 @@
 	.h_border {
 		display: flex;
 		background-color: rgb(220, 93, 71);;
-		height: 12rem;
-		margin: 60px 10px 10px 10px;
+		height: 0rem;
+		margin: 20px 10px 10px 10px;
 		border-radius: 1rem;
 		text-align: center;
 	}
@@ -104,21 +104,35 @@
 	}
 </style>
 <body>
+<div class="page">
+	<header>
+		<div class="back">
+			<i class="fa fa-angle-left"></i>
+		</div>
+		<p>充值订单信息</p>
+		<span></span>
+	</header>
+</div>
+<div class="h_border">
+
+</div>
 <div class="h_tab">
 	<div class="tabs-underline1">
 		<ul>
+
 			<li>
-				<a class="tab-active1" data-index="1" href="#" id="data0">发起订单</a>
+				<a  class="tab-active1" data-index="3" href="#" id="data3">成功订单</a>
 			</li>
 			<li>
-				<a data-index="2" href="#" id="data1">超时订单</a>
+				<a data-index="1" href="#" id="data1">发起订单</a>
 			</li>
 			<li>
-				<a data-index="3" href="#" id="data2">成功订单</a>
+				<a data-index="2" href="#" id="data2">超时订单</a>
 			</li>
-			<li>
-				<a data-index="-1" href="#" id="data3">申诉订单</a>
-			</li>
+			<!--<li>-->
+				<!--<a data-index="3" href="#" id="data3">成功订单</a>-->
+			<!--</li>-->
+
 		</ul>
 		<div class="tabs-content-placeholder1">
 			<div class="tab-content-active1">
@@ -127,6 +141,7 @@
 					<section class="h_item">时间</section>
 					<section class="h_item">类型</section>
 					<section class="h_item">金额</section>
+					<section class="h_item">操作</section>
 				</section>
 			</div>
 			<div>
@@ -138,12 +153,13 @@
 					<section class="h_item">操作</section>
 				</section>
 			</div>
-			<div>
-				<section class="h_wrap">
+			<div >
+				<section class="h_wrap" >
 					<section class="h_item">订单号</section>
-					<section class="h_item">发起时间</section>
+					<section class="h_item">时间</section>
 					<section class="h_item">类型</section>
 					<section class="h_item">金额</section>
+					<section class="h_item">操作</section>
 				</section>
 			</div>
 			<div>
@@ -151,10 +167,19 @@
 					<section class="h_item">订单号</section>
 					<section class="h_item">时间</section>
 					<section class="h_item">类型</section>
-					<section class="h_item">失败原因</section>
 					<section class="h_item">金额</section>
+					<section class="h_item">操作</section>
 				</section>
 			</div>
+			<!--<div>-->
+				<!--<section class="h_wrap">-->
+					<!--<section class="h_item">订单号</section>-->
+					<!--<section class="h_item">时间</section>-->
+					<!--<section class="h_item">类型</section>-->
+					<!--<section class="h_item">失败原因</section>-->
+					<!--<section class="h_item">金额</section>-->
+				<!--</section>-->
+			<!--</div>-->
 		</div>
 		<div id="divData">
 			<!--<section class="h_wrap">-->
@@ -172,15 +197,15 @@
             window.location.href = 'my.html';
         });
 
-//        queryOrdeyList(1);
+        queryOrdeyList(3);
         let widget = $('.tabs-underline1');
         let tabs = widget.find('ul a'),
 			content = widget.find('.tabs-content-placeholder1 > div');
         tabs.on('click', function (e) {
             e.preventDefault();
             let index = $(this).data('index');
-           showMessage(index);
-//            queryOrdeyList(index);
+//           showMessage(index);
+            queryOrdeyList(index);
             tabs.removeClass('tab-active1');
             content.removeClass('tab-content-active1');
             $(this).addClass('tab-active1');
@@ -195,33 +220,49 @@
 
 
         function queryOrdeyList(type) {
-            let beginTime = new Date();
+            if(storage.getItem("yf_token")==""){
+                signout();
+            }
+            let time = new Date();
+            let btime = new Date();
+            let beginTimeDate = time.getTime() -1000*60*60*24*3;
+            btime.setTime(beginTimeDate);
+            let curdayStart = "";
+            let curdayStartMonth = "";
+            let curdayStartDay = "";
 
-            let todayTime = "";
-            let month = "";
-            let day = "";
+            let curdayEnd = "";
+            let curdayEndMonth = "";
+            let curdayEndDay = "";
 
-            if (beginTime.getMonth().toString().length = 1) {
-                month = "0" + (beginTime.getMonth() + 1);
+            if (time.getMonth().toString().length = 1) {
+                curdayEndMonth = "0" + (time.getMonth() + 1);
             } else {
-                month = (beginTime.getMonth() + 1);
+                curdayEndMonth = (time.getMonth() + 1);
+            }
+            if (time.getDate().toString().length = 1) {
+                curdayEndDay = "0" + time.getDate().toString();
+            } else {
+                curdayEndDay = time.getDate().toString();
             }
 
-            if (beginTime.getDate().toString().length = 1) {
-                day = "0" + beginTime.getDate().toString();
+            if (btime.getMonth().toString().length = 1) {
+                curdayStartMonth = "0" + (btime.getMonth() + 1);
             } else {
-                day = beginTime.getDate().toString();
+                curdayStartMonth = (btime.getMonth() + 1);
             }
-            todayTime = beginTime.getFullYear() + month + day;
 
+            if (btime.getDate().toString().length = 1) {
+                curdayStartDay = "0" + btime.getDate().toString();
+            } else {
+                curdayStartDay = btime.getDate().toString();
+            }
             let timestamp = Date.parse(new Date());
-            if(type==4){
-                type=-1;
-			}
-//            let base64 = `{"token": "111111","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            let base64 = `{"token": "111111","orderStatus": ${type},"curdayStart": 20200609,"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+
+            curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
+            curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
+            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            console.log("参数：" + base64);
             let base = new Base64();
             let result = base.encode(base64);
             let jsonData = JSON.stringify({"jsonData": result});
@@ -234,16 +275,20 @@
                 // 成功执行
                 success(data) {
                     let code = data.resultCode;
+                    if(code==-1){
+                        storage.setItem("yf_token","");
+                        signout();
+                        return;
+                    }
                     if (code !== "0") {
                         showMessage(data.message);
                     } else {
-//                        debugger
                         let base64 = data.data.jsonData;
                         let base = new Base64();
                         let rsData = base.decode(base64);
                         let rsDataJson = JSON.parse(rsData);
                         if (rsDataJson.dataList == undefined||rsDataJson.dataList =="undefined") {
-                            onDataCallBack();
+                            $("#divData").html("");
                             return;
                         }
                         if(type==1){
@@ -252,16 +297,7 @@
                             callbackType2(rsDataJson.dataList);
 						}else if(type==3){
                             callbackType3(rsDataJson.dataList);
-						}else if(type==-1){
-                            callbackType4(rsDataJson.dataList);
 						}
-
-//                        debugger;
-//                        if (rsDataJson.dataList == undefined||rsDataJson.dataList =="undefined") {
-//                            onDataCallBack();
-//                            return;
-//                        }
-//                        Callback(rsDataJson.dataList,type);
                     }
                 }
             })
@@ -284,38 +320,17 @@
             let   html ="<div id=\"divData\">";
             for(let  i=0;i<data.length;i++){
                 html+="<section class=\"h_wrap\">";
-                html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+//                html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+                html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 7) +"....</section>";
                 html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
                 html+="<section class=\"h_item\">初始化</section>";
                 html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+                html+="<section class=\"h_item\"> <i class=\"glyphicon glyphicon-check\" onclick=\"copy('"+ data[i].orderNo +"')\"></i></section>";
                 html+="</section>";
             }
             html+="</div>";
             $("#divData").html(html);
         }
-
-
-//        function callbackType1(data) {
-//            let divHtml = '<div style="display:flex;width: 94%;margin: 20px auto 0">';
-//					 divHtml+= '<div class="item1">订单号</div>';
-//					 divHtml+= '<div class="item2">时间</div>';
-//					 divHtml+= '<div class="item3">类型</div>';
-//					 divHtml+= '<div class="item4">金额</div>';
-//				 divHtml+= '</div>';
-//            for (let i = 0; i < data.length; i++) {
-//                divHtml +='<div  style="display: flex; justify-content: center;">';
-//					divHtml += '<div class="item1" >'+ data[i].orderNo.substr(0, 10) +'</div>';
-//					divHtml += '<div class="item2" >' + data[i].curday + "" + data[i].curhour  + '</div>';
-//					divHtml += '<div class="item3" >初始化</div>';
-//					divHtml += '<div class="item4" >' +  returnFloat(data[i].orderMoney) +'</div>';
-//                divHtml += '</div>';
-//            }
-//            //缺少汇总
-//            $("#divData").html(divHtml);
-//        }
-
-
-
 
 
         function callbackType2(data,type){
@@ -335,127 +350,41 @@
         }
 
 
-//        function callbackType2(data) {
-//            let divHtml = '<div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">';
-//					divHtml+= '<div class="item1">订单号</div>';
-//					divHtml+= '<div class="item2">时间</div>';
-//					divHtml+= '<div class="item3">类型</div>';
-//					divHtml+= '<div class="item4">金额</div>';
-//					divHtml+= '<div class="item4">操作</div>';
-//				divHtml+= "</div>";
-//            for (let i = 0; i < data.length; i++) {
-//                divHtml += "<div  style=\"display: flex; justify-content: center;\">";
-////                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
-//					divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 10) + "</div>";
-//					divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour  + "</div>";
-//					divHtml += "<div class=\"item3\" >超时</div>";
-//					divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
-//					let   appealUrl="invest_abnormal.html?orderNo="+data[i].orderNo;
-//					divHtml += "<div class=\"item4\" ><a src=''  onclick=\"appealHerf('"+appealUrl+"')\">申诉</a></div>";
-//                divHtml += "</div>";
-//            }
-//            //缺少汇总
-//            $("#demo").html(divHtml);
-//        }
-
-
         function callbackType3(data,type){
             let   html ="<div id=\"divData\">";
             for(let  i=0;i<data.length;i++){
                 html+="<section class=\"h_wrap\">";
-					html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
+					html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 7) +"...</section>";
 					html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
 					html+="<section class=\"h_item\">成功</section>";
 					html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+               	    html+="<section class=\"h_item\"> <i class=\"glyphicon glyphicon-check\" onclick=\"copy('"+ data[i].orderNo +"')\"></i></section>";
                 html+="</section>";
             }
             html+="</div>";
             $("#divData").html(html);
         }
-
-//        function callbackType3(data) {
-//            let divHtml = '<div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">';
-//            divHtml+= '<div class="item1">订单号</div>';
-//            divHtml+= '<div class="item2">时间</div>';
-//            divHtml+= '<div class="item3">类型</div>';
-//            divHtml+= '<div class="item4">金额</div>';
-//            divHtml+= "</div>";
-//            for (let i = 0; i < data.length; i++) {
-//                divHtml += "<div  style=\"display: flex; justify-content: center;\">";
-////                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
-//                divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 10) + "</div>";
-//                divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour  + "</div>";
-//                divHtml += "<div class=\"item3\" >成功</div>";
-//                divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
-//                divHtml += "</div>";
-//            }
-//            //缺少汇总
-//            $("#demo").html(divHtml);
-//        }
-
-        function callbackType4(data,type){
-            let   html ="<div id=\"divData\">";
-            for(let  i=0;i<data.length;i++){
-                html+="<section class=\"h_wrap\">";
-                html+="<section class=\"h_item\">"+data[i].orderNo.substr(0, 10) +"</section>";
-                html+="<section class=\"h_item\">"+ data[i].curday + "" + data[i].curhour  +"</section>";
-                if(data[i].appealStatus==1){
-                    html+="<section class=\"h_item\">初始化</section>";
-				}else if(data[i].appealStatus==2){
-                    html+="<section class=\"h_item\">申诉中</section>";
-				}else if(data[i].appealStatus==3){
-                    html+="<section class=\"h_item\">申诉失败</section>";
-                }else if(data[i].appealStatus==4){
-                    html+="<section class=\"h_item\">申诉成功</section>";
-                }
-                html+="<section class=\"h_item\">" + data[i].appealOrigin + "</section>";
-                html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
-                html+="</section>";
-            }
-            html+="</div>";
-            $("#divData").html(html);
-        }
-
-//        function callbackType4(data) {
-//            let divHtml = '<div class="demo" style="display:flex;width: 94%;margin: 20px auto 0">';
-//            divHtml+= '<div class="item1">订单号</div>';
-//            divHtml+= '<div class="item2">时间</div>';
-//            divHtml+= '<div class="item3">类型</div>';
-//            divHtml+= '<div class="item4">失败原因</div>';
-//            divHtml+= '<div class="item4">金额</div>';
-//            divHtml+= "</div>";
-//            for (let i = 0; i < data.length; i++) {
-//                divHtml += "<div  style=\"display: flex; justify-content: center;\">";
-////                console.log(data[i].distributionMoney+"======"+data[i].invalidTime+"====="+data[i].orderMoney+"===="+data[i].orderNo+"===="+data[i].orderStatus);
-//                divHtml += "<div class=\"item1\" >" + data[i].orderNo.substr(0, 10) + "</div>";
-//                divHtml += "<div class=\"item2\" >" + data[i].curday + "" + data[i].curhour  + "</div>";
-//                if(data[i].appealStatus==1){
-//                    divHtml += "<div class=\"item3\" >初始化</div>";
-//				}else if(data[i].appealStatus==2){
-//                    divHtml += "<div class=\"item3\" >申诉中</div>";
-//				}else if(data[i].appealStatus==3){
-//                    divHtml += "<div class=\"item3\" >申诉失败</div>";
-//                }else if(data[i].appealStatus==4){
-//                    divHtml += "<div class=\"item3\" >申诉成功</div>";
-//                }
-//                divHtml += "<div class=\"item4\" >" + data[i].appealOrigin + "</div>";
-//                divHtml += "<div class=\"item4\" >" +  returnFloat(data[i].orderMoney) + "</div>";
-//                divHtml += "</div>";
-//            }
-//            //缺少汇总
-//            $("#demo").html(divHtml);
-//        }
-
-
-
-
-
-
 
     })
 
     function appealHerf(url){
         window.location.href=url;
+    }
+
+
+    function copy(value) {
+        if(value==""||value==undefined||value=="undefined"){
+            showMessage("复制订单号失败");
+            return;
+        }
+        var oInput = document.createElement('input');
+        oInput.value = value;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象2113
+        document.execCommand("Copy"); // 执行浏览器复5261制4102命令
+        oInput.className = 'oInput';
+        oInput.style.display='none';
+        showMessage("复制订单号!");
     }
 </script>
 </html>

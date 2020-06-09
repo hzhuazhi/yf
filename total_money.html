@@ -144,31 +144,49 @@
         indexInit();
 
         function indexInit() {
-            let beginTime = new Date();
+            if(storage.getItem("yf_token")==""){
+                signout();
+            }
+            let time = new Date();
+            let btime = new Date();
+            let beginTimeDate = time.getTime() -1000*60*60*24*3;
+            btime.setTime(beginTimeDate);
+            let curdayStart = "";
+            let curdayStartMonth = "";
+            let curdayStartDay = "";
 
-            let todayTime = "";
-            let month = "";
-            let day = "";
+            let curdayEnd = "";
+            let curdayEndMonth = "";
+            let curdayEndDay = "";
 
-            if (beginTime.getMonth().toString().length = 1) {
-                month = "0" + (beginTime.getMonth() + 1);
+            if (time.getMonth().toString().length = 1) {
+                curdayEndMonth = "0" + (time.getMonth() + 1);
             } else {
-                month = (beginTime.getMonth() + 1);
+                curdayEndMonth = (time.getMonth() + 1);
+            }
+            if (time.getDate().toString().length = 1) {
+                curdayEndDay = "0" + time.getDate().toString();
+            } else {
+                curdayEndDay = time.getDate().toString();
             }
 
-            if (beginTime.getDay().toString().length = 1) {
-                day = "0" + (beginTime.getDay());
+            if (btime.getMonth().toString().length = 1) {
+                curdayStartMonth = "0" + (btime.getMonth() + 1);
             } else {
-                day = beginTime.getDay();
+                curdayStartMonth = (btime.getMonth() + 1);
             }
-            todayTime = beginTime.getFullYear() + month + day;
 
+            if (btime.getDate().toString().length = 1) {
+                curdayStartDay = "0" + btime.getDate().toString();
+            } else {
+                curdayStartDay = btime.getDate().toString();
+            }
             let timestamp = Date.parse(new Date());
 
-            let base64 = `{"token": "111111","curdayStart": 20200508,"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-//            let base64 = `{"token": "111111","curdayStart": ${todayTime},"curdayEnd":${todayTime},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            console.log("参数：" + base64);
+            curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
+            curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
+            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+
             let base = new Base64();
             let result = base.encode(base64);
             let jsonData = JSON.stringify({"jsonData": result});

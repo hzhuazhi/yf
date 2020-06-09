@@ -15,7 +15,7 @@
     <script src="js/API.js"></script>
     <script src="js/toast.js"></script>
     <script src="js/analyticCode.js"></script>
-    <script src="js/llqrcode.js"></script>
+    <script src="js/qrcode.js"></script>
 </head>
 <body>
 <div class="page">
@@ -59,7 +59,7 @@
                                      style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"/>
                             </div>
 
-                            <from id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">
+                            <from id="fileForm1" name="fileForm1" method="POST" enctype="multipart/form-data">
                                 <input type="file" hidden name="image1" id="image1" style="display:none;width:1px; "
                                        onchange="excptions(2)" accept="image/*"/>
                                 <input type="text" hidden name="path1" id="path1" onfocus="jQuery('#image1').click()"
@@ -75,8 +75,8 @@
 
                         <input type="hidden" id="wxAdd"/>
                         <div class="input">
-                            <span>微&nbsp;&nbsp;信&nbsp;&nbsp;名:</span>
-                            <input type="" id="payee" placeholder="请输入微信名"/>
+                            <span>微信昵称:</span>
+                            <input type="" id="payee" placeholder="请输入微信昵称"/>
                         </div>
                         <div class="input">
                             <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</span>
@@ -86,10 +86,10 @@
                             <span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</span>
                             <input type="" id="acName" placeholder="备注名字"/>
                         </div>
-                        <div class="input">
-                            <span>安全密码:</span>
-                            <input type="password" id="password" placeholder="请输入安全密码"/>
-                        </div>
+                        <!--<div class="input">-->
+                            <!--<span>安全密码:</span>-->
+                            <!--<input type="password" id="password" placeholder="请输入安全密码"/>-->
+                        <!--</div>-->
 
 
                         <div class="btn" style="display: flex;justify-content: center;">
@@ -124,13 +124,19 @@
     }
 
     $("#btn_sava").click(function () {
+        if(storage.getItem("yf_token")==""){
+            showMessage('token 失效，请重新登陆！');
+            signout();
+        }
 //
 //				let  mmQrCode ="http://www.baidu.com";//暂时没有获取七牛云地址
 //				let  wxQrCodeAds ="http://www.baidu.com";//暂时没有获取七牛云地址
+//        mmQrCode ="http://gtpqn.tiaocheng-tech.com/f9ddcf7fee8145c3a5c27bb06014348e.jpg";
+//        wxQrCodeAds ="http://gtpqn.tiaocheng-tech.com/0a5d32c7797b432892f84eab7213cffc.jpg";
       let acType = 1;
       let businessType = 1;
-      let acNum = $("#acNum").val();
-      let acName = $("#acName").val();
+      let payee = $("#payee").val();
+      let acName= $("#acName").val();
       let password = $("#password").val();
       let wxAdd = $("#wxAdd").val();
       let timestamp = Date.parse(new Date());
@@ -140,16 +146,13 @@
       } else if (wxQrCodeAds == "") {
         showMessage('小微二维码不能为空！');
         return;
-      } else if (acNum == "") {
+      } else if (payee == "") {
         showMessage('微信名不能为空！');
         return;
-      } else if (password == "") {
-        showMessage('安全密码不能为空！');
-        return;
       }
-//                let payee = $("#payee").val();
 
-      let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+
+      let base64 = `{"token": "${storage.getItem("yf_token")}","acType":${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
       console.log("参数：" + base64);
       let base = new Base64();
       let result = base.encode(base64);
@@ -218,37 +221,21 @@
       url = getObjectURL($("#image").get(0).files[0]);
     } else if (type == 2) {
       formData.append("image", $("#image1").get(0).files[0]);
-      url = getObjectURL($("#image1").get(0).files);
+      url = getObjectURL($("#image1").get(0).files[0]);
     }
 
-    analyticCode.getUrl('file-url', $("#image").get(0), function (url1, url2) {
-      if (url1 == errorCode) {
-        showMessage("请上传正确的二维码！");
-        return;
-      } else {
-        $("#wxAdd").val(url1);
-      }
-    });
-
-//             let    qrcodeIntn =document.getElementById("qrcode");
-//             var qrcode = new QRCode(qrcodeIntn, {
-//                 width : 200,//设置宽高
-//                 height : 200
-//             });
-//             qrcode.decode(url);
-//             qrcode.callback = function(imgMsg){
-//                 fn(imgMsg,url);
-//             }
+//    if(type!=2){
+//        analyticCode.getUrl('file-url', $("#image").get(0), function (url1, url2) {
+//            if (url1 == errorCode) {
+//                showMessage("请上传正确的二维码！");
+//                return;
+//            } else {
+//                $("#wxAdd").val(url1);
+//            }
+//        });
+//    }
 
 
-//             qrcode.decode(url);
-//
-//             qrcode.callback = function(imgMsg){
-//                 console.log("imgMsg",imgMsg);
-//             }
-
-
-    return;
     $.ajax({
       url: API + '/fine/stg/qiniuUpload',
       type: 'POST',
@@ -266,11 +253,9 @@
           let base = new Base64();
           let rsData = base.decode(base64);
           let rsDataJson = JSON.parse(rsData);
-//                    $(".upload_img").src=rsDataJson.qiNiu.url;
           if (type == 1) {
             mmQrCode = rsDataJson.qiNiu.url;
             $('#image').src = mmQrCode;
-//                             $('#image').attr("src", mmQrCode);
             $('.img').find("#imgwechar").attr("src", mmQrCode);
           } else if (type == 2) {
             wxQrCodeAds = rsDataJson.qiNiu.url;
