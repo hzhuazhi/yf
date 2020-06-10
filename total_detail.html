@@ -188,7 +188,7 @@
               signout();
           }
           let timestamp = Date.parse(new Date());
-          let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+          let base64 = `{"token": "${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
           console.log("参数："+base64);
           let base = new Base64();
           let result = base.encode(base64);
@@ -241,7 +241,7 @@
       }
       let time = new Date();
       let btime = new Date();
-      let beginTimeDate = time.getTime() -1000*60*60*24*3;
+      let beginTimeDate = time.getTime() -1000 * 60 * 60 * 24 * 3;
       btime.setTime(beginTimeDate);
       let curdayStart = "";
       let curdayStartMonth = "";
@@ -251,24 +251,24 @@
       let curdayEndMonth = "";
       let curdayEndDay = "";
 
-      if (time.getMonth().toString().length = 1) {
+      if (time.getMonth().toString().length == 1) {
           curdayEndMonth = "0" + (time.getMonth() + 1);
       } else {
           curdayEndMonth = (time.getMonth() + 1);
       }
-      if (time.getDate().toString().length = 1) {
+      if (time.getDate().toString().length == 1) {
           curdayEndDay = "0" + time.getDate().toString();
       } else {
           curdayEndDay = time.getDate().toString();
       }
 
-      if (btime.getMonth().toString().length = 1) {
+      if (btime.getMonth().toString().length == 1) {
           curdayStartMonth = "0" + (btime.getMonth() + 1);
       } else {
           curdayStartMonth = (btime.getMonth() + 1);
       }
 
-      if (btime.getDate().toString().length = 1) {
+      if (btime.getDate().toString().length == 1) {
           curdayStartDay = "0" + btime.getDate().toString();
       } else {
           curdayStartDay = btime.getDate().toString();
@@ -277,8 +277,8 @@
 
       curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
       curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
-      let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-
+      let base64 = `{"token": "${storage.getItem("yf_token")}","rewardType": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+      console.log(base64);
       let base = new Base64();
       let result = base.encode(base64);
       let jsonData = JSON.stringify({"jsonData":result});
@@ -298,6 +298,10 @@
                   let base = new Base64();
                   let rsData= base.decode(base64);
                   let rsDataJson = JSON.parse(rsData);
+                  if(rsDataJson.dataList==undefined||rsDataJson.dataList=="undefined"){
+                      $("#divData").html("<div id=\"divData\"></div>");
+                      return;
+                  }
                   rechargeListCallback(rsDataJson.dataList,type);
               }
           }
@@ -311,11 +315,11 @@
           if(type==3){
               html+="<section class=\"h_item\">"+data[i].proof+"</section>";
           }else{
-              html+="<section class=\"h_item\">"+data[i].orderNo+"</section>";
+              html+="<section class=\"h_item\">"+data[i].orderNo.substr(0,10)+"</section>";
           }
 
           html+="<section class=\"h_item\">"+data[i].curday+""+data[i].curhour+""+data[i].curminute+"</section>";
-          html+="<section class=\"h_item\">"+returnFloat(data[i].orderMoney)+"</section>";
+          html+="<section class=\"h_item\">"+returnFloat(data[i].money)+"</section>";
           html+="</section>";
       }
       html+="</div>";

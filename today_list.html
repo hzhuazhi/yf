@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>订单记录</title>
+	<title>兑换明细</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/css.css">
@@ -90,7 +90,7 @@
 		<div class="back">
 			<i class="fa fa-angle-left"></i>
 		</div>
-		<p>今日收益明细</p>
+		<p>今日兑换明细</p>
 		<span></span>
 	</header>
 	<!--<div class="empty"></div>-->
@@ -160,24 +160,24 @@
             let curdayEndMonth = "";
             let curdayEndDay = "";
 
-            if (time.getMonth().toString().length = 1) {
+            if (time.getMonth().toString().length == 1) {
                 curdayEndMonth = "0" + (time.getMonth() + 1);
             } else {
                 curdayEndMonth = (time.getMonth() + 1);
             }
-            if (time.getDate().toString().length = 1) {
+            if (time.getDate().toString().length == 1) {
                 curdayEndDay = "0" + time.getDate().toString();
             } else {
                 curdayEndDay = time.getDate().toString();
             }
 
-            if (btime.getMonth().toString().length = 1) {
+            if (btime.getMonth().toString().length == 1) {
                 curdayStartMonth = "0" + (btime.getMonth() + 1);
             } else {
                 curdayStartMonth = (btime.getMonth() + 1);
             }
 
-            if (btime.getDate().toString().length = 1) {
+            if (btime.getDate().toString().length == 1) {
                 curdayStartDay = "0" + btime.getDate().toString();
             } else {
                 curdayStartDay = btime.getDate().toString();
@@ -186,7 +186,7 @@
 
             curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
             curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
-            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": 4,"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
 
             console.log("参数：" + base64);
             let base = new Base64();
@@ -213,7 +213,7 @@
                         let base = new Base64();
                         let rsData = base.decode(base64);
                         let rsDataJson = JSON.parse(rsData);
-                        if (rsDataJson.rowCount == 0) {//没有数据
+                        if (rsDataJson.dataList == undefined||rsDataJson.dataList == "") {//没有数据
                             onDataCallBack();
                             return;
                         }

@@ -90,7 +90,7 @@
 		<div class="back">
 			<i class="fa fa-angle-left"></i>
 		</div>
-		<p>今日收益明细</p>
+		<p>总充值明细</p>
 		<span></span>
 	</header>
 	<!--<div class="empty"></div>-->
@@ -149,7 +149,7 @@
             }
             let time = new Date();
             let btime = new Date();
-            let beginTimeDate = time.getTime() -1000*60*60*24*3;
+            let beginTimeDate = time.getTime() -1000 * 60 * 60 * 24 * 3;
             btime.setTime(beginTimeDate);
             let curdayStart = "";
             let curdayStartMonth = "";
@@ -185,7 +185,7 @@
 
             curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
             curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
-            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            let base64 = `{"token": "${storage.getItem("yf_token")}","curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
 
             let base = new Base64();
             let result = base.encode(base64);
