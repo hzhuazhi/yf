@@ -120,44 +120,7 @@
 			window.location.href = 'my.html';
 		});
         queryallInfo();
-		function  queryInfo(){
-            let orderNo = $("#orderNo").val();
-            let timestamp = Date.parse(new Date());
-            if(orderNo==""){
-                showMessage("请填写号订单号再进行查询！");
-                return;
-            }
-//            let base64 = `{"token": "${storage.getItem("yf_token")}","passWd": ${passWd},"newPassWd": ${newPassWd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus":-1,"orderNo":"${orderNo}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-            let base = new Base64();
-            let result = base.encode(base64);
-            let jsonData = JSON.stringify({"jsonData":result});
 
-            $.ajax({
-                url: API+'/fine/recharge/getDataList',
-                type: 'post',
-                dataType: 'json',
-                contentType:"application/json",
-                data:jsonData,
-                // 成功执行
-                success (data) {
-                    if(code==-1){
-                        storage.setItem("yf_token","");
-                        signout();
-                    }
-                    let code = data.resultCode;
-                    if(code !== "0"){
-                        showMessage(data.message);
-                    }else {
-                        let base64 = data.data.jsonData;
-                        let base = new Base64();
-                        let rsData = base.decode(base64);
-                        let rsDataJson = JSON.parse(rsData);
-                        callback(rsDataJson.dataList);
-                    }
-                },
-            })
-		}
 
 
         function  queryallInfo(){
@@ -166,7 +129,6 @@
             let base = new Base64();
             let result = base.encode(base64);
             let jsonData = JSON.stringify({"jsonData":result});
-            console.log(base64)
 
             $.ajax({
                 url: API+'/fine/recharge/getDataList',
@@ -199,28 +161,73 @@
             })
         }
 
-        function callback(data){
-            let   html ="";
-		    for(var i=0;i<data.length;i++ ){
-                html+=" <div class=\"demo\" style=\"width: 100%; display: flex; justify-content: center; align-items: center;\">";
-					html+="<div class=\"item\">"+data[i].orderNo.substr(0, 10)+"...</div>";
-					if(data[i].appealStatus==1){
-						html+=" <div class=\"item\">初始化</div>";
-					}else if(data[i].appealStatus==2){
-						html+=" <div class=\"item\">申诉中</div>";
-					}else if(data[i].appealStatus==2){
-						html+=" <div class=\"item\">申诉失败</div>";
-					}else if(data[i].appealStatus==2){
-						html+=" <div class=\"item\">申诉成功</div>";
-					}
-					html+=" <div class=\"item\">"+data[i].appealOrigin+"</div>";
-                html+="  </div>";
-			}
-            $("#divData").html(html);
-        }
+
 
 
 	})
+
+    function  queryInfo(){
+        let orderNo = $("#orderNo").val();
+        let timestamp = Date.parse(new Date());
+        if(orderNo==""){
+            showMessage("请填写号订单号再进行查询！");
+            return;
+        }
+//            let base64 = `{"token": "${storage.getItem("yf_token")}","passWd": ${passWd},"newPassWd": ${newPassWd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus":-1,"orderNo":"${orderNo}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+
+        $.ajax({
+            url: API+'/fine/recharge/getDataList',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code==-1){
+                    storage.setItem("yf_token","");
+                    signout();
+                }
+                if(code !== "0"){
+                    showMessage(data.message);
+                }else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData = base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+                    if(rsDataJson.dataList==undefined||rsDataJson.dataList=="undefined"){
+                        showMessage("该订单号没有申诉信息！");
+                        return
+					}
+                    callback(rsDataJson.dataList);
+                }
+            },
+        })
+    }
+
+    function callback(data){
+        let   html ="";
+        for(var i=0;i<data.length;i++ ){
+            html+=" <div class=\"demo\" style=\"width: 100%; display: flex; justify-content: center; align-items: center;\">";
+            html+="<div class=\"item\">"+data[i].orderNo.substr(0, 10)+"...</div>";
+            if(data[i].appealStatus==1){
+                html+=" <div class=\"item\">初始化</div>";
+            }else if(data[i].appealStatus==2){
+                html+=" <div class=\"item\">申诉中</div>";
+            }else if(data[i].appealStatus==2){
+                html+=" <div class=\"item\">申诉失败</div>";
+            }else if(data[i].appealStatus==2){
+                html+=" <div class=\"item\">申诉成功</div>";
+            }
+            html+=" <div class=\"item\">"+data[i].appealOrigin+"</div>";
+            html+="  </div>";
+        }
+        $("#divData").html(html);
+    }
 </script>
 </html>
 

@@ -9,16 +9,47 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/css.css">
     <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/fountainG.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
     <script src="js/toast.js"></script>
-    <script src="js/analyticCode.js"></script>
+    <!--<script src="js/analyticCode.js"></script>-->
     <script src="js/qrcode.js"></script>
 </head>
+<style>
+    #bg{
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.3;
+        opacity:.30;
+        filter: alpha(opacity=30);
+    }
+
+    #show{
+        display: none;
+        position: absolute;
+        top: 25%;
+        left: 32%;
+        width: 33%;
+        height: auto;
+        padding: 8px;
+        border: 8px solid #E8E9F7;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+    }
+</style>
 <body>
-<div class="page">
+
+<div class="page" >
     <header>
         <div class="back">
             <i class="fa fa-angle-left"></i>
@@ -27,7 +58,7 @@
         <span></span>
     </header>
     <div class="empty"></div>
-    <div class="shoukuan">
+    <div class="shoukuan"  align="">
         <!-- <div class="up">
             <i class="fa fa-qrcode"></i>
         </div> -->
@@ -43,10 +74,34 @@
                     <div class="item active" onclick="window.location.href='wechar_collectioncode.html'">上传二维码</div>
                     <div class="item" onclick="window.location.href='wechar_collectioncode_list.html'">二维码列表</div>
                 </div>
+
+
                 <div class="content">
-                    <div class="upload active">
-                        <div class="img">
-                            <from id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data">
+
+                    <!--<div id="bg"></div>-->
+                    <div class="upload active" >
+                        <div id="fountainG"  style="display: none" >
+                            <div id="fountainG_1" class="fountainG">
+                            </div>
+                            <div id="fountainG_2" class="fountainG">
+                            </div>
+                            <div id="fountainG_3" class="fountainG">
+                            </div>
+                            <div id="fountainG_4" class="fountainG">
+                            </div>
+                            <div id="fountainG_5" class="fountainG">
+                            </div>
+                            <div id="fountainG_6" class="fountainG">
+                            </div>
+                            <div id="fountainG_7" class="fountainG">
+                            </div>
+                            <div id="fountainG_8" class="fountainG">
+                            </div>
+                        </div>
+
+                        <div class="img" id="divImg">
+
+                            <from id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >
                                 <input type="file" hidden name="image" accept="image/*" id="image" style="display:none;"
                                        onchange="excptions(1)" autofocus="autofocus"/>
                                 <input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"
@@ -56,7 +111,7 @@
                             <div style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"
                                  onclick="jQuery('#image').click()">
                                 <img src="" id="imgwechar"
-                                     style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"/>
+                                     style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center" />
                             </div>
 
                             <from id="fileForm1" name="fileForm1" method="POST" enctype="multipart/form-data">
@@ -224,17 +279,19 @@
       url = getObjectURL($("#image1").get(0).files[0]);
     }
 
-//    if(type!=2){
-//        analyticCode.getUrl('file-url', $("#image").get(0), function (url1, url2) {
-//            if (url1 == errorCode) {
-//                showMessage("请上传正确的二维码！");
-//                return;
-//            } else {
-//                $("#wxAdd").val(url1);
-//            }
-//        });
-//    }
-
+    if(type!=2){
+        analyticCode.getUrl('file-url', $("#image").get(0), function (url1, url2) {
+            if (url1 == errorCode) {
+                showMessage("请上传正确的二维码！");
+                return;
+            } else {
+                console.log(url1);
+                $("#wxAdd").val(url1);
+            }
+        });
+    }
+//
+    showDiv();
 
     $.ajax({
       url: API + '/fine/stg/qiniuUpload',
@@ -261,9 +318,23 @@
             wxQrCodeAds = rsDataJson.qiNiu.url;
             $('.img').find("#imgsmall").attr("src", wxQrCodeAds);
           }
+
+            hideDiv();
         }
       }
     });
+
   }
+
+  function showDiv() {
+      document.getElementById("fountainG").style.display ="";
+      document.getElementById("divImg").style.display ="none";
+  };
+
+  function hideDiv(){
+      document.getElementById("fountainG").style.display ="none";
+      document.getElementById("divImg").style.display ="";
+  };
+
 </script>
 </html>

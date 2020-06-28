@@ -113,7 +113,7 @@
             <p>1、通过的二维码分享用户所产生的收益叫直推奖励。</p>
             <p>2、奖励额度为直推人员所充值的0.2% 。</p>
             <p>3、获取直推奖励必须每天自己拥有一笔充值交易。</p>
-            <p>4、一日一清，发放时间为当日 00:00:01 根据当日总额发放总体奖励。</p>
+            <p>4、一日一清，发放时间为当日 01:00:00 根据当日总额发放总体奖励。</p>
         </div>
         <span>确定</span>
     </div>
@@ -148,62 +148,14 @@
     <div id="divData">
 
     </div>
-    <!--<div class="h_list">-->
-        <!--<p class="h_list_top">推荐时间：1920.11.09 12:11</p>-->
-        <!--<div class="h_list_bottom">-->
-            <!--<div class="h_list_left">-->
-                <!--<img class="list_item">-->
-            <!--</div>-->
-            <!--<div class="h_list_center">-->
-                <!--<div class="h_title">孔明</div>-->
-                <!--<div class="h_desc">我是描述啊</div>-->
-            <!--</div>-->
-            <!--<div class="h_list_right">-->
-                <!--<div class="h_title">我已得收益</div>-->
-                <!--<div class="h_desc">2000元</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="h_list">-->
-        <!--<p class="h_list_top">推荐时间：1920.11.09 12:11</p>-->
-        <!--<div class="h_list_bottom">-->
-            <!--<div class="h_list_left">-->
-                <!--<img class="list_item">-->
-            <!--</div>-->
-            <!--<div class="h_list_center">-->
-                <!--<div class="h_title">孔明</div>-->
-                <!--<div class="h_desc">我是描述</div>-->
-            <!--</div>-->
-            <!--<div class="h_list_right">-->
-                <!--<div class="h_title">我已得收益</div>-->
-                <!--<div class="h_desc">2000元</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="h_list">-->
-        <!--<p class="h_list_top">推荐时间：1920.11.09 12:11</p>-->
-        <!--<div class="h_list_bottom">-->
-            <!--<div class="h_list_left">-->
-                <!--<img class="list_item">-->
-            <!--</div>-->
-            <!--<div class="h_list_center">-->
-                <!--<div class="h_title">孔明</div>-->
-                <!--<div class="h_desc">我是描述</div>-->
-            <!--</div>-->
-            <!--<div class="h_list_right">-->
-                <!--<div class="h_title">我已得收益</div>-->
-                <!--<div class="h_desc">2000元</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div id="divPage"  align="center"></div>
 </div>
 <!--尾部-->
 <div class="empty_footer"></div>
 <footer>
     <div class="item" onclick="window.location.href='homepage.html'">
         <i class="fa fa-home"></i>
-        <span>首页</span>
+        <span>账户</span>
     </div>
     <div class="item active" onclick="window.location.href='rob_order.html'">
         <i class="fa fa-user-secret"></i>
@@ -211,11 +163,16 @@
     </div>
     <div class="item" onclick="window.location.href='my.html'">
         <i class="fa fa-user-o"></i>
-        <span>我的</span>
+        <span>钱包</span>
     </div>
 </footer>
 </body>
 <script>
+    let count =0;
+    let  page = 1;
+    queryUserInfo();
+    queryTeamInfo(page);
+    let  html ="";
   $(function () {
     let btn = $('.page3 header div i:last-child')
     let obj = $('.alert');
@@ -227,118 +184,140 @@
       obj.css('display', 'none')
     })
 
-      queryUserInfo();
-      queryTeamInfo();
-
-      function queryUserInfo(){
-          if(storage.getItem("yf_token")==""){
-              showMessage('token 失效，请重新登陆！');
-              signout();
-          }
-          let timestamp = Date.parse(new Date());
-          let base64 = `{"token": "${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-          console.log("参数："+base64);
-          let base = new Base64();
-          let result = base.encode(base64);
-          let jsonData = JSON.stringify({"jsonData":result});
-          $.ajax({
-              url: API+'/fine/did/getData',
-              type: 'post',
-              dataType: 'json',
-              contentType:"application/json",
-              data:jsonData,
-              // 成功执行
-              success (data) {
-                  let code = data.resultCode;
-                  if(code !== "0"){
-                      showMessage(data.message);
-                  }else {
-                      let base64 = data.data.jsonData;
-                      let base = new Base64();
-                      let rsData= base.decode(base64);
-                      let rsDataJson = JSON.parse(rsData);
-                      Callback(rsDataJson.dataModel);
-                  }
-              }
-          })
-      }
 
 
-
-      function   Callback(data){
-          if(data.length!=0){
-              $("#totalDirectNum").html("￥"+data.totalRechargeProfit);
-              $("#totalDirectProfit").html("￥"+data.totalGradeProfit);
-          }else{
-              $("#totalDirectNum").html("￥ 0");
-              $("#totalDirectProfit").html("￥ 0");
-          }
-      }
-
-
-      function queryTeamInfo(){
-          if(storage.getItem("yf_token")==""){
-              showMessage('token 失效，请重新登陆！');
-              signout();
-          }
-          let timestamp = Date.parse(new Date());
-          let base64 = `{"token": "${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
-          console.log("参数："+base64);
-          let base = new Base64();
-          let result = base.encode(base64);
-          let jsonData = JSON.stringify({"jsonData":result});
-          $.ajax({
-              url: API+'/fine/reward/getShareDataList',
-              type: 'post',
-              dataType: 'json',
-              contentType:"application/json",
-              data:jsonData,
-              // 成功执行
-              success (data) {
-                  let code = data.resultCode;
-                  if(code !== "0"){
-                      showMessage(data.message);
-                  }else {
-                      let base64 = data.data.jsonData;
-                      let base = new Base64();
-                      let rsData= base.decode(base64);
-                      let rsDataJson = JSON.parse(rsData);
-                      CallbackTeam(rsDataJson);
-                  }
-              }
-          })
-      }
-
-      function  CallbackTeam(dataModel) {
-          let  html ="";
-          if(dataModel.rowCount!=0){
-             for(let i=0;i<dataModel.rowCount;i++){
-                 html+="<div class=\"h_list\">";
-                     html+="<p class=\"h_list_top\">推荐时间："+dataModel.shareList[i].shareTime+"</p>";
-                     html+="<div class=\"h_list_bottom\">";
-                         html+="<div class=\"h_list_left\">";
-                             html+="<img class=\"list_item\" src='img/order/touxiang.svg'>";
-                         html+="</div>";
-                         html+="<div class=\"h_list_center\">";
-                             html+="<div class=\"h_title\">"+dataModel.shareList[i].acNum+"</div>";
-                             html+="<div class=\"h_desc\">"+dataModel.shareList[i].nickname+"</div>";
-                         html+="</div>";
-                         html+="<div class=\"h_list_right\">";
-                             html+="<div class=\"h_title\">我已得收益</div>";
-                             html+="<div class=\"h_desc\">"+dataModel.shareList[i].profit+"</div>";
-                         html+="</div>";
-                     html+="</div>";
-                 html+="</div>";
-             }
-          }
-
-          $("#divData").html(html);
-
-      }
 
 
   })
+
+
+
+    function queryUserInfo(){
+        if(storage.getItem("yf_token")==""){
+            signout();
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        console.log("参数："+base64);
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/did/getData',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code !== "0"){
+                    showMessage(data.message);
+                }else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData= base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+                    Callback(rsDataJson.dataModel);
+                }
+            }
+        })
+    }
+
+
+
+    function   Callback(data){
+        if(data.length!=0){
+            $("#totalDirectNum").html("￥"+data.totalRechargeProfit);
+            $("#totalDirectProfit").html("￥"+data.totalGradeProfit);
+        }else{
+            $("#totalDirectNum").html("￥ 0");
+            $("#totalDirectProfit").html("￥ 0");
+        }
+    }
+
+
+
+    function  CallbackTeam(dataModel) {
+
+        count = count+dataModel.shareList.length;
+        for(let i=0;i<dataModel.shareList.length;i++){
+
+            html+="<div class=\"h_list\">";
+            html+="<p class=\"h_list_top\">推荐时间："+dataModel.shareList[i].shareTime+"</p>";
+            html+="<div class=\"h_list_bottom\">";
+                html+="<div class=\"h_list_left\">";
+                html+="<img class=\"list_item\" src='img/order/touxiang.svg'>";
+                html+="</div>";
+            html+="<div class=\"h_list_center\">";
+                  html+="<div class=\"h_title\">"+dataModel.shareList[i].acNum+"</div>";
+                  html+="<div class=\"h_desc\">"+dataModel.shareList[i].nickname+"</div>";
+            html+="</div>";
+            html+="<div class=\"h_list_right\">";
+                  html+="<div class=\"h_title\">我已得收益</div>";
+                  html+="<div class=\"h_desc\">"+dataModel.shareList[i].profit+"</div>";
+            html+="</div>";
+            html+="</div>";
+            html+="</div>";
+        }
+
+
+
+        $("#divData").html(html);
+
+        let  divPage ="";
+        page++;
+        if(count>=dataModel.rowCount){
+            divPage+="<div id=\"divPage\"  align=\"center\"><span></span></div>  ";
+        }else{
+            divPage+="<div id=\"divPage\"  align=\"center\" onclick='queryTeamInfo("+page+")'><a>下一页</a><span></span></div>  ";
+        }
+
+        $("#divPage").html(divPage);
+    }
+
+
+    function queryTeamInfo(page){
+        if(storage.getItem("yf_token")==""){
+            showMessage('token 失效，请重新登陆！');
+            signout();
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber":${page},"pageSize":${10},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+//	        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        console.log("参数："+base64);
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/reward/getShareDataList',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code==-1){
+                    storage.setItem("yf_token","");
+                    signout();
+                }
+                if(code !== "0"){
+                    showMessage(data.message);
+                }else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData= base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+                    if(rsDataJson.shareList==undefined||rsDataJson.shareList=="undefined"){
+                        return;
+                    }
+
+                    CallbackTeam(rsDataJson);
+                }
+            }
+        })
+    };
 </script>
 </html>

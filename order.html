@@ -113,7 +113,7 @@
         <div class="back">
             <i class="fa fa-angle-left"></i>
         </div>
-        <p>充值记录</p>
+        <p>订单记录</p>
         <span></span>
     </header>
 </div>
@@ -123,15 +123,15 @@
             <li>
                 <a class="tab-active" data-index="4" href="#" id="data4">成功订单</a>
             </li>
-            <li>
-                <a data-index="2" href="#" id="data2">超时订单</a>
-            </li>
-            <li>
-                <a data-index="1" href="#" id="data1">发起订单</a>
-            </li>
-            <li>
-                <a data-index="3" href="#" id="data3">有质疑订单</a>
-            </li>
+            <!--<li>-->
+                <!--<a data-index="2" href="#" id="data2">超时订单</a>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<a data-index="1" href="#" id="data1">发起订单</a>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<a data-index="3" href="#" id="data3">有质疑订单</a>-->
+            <!--</li>-->
         </ul>
         <div class="tabs-content-placeholder">
             <div class="tab-content-active">
@@ -221,28 +221,31 @@
             let curdayEndMonth = "";
             let curdayEndDay = "";
 
-            if (time.getMonth().toString().length = 1) {
+            if (time.getMonth().toString().length == 1) {
                 curdayEndMonth = "0" + (time.getMonth() + 1);
             } else {
                 curdayEndMonth = (time.getMonth() + 1);
             }
-            if (time.getDate().toString().length = 1) {
+            if (time.getDate().toString().length == 1) {
                 curdayEndDay = "0" + time.getDate().toString();
             } else {
                 curdayEndDay = time.getDate().toString();
             }
 
-            if (btime.getMonth().toString().length = 1) {
+            if (btime.getMonth().toString().length == 1) {
                 curdayStartMonth = "0" + (btime.getMonth() + 1);
             } else {
                 curdayStartMonth = (btime.getMonth() + 1);
             }
 
-            if (btime.getDate().toString().length = 1) {
+
+
+            if (btime.getDate().toString().length == 1) {
                 curdayStartDay = "0" + btime.getDate().toString();
             } else {
                 curdayStartDay = btime.getDate().toString();
             }
+
             let timestamp = Date.parse(new Date());
 
             curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
@@ -251,6 +254,7 @@
             let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": ${type},"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
             let base = new Base64();
+            console.log(base64);
             let result = base.encode(base64);
             let jsonData = JSON.stringify({"jsonData": result});
             $.ajax({

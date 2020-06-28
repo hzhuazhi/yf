@@ -41,14 +41,22 @@
 			<!--</div>-->
 			<div class="copy">
 				<div class="png">
-					<p>收款户名: <span id="accountName"> &nbsp;</span></p>
+
+					<p>收款户名: <span id="accountName"> &nbsp;&nbsp;&nbsp;&nbsp;</span> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<button id="butBankCard1" onclick="copy()">申诉</button></p>
 					<p>收款银行: <span id="bankName"> &nbsp;</span></p>
-					<p>收款账号: <span id="bankCard"> &nbsp;</span>&nbsp;&nbsp;&nbsp;<button id="butBankCard" onclick="copy()">复制</button></p>
+					<p>收款账号: <span id="bankCard"> &nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<button id="butBankCard" onclick="copy()">复制</button></p>
                     <p>充值金额: <span id="orderMoney"> &nbsp;</span></p>
-                    <p>匹配金额: <span style="color: #c91e1c;size: 50px" id="distributionMoney"> &nbsp;</span><span style="color: #c91e1c;size: 50px">  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;    ***按该金额进行充值</span></p>
+                    <p>匹配金额: <span style="color: #c91e1c;size: 50px" id="distributionMoney"></span><span style="color: #c91e1c;size: 50px"></span></p>
+					<p>充值有效时间: <span id="invalidTime" style="color: #c9431e;size: 50px"> &nbsp;</span></p>
+					<p></p>
+					<p><span style="color: #c9431e;size: 50px">如超过有效时间会导致支付无效，转账确保有效充值时间没有失效,在进行充值</span></p>
+
 				</div>
 			</div>
-
+			<div align="center">
+				<h4><span style="color: #c9431e;size: 50px">转账方式：只允许  “银行卡” 转  “银行卡”</span></h4>
+				<h3><span style="color: #c9431e;size: 50px">如不遵守，后果自负</span></h3>
+			</div>
 			<!--<div  width="80%" align="center" >111-->
 				<!--<div width="100%" align="right"> <a  >  提交申述记录</a> </div>-->
 
@@ -151,6 +159,7 @@
                 $("#bankCard").text(data.bankCard);
                 $("#orderMoney").text(data.orderMoney);
                 $("#distributionMoney").text(data.distributionMoney);
+                $("#invalidTime").text(data.invalidTime);
             }
         }
     })

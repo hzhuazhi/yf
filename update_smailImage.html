@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>异常处理</title>
+	<title>小薇商户管理</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/css.css">
@@ -63,20 +63,20 @@
 			<div class="back">
 				<i class="fa fa-angle-left"></i>
 			</div>
-			<p>订单申诉</p>
+			<p>小微商户上传/修改</p>
 			<span></span>
 		</header>
 		<div class="empty"></div>
 		<div class="chongzhi">
 			<div class="zhuce" align="center">
 				<!--<div class="input">-->
-				<h4>订单号：<span id="orderNo" style="color: #eba04b;"></span></h4>
+				<h4>微信昵称：<span id="nikeName" style="color: #eba04b;"></span></h4>
 				<!--</div>-->
 			</div>
 
 			<div class="input">
 				<div class="upload_img">
-					<div  align="center"><h4>上传已支付转账凭证图片</h4></div>
+					<div  align="center"><h4>上传新的小微商户图片</h4></div>
 
                     <div class="img">
 						<img src=""  style="display: flex;justify-content: center;align-items: center;height: 24rem;text-align: center"  onclick="jQuery('#image').click()" />
@@ -86,13 +86,10 @@
 						<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"/>
 					</from>
                 </div>
-
 				<br>
-
 				<div align="center">
-					<spen style="color: #eb353c;">**请上传您的银行卡转账成功的截图记录，否在申诉无效！</spen>
+					<spen style="color: #eb353c;">**上传前再去截屏小微商户码，可以提高审核通过率！</spen>
 				</div>
-
 				<div class="btn1">
 					<button>提交</button>
 				</div>
@@ -103,21 +100,29 @@
 <script type="text/javascript">
 
 	let    url ="";
-	let    order_no ="";
+	let    name ="";
+	let    id=""
     $(function(){
-        var test =window.location.href;
-        var orderNo=test.split("?orderNo=");
-        if(orderNo[1]==undefined||orderNo[1]=="undefined"){
+        let test =window.location.href;
+        let info=test.split("?");
+
+//        let  toInfo =decodeURIComponent(info);
+        if(info[1]==undefined||info[1]=="undefined"){
             showMessage("订单号为空！");
             history.back(-1);
 		}else{
-            order_no=orderNo[1];
-            $("#orderNo").text(orderNo[1]);
+            infos=info[1];
+            let  infoBean  = infos.split("&");
+
+			name=infoBean[0].split("=");
+			id=infoBean[1].split("=");
+
+            $("#nikeName").text(decodeURI(name[1]));
+//            $("#orderNo").text(infoBean[1].split("id="));
+//            $("#orderNo").text(infoBean[1]);
+
+
 		}
-
-
-
-
 
         $(function(){
             $(".back").on('click', function()  {
@@ -126,8 +131,8 @@
 
             $(".btn1").on('click', function()  {
 
-                if(order_no==""){
-					showMessage("请选择好上传图片再进行保存！");
+                if(name==""||id[1]==""||id[1]==undefined||name==undefined){
+					showMessage("无效的操作！");
 					return;
 				}else if(url==""){
                     showMessage("请选择好上传图片再进行保存！");
@@ -135,14 +140,14 @@
 				}
 
                 let timestamp = Date.parse(new Date());
-                let base64 = `{"token": "${storage.getItem("yf_token")}","orderNo":"${order_no}","pictureAds":"${url}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+                let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id[1]},"wxQrCodeAds":"${url}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
                 //        let base64 = `{"token": "${storage.getItem("yf_token")}","acType": ${acType},"businessType": ${businessType},"mmQrCode": "${mmQrCode}","wxQrCodeAds": "${wxQrCodeAds}","payee": "${payee}","acNum": "${acNum}","acName": "${acName}","password": "${password}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
                 console.log("参数："+base64);
                 let base = new Base64();
                 let result = base.encode(base64);
                 let jsonData = JSON.stringify({"jsonData":result});
                 $.ajax({
-                    url: API+'/fine/recharge/appeal',
+                    url: API+'/fine/collAc/updateWxQrCode',
                     type: 'post',
                     dataType: 'json',
                     contentType:"application/json",
@@ -158,6 +163,7 @@
                             showMessage(data.message);
                         }else {
                             showMessage("保存成功！");
+                            window.location.href = 'homepage.html';
                         }
                     }
                 })
@@ -165,40 +171,7 @@
 
         })
 
-
-
-
-
-
-        function Callback(data) {
-            if(data.length!=0){
-                $("#accountName").text(data.accountName);
-                $("#bankName").text(data.bankName);
-                $("#bankCard").text(data.bankCard);
-                $("#orderMoney").text(data.orderMoney);
-                $("#distributionMoney").text(data.distributionMoney);
-            }
-        }
     })
-
-    function copy() {
-        let  bankCard =$("#bankCard").html();
-        if(bankCard==""||bankCard==undefined||bankCard=="undefined"){
-            showMessage("卡号信息缺失不能复制！");
-            return;
-		}
-
-        var oInput = document.createElement('input');
-        oInput.value = bankCard;
-        document.body.appendChild(oInput);
-        oInput.select(); // 选择对象2113
-        document.execCommand("Copy"); // 执行浏览器复5261制4102命令
-        oInput.className = 'oInput';
-        oInput.style.display='none';
-        showMessage("复制成功!");
-    }
-
-
 
     function excptionImage() {
         var formData = new FormData();
@@ -229,12 +202,8 @@
                     $('.img').find('img').attr("src",rsDataJson.qiNiu.url);
                 }
 			}
-
-
         });
 
     }
-
-//    let copy = $('.chongzhi .copy .png p');
 </script>
 </html>

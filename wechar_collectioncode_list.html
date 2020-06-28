@@ -50,6 +50,65 @@
         table>tbody>tr:last-of-type{
             border-bottom: 1px solid #ddd;
         }
+
+
+
+
+         .h_wrap {
+             background-color: rgb(247, 244, 242);
+             padding: 10px;
+         }
+
+        .h_list_top {
+            padding: 10px 0 0 10px;
+        }
+
+        .h_t {
+            margin: 10px 0;
+            padding-bottom: 10px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .h_list {
+            width: 100%;
+            height: 11rem;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+
+        .h_list_bottom {
+            display: flex;
+        }
+
+        .h_list_left {
+            width: 8rem;
+            padding: 0 10px;
+        }
+
+        .list_item {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            /*background: url("img/order/touxiang.svg") no-repeat;*/
+        }
+
+        .h_list_center {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .h_title {
+            margin-bottom: 20px;
+        }
+
+        .h_list_right {
+            width: 10rem;
+            text-align: right;
+            font-size: 17px;
+            padding: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -63,15 +122,7 @@
     </header>
     <div class="empty"></div>
     <div class="shoukuan">
-        <!-- <div class="up">
-            <i class="fa fa-qrcode"></i>
-        </div> -->
-        <!-- <div class="link">
-            <div class="list">
-                <div class="item"><i class="fa fa-book"></i>教程攻略</div>
-                <div class="item"><i class="fa fa-lock"></i>安全密码</div>
-            </div>
-        </div> -->
+
         <div class="down">
             <div class="con">
                 <div class="tab">
@@ -80,68 +131,9 @@
                     </div>
                 </div>
                 <br>
+
                 <div class="content">
-
-                    <!--<div class="upload active" id="tableList">-->
-                    <!--<div class="container">-->
-
-                    <!--</div>-->
                     <table class="table" id="datas">
-                        <tr>
-                            <th width="20%">微信名</th>
-                            <th width="17%">备注</th>
-                            <th width="20%">审核状态</th>
-                            <th width="20%">开启状态</th>
-                            <th width="20%">操作</th>
-                        </tr>
-                        <!--<tr>-->
-                            <!--<td><input class="h_name" type="text" size="8" value="11111"></td>-->
-                            <!--<td title="actName1"><span class="h_nameTwo">actName1</span></td>-->
-                            <!--<td title="通过" class="h_status">通过</td>-->
-                            <!--<td>-->
-                                <!--<label class="bui-switch-label bui-switch-anim">-->
-                                <!--<input type="checkbox" name="s" checked /><i class="bui-switch"></i>-->
-
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<span class="h_opt">-->
-                                <!--<i class="glyphicon glyphicon-check"></i>-->
-                                <!--<i class="glyphicon glyphicon-remove"></i>-->
-                                <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><input class="h_name" type="text" size="8"></td>-->
-                            <!--<td><span class="h_nameTwo">actName1</span></td>-->
-                            <!--<td class="h_status">通过</td>-->
-                            <!--<td>-->
-                                <!--<label class="bui-switch-label bui-switch-anim">-->
-                                    <!--<input type="checkbox" name="s" checked /><i class="bui-switch"></i>-->
-                                <!--</label>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<span class="h_opt">-->
-                                <!--<i class="glyphicon glyphicon-check"></i>-->
-                                <!--<i class="glyphicon glyphicon-remove"></i>-->
-                                <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><input class="h_name" type="text" size="8"></td>-->
-                            <!--<td title="actName1"><span class="h_nameTwo">actName1</span></td>-->
-                            <!--<td title="待审核" class="h_status">待审核</td>-->
-                            <!--<td>-->
-                                <!--<label class="bui-switch-label bui-switch-anim">-->
-                                    <!--<input type="checkbox" name="s" checked /><i class="bui-switch"></i>-->
-                                <!--</label>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<span class="h_opt">-->
-                                <!--<i class="glyphicon glyphicon-check"></i>-->
-                                <!--<i class="glyphicon glyphicon-remove"></i>-->
-                                <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
                     </table>
                 </div>
                 <div>
@@ -149,36 +141,8 @@
                 </div>
             </div>
         </div>
-        <!--<div class="jieshi">-->
-        <!--<p>* 1.收款码请务必添加一张不设置金额的通用二维码，通用二维码支持个人码,商用码，聚合码</p>-->
-        <!--<p>* 2.同一微信收款码切勿重复上传，若造成金额损失，平台概不负责</p>-->
-        <!--<p>* 3.为提高成功率，连续收款失败四次及以上，系统将自动删除对应二维码，请及时检查</p>-->
-        <!--</div>-->
     </div>
 </div>
-<!--<div class="container">-->
-<!--<div class="row clearfix">-->
-<!--<div class="col-xs-3 col-sm-3 column">-->
-<!--<div>微信名</div>-->
-<!--<div><input type="text" class="h_name" id="name"></div>-->
-<!--</div>-->
-<!--<div class="col-xs-2 col-sm-3 column">-->
-<!--<div>备注</div>-->
-<!--<div>ggggg</div>-->
-<!--</div>-->
-<!--<div class="col-xs-3 col-sm-3 column">-->
-<!--<div>审核状态</div>-->
-<!--<div>ggggg</div>-->
-<!--</div>-->
-<!--<div class="col-xs-2 col-sm-3 column">-->
-<!--<div>状态</div>-->
-<!--<div>ggggg</div>-->
-<!--</div>-->
-<!--<div class="col-xs-2 col-sm-3 column">-->
-<!--<div>操作</div>-->
-<!--<div>ggggg</div>-->
-<!--</div>-->
-<!--</div>-->
 </div>
 </div>
 </body>
@@ -218,6 +182,7 @@
           let rsData = base.decode(base64);
           let rsDataJson = JSON.parse(rsData);
           if(rsDataJson.dataList==undefined||rsDataJson.dataList==""){
+              $("#datas").html("");
                 return;
           }
 
@@ -230,84 +195,49 @@
 
   function Callback(data) {
 
+//      let table ="";
     let table = "<table class=\"table\" id=\"datas\" >";
-    table += "<tr>";
-    table += "<th width=\"20%\">微信名</th>";
-    table += "<th width=\"17%\">备注</th>";
-    table += "<th width=\"20%\">审核状态</th>";
-    table += "<th width=\"20%\">开启状态</th>";
-    table += "<th width=\"20%\">操作</th>";
-    table += "</tr>";
-
 
     if (data.length != 0) {
-      let row = $("#template").clone();
+//      let row = $("#template").clone();
       for (let i = 0; i < data.length; i++) {
-        table += "<tr>";
-        let inpName = "inp" + i;
+          let inpName = "inp" + i;
+          table +='<tr>';
+                  table +='<td >';
+                      table +='<div>微信昵称：<input id="'+ inpName + '"  value="'+data[i].payee+'" size="6"></div>';
+                      table +='    <div>备&nbsp;&nbsp;&nbsp;注 ：&nbsp;&nbsp;&nbsp;  '+data[i].acName+'</div>';
+                      if (data[i].checkStatus == 1) {
+                          table +=' <div>审核状态：待审核</div>';
+                      }else if(data[i].checkStatus == 2){
+                          table +=' <div>审核状态：审核失败</div>';
+                      }else if(data[i].checkStatus == 3){
+                          table +=' <div>审核状态：审核成功</div>';
+                      }
+                      table += '<div>审核结果：'+data[i].checkInfo+'</div>';
+                  table +=' </td>';
+                  table +=' <td>';
+                      table +='<div align="right">';
+                      table +='    <i class="glyphicon glyphicon-check" onclick="updateInfn('+ data[i].id + ',' + inpName + ')"></i>';
+                      table +='    <i class="glyphicon glyphicon-remove" onclick="deleteInfn('+ data[i].id + ')"></i>';
+                      table +='   </div>';
 
+//                      table +=' <div align="right">&nbsp;</div>';
+                      table +='<div align="right">';
 
-//        let inp_acNumHtml = '<input type="text" id=' + inpName + ' size="8" value=' + data[i].payee + '>';
-        let acNumHtml = '<td><input class="h_name" id=' + inpName + ' type="text" size="8" value=' + data[i].payee + '></td>';
-        let acNameHtml = '<td  onmousemove="sendMsg(\''+data[i].acName+ '\')"><span class="h_nameTwo">'+data[i].acName+'</span></td>';
-
-
-        let checkStatus = "";
-        if (data[i].checkStatus == 1) {
-          checkStatus += '<td class="h_status"  onmousemove="sendMsg(\'待审核\')">待审核</td>';
-        } else if (data[i].checkStatus == 2) {
-          checkStatus += '<td class="h_status" onmousemove="sendMsg('+data[i].checkInfo+')">" + data[i].checkInfo + "</td>';
-        } else if (data[i].checkStatus == 3) {
-//          checkStatus += '<td class="h_status" onmousemove="sendMsg("审核通过")">审核通过</td>';
-          checkStatus += '<td class="h_status" onmousemove="sendMsg(\'审核通过\')">审核通过</td>';
-        }
-        var checkboxHTML = '';
-        if (data[i].useStatus == 1) {
-           checkboxHTML+= '<td>';
-            checkboxHTML += ' <span class="h_opt">';
-                  checkboxHTML += '<label class="bui-switch-label bui-switch-anim">';
-                  checkboxHTML += '<input type="checkbox" name="s" checked onchange="updateStatus(' + data[i].id + ',2)" /><i class="bui-switch"></i>';
-                  checkboxHTML += ' </label>';
-            checkboxHTML += '</span>';
-//              checkboxHTML += '</label>';
-//              checkboxHTML += '  <input type="checkbox" name="s" checked onchange="updateStatus(' + data[i].id + ',2)"/><i class="bui-switch"></i>';
-//              checkboxHTML += '</label>';
-          checkboxHTML += '</td>';
-
-//          row.find("#daySwitch").html(checkboxHTML);
-
-        } else if (data[i].useStatus == 2) {
-            checkboxHTML+= '<td>';
-            checkboxHTML += ' <span class="h_opt">';
-            checkboxHTML += '<label class="bui-switch-label bui-switch-anim">';
-            checkboxHTML += '<input type="checkbox" name="s" onchange="updateStatus(' + data[i].id + ',1)" /><i class="bui-switch"></i>';
-            checkboxHTML += ' </label>';
-            checkboxHTML += '</span>';
-//              checkboxHTML += '</label>';
-//              checkboxHTML += '  <input type="checkbox" name="s" checked onchange="updateStatus(' + data[i].id + ',2)"/><i class="bui-switch"></i>';
-//              checkboxHTML += '</label>';
-            checkboxHTML += '</td>';
+                      table +='   <label class="bui-switch-label bui-switch-anim">';
+                      if(data[i].useStatus == 1){
+                          table +='   <input type="checkbox" name="s" checked onchange="updateStatus(' + data[i].id + ',2)" /><i class="bui-switch"></i>';
+                      }else{
+                          table +='   <input type="checkbox" name="s"  onchange="updateStatus(' + data[i].id + ',1)"/><i class="bui-switch"></i>';
+                      }
+                      table +='   </label>';
+                      table +='   </div>';
+//                      table +='   <div align="right"><a>&nbsp;</a></div>';
+                      table +='   <div align="right"><i class="glyphicon glyphicon-camera" onclick="updateSmall(' + data[i].id + ',\''+data[i].payee+'\')"></i></div>';
+                  table +='   </td>';
+          table +='   </tr>';
 
         }
-        let html = "";
-        html += ' <td>';
-            html += ' <span class="h_opt">';
-                html += ' <i class="glyphicon glyphicon-check" onclick="updateInfn(' + data[i].id + ',' + inpName + ')"></i>';
-                html += ' <i class="glyphicon glyphicon-remove" onclick="deleteInfn(' + data[i].id + ')"></i>';
-            html += ' </span>';
-        html += ' </td>';
-
-//        html += ' <i class="glyphicon glyphicon-remove" onclick="deleteInfn(' + data[i].id + ')"></i>';
-        table += "<tr>";
-            table +=acNumHtml;
-            table += acNameHtml;
-            table += checkStatus;
-            table += checkboxHTML;
-            table += html;
-        table += "</tr>";
-//                row.find("#operation").html(html);
-//                row.appendTo("#datas");
-      }
       table += "</table>";
       $("#datas").html(table);
     }
@@ -317,7 +247,7 @@
   //操作删除记录
   function deleteInfn(id) {
     if (!confirm("确定要删除吗?")) {
-      return;
+        return;
     }
 
     if (id == 0 || id == "") {
@@ -329,6 +259,7 @@
     let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     let base = new Base64();
     let result = base.encode(base64);
+    console.log(result)
     let jsonData = JSON.stringify({"jsonData": result});
     $.ajax({
       url: API + '/fine/collAc/updateUse',
@@ -354,6 +285,7 @@
       showMessage("该微信名没有进行修改，不能进行保存");
       return;
     }
+
     let timestamp = Date.parse(new Date());
     let base64 = `{"token": "${storage.getItem("yf_token")}","id": ${id},"payee":"${wecharName.value}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     console.log("参数：" + base64);
@@ -386,9 +318,10 @@
 
 
   function updateStatus(id, type) {
-    if (!confirm("确定要修改吗?")) {
-      return;
-    }
+      if (!confirm("确定要修改吗?")) {
+          return;
+      }
+
     let timestamp = Date.parse(new Date());
     let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"useStatus": ${type},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
     let base = new Base64();
@@ -414,9 +347,10 @@
     })
   }
 
-  function sendMsg(value) {
-//      alert(1)
-      showMessage(value);
+
+  function updateSmall(id,name){
+      window.location.href = 'update_smailImage.html?name='+name+'&id='+id;
   }
+
 </script>
 </html>

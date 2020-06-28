@@ -159,24 +159,26 @@
             let curdayEndMonth = "";
             let curdayEndDay = "";
 
-            if (time.getMonth().toString().length = 1) {
+            if (time.getMonth().toString().length == 1) {
                 curdayEndMonth = "0" + (time.getMonth() + 1);
             } else {
                 curdayEndMonth = (time.getMonth() + 1);
             }
-            if (time.getDate().toString().length = 1) {
+            if (time.getDate().toString().length == 1) {
                 curdayEndDay = "0" + time.getDate().toString();
             } else {
                 curdayEndDay = time.getDate().toString();
             }
 
-            if (btime.getMonth().toString().length = 1) {
+            if (btime.getMonth().toString().length == 1) {
                 curdayStartMonth = "0" + (btime.getMonth() + 1);
             } else {
                 curdayStartMonth = (btime.getMonth() + 1);
             }
 
-            if (btime.getDate().toString().length = 1) {
+
+
+            if (btime.getDate().toString().length == 1) {
                 curdayStartDay = "0" + btime.getDate().toString();
             } else {
                 curdayStartDay = btime.getDate().toString();
@@ -185,9 +187,11 @@
 
             curdayStart = btime.getFullYear() + curdayStartMonth + curdayStartDay;
             curdayEnd = time.getFullYear() + curdayEndMonth + curdayEndDay;
-            let base64 = `{"token": "${storage.getItem("yf_token")}","curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            let base64 = `{"token": "${storage.getItem("yf_token")}","orderStatus": 3,"curdayStart": ${curdayStart},"curdayEnd":${curdayEnd},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
 
-            let base = new Base64();
+            console.log(base64);
+
+           let base = new Base64();
             let result = base.encode(base64);
             let jsonData = JSON.stringify({"jsonData": result});
             $.ajax({
@@ -199,6 +203,10 @@
                 // 成功执行
                 success(data) {
                     let code = data.resultCode;
+                    if(code==-1){
+                        storage.setItem("yf_token","");
+                        signout();
+                    }
                     if (code !== "0") {
                         showMessage(data.message);
                     } else {
@@ -207,7 +215,7 @@
                         let base = new Base64();
                         let rsData = base.decode(base64);
                         let rsDataJson = JSON.parse(rsData);
-                        if (rsDataJson.rowCount == 0) {//没有数据
+                        if (rsDataJson.dataList == undefined||rsDataJson.dataList == "undefined") {//没有数据
                             onDataCallBack();
                             return;
                         }

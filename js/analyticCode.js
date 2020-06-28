@@ -18,7 +18,6 @@
     window.analyticCode = {
         getUrl : function(type,elem,fn){
             let url = null,src = null;
-
             if(type === 'img-url'){
                 url = elem.src;
             }else if(type === 'file-url' && elem.files.length > 0){

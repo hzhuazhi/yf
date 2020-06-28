@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/font-awesome1.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap1.min.css">
+    <link rel="stylesheet" href="css/css1.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1862569_a47k8bou03l.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
+    <script src="js/toast.js"></script>
+</head>
+<body class="index">
+<div class="index">
+    <header>云宝</header>
+    <div class="empty"></div>
+    <div class="method">
+        <div class="item" onclick="isRecharge()">
+            <!--<div class="img" datasrc="/img/wx.jpg"></div>-->
+            <div class="img"><img src="img/weixin.svg" alt="" width="100%" height="100%"></div>
+            <span>微信</span>
+        </div>
+        <!--<div class="item">-->
+            <!--<div class="img"><img class="item_img" src="img/zhifubao.svg" alt="" width="100%" height="100%"></div>-->
+            <!--<span>支付宝</span>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="img"><img class="item_img" src="img/yunshanfu-da.svg" alt="" width="100%" height="100%"></div>-->
+            <!--<span>云闪付</span>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="img"><img class="item_img" src="img/yinhangqia.svg" alt="" width="100%" height="100%"></div>-->
+            <!--<span>银行卡</span>-->
+        <!--</div>-->
+    </div>
+    <div class="adver">
+        <div class="img">用闲钱赚大钱</div>
+        <!--div class="notice_active">
+            <div class="rela">
+                <a href=""><i class="fa fa-bullhorn"></i>用户183****2030提现<span>55.00</span>元</a>
+                <a href=""><i class="fa fa-bullhorn"></i>用户182****2040提现<span>100.00</span>元</a>
+                <a href=""><i class="fa fa-bullhorn"></i>用户181****2050提现<span>150.00</span>元</a>
+            </div>
+        </div -->
+    </div>
+    <div class="caozuo" >
+        <h4>&nbsp;操作指南</h4>
+        <div class="list" style="height: 100%">
+            <!--<div class="item" onclick="window.location.href='page.html'">-->
+                <!--<div class="img"><img class="item_img" src="img/gongzuoliucheng.svg" alt="" width="100%" height="100%"></div>-->
+                <!--<div class="word">-->
+                    <!--<h5>总流程图</h5>-->
+                    <!--<span>总流程图</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="item">-->
+                <!--<div class="img" onclick="window.location.href='page.html'"><img class="item_img" src="img/shoukuan.svg" alt="" width="100%" height="100%"></div>-->
+                <!--<div class="word">-->
+                    <!--<h5>收款渠道</h5>-->
+                    <!--<span>收款渠道教程</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="item" onclick="window.location.href='xwpage.html'">-->
+                <!--<div class="img"><img class="item_img" src="img/huoqu.svg" alt="" width="100%" height="100%"></div>-->
+                <!--<div class="word">-->
+                    <!--<h5>小微获取</h5>-->
+                    <!--<span>小微获取教程</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="item" onclick="window.location.href='rule_page.html'">
+                <div class="img" ><img class="item_img" src="img/chongzhi.svg" alt="" width="100%" height="100%"></div>
+                <div class="word">
+                    <h5>奖励规则</h5>
+                    <span>奖励规则教程</span>
+                </div>
+            </div>
+            <!--<div class="item">-->
+                <!--<div class="img"><img class="item_img" src="img/celve.svg" alt="" width="100%" height="100%"></div>-->
+                <!--<div class="word">-->
+                    <!--<h5>策略规范</h5>-->
+                    <!--<span>平台策略教程</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<div class="empty_footer"></div>
+<footer>
+    <div class="item active" onclick="window.location.href='homepage.html'">
+        <i class="fa fa-home"></i>
+        <span>账户</span>
+    </div>
+    <div class="item ">
+    <!--<div class="item " onclick="window.location.href='rob_order.html'">-->
+        <!--<i class="fa fa-user-secret"></i>-->
+        <!--<span>团队</span>-->
+    </div>
+    <div class="item" onclick="window.location.href='my.html'">
+        <i class="fa fa-user-o"></i>
+        <span>钱包</span>
+    </div>
+</footer>
+</body>
+<script type="text/javascript">
+    var  balance="";
+    if(storage.getItem("yf_token")==""||storage.getItem("yf_token")=="undefined"){
+        signout();
+    }else{
+        isNormal();
+    }
+
+
+
+    function isNormal(){
+        if(storage.getItem("yf_token")==""){
+            signout();
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token":"${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/did/getData',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code==-1){
+                    storage.setItem("yf_token","");
+                    signout();
+                }
+                if(code !== "0"){
+                    showMessage(data.message);
+                }else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData= base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+                    balance=rsDataJson.dataModel.balance
+                }
+            }
+        })
+    }
+
+
+  $(function () {
+    var num = $('.notice_active').find('a').length;
+    if (num > 1) {
+      setInterval('timer(".notice_active")', 4000);
+    }
+  })
+
+  function timer(opj) {
+    $(opj).find('div.rela').animate({
+      marginTop: "-26px"
+    }, 500, function () {
+      $(this).css({
+        marginTop: "0"
+      }).find("a:first").appendTo(this);
+    })
+  }
+  
+  
+  function  isRecharge() {
+      if(balance=="undefined"||balance==""||(balance*1)<10){
+          showMessage("剩余金额少于10元，请充值后再进行操作！");
+          return;
+      }
+      window.location.href='wechar_wallet.html';
+  }
+</script>
+</html>

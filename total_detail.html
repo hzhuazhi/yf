@@ -291,6 +291,7 @@
           // 成功执行
           success (data) {
               let code = data.resultCode;
+
               if(code !== "0"){
                   showMessage(data.message);
               }else {

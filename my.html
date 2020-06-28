@@ -27,7 +27,7 @@
 
 
         <div class="p" align="center" width="50%" >
-           <p id="icode">邀请码：728329</p>
+           <p id="icode">邀请码：</p>
             <p> </p>
             <p> </p>
             <p> </p>
@@ -54,7 +54,7 @@
 			<!--</div>-->
 		</div>
 	</div>
-	<div class="list">
+	<div class="list" >
 		<div class="item"  onclick="window.location.href='total_money.html'">
 			<span >总充值</span>
 			<span id="totalMoney">0.0</span>
@@ -76,7 +76,7 @@
 </div>
 <div class="qianbao_down" >
 	<marquee width="90%" height="50px" direction="left" scrollamount="3">
-		<span style="font-size: 1.2rem;"><i class="fa fa-volume-up"></i>保证金提现需要24小时到账，若有不便敬请谅解!</span>
+		<span style="font-size: 1.2rem;"><i class="fa fa-volume-up"></i><span id="info">&nbsp;无新消息！</span></span>
 	</marquee>
 	<div class="part" style="margin-bottom: 6rem;">
 		<div class="part_con">
@@ -113,10 +113,10 @@
 			</div>
 
 
-            <div class="item promotion">
-                <div class="img "  onclick="queryShareCode()"><img class="item_img" src="img/order/tuiguang.svg" alt="" width="100%" height="100%"></div>
-                <span>推广码</span>
-            </div>
+            <!--<div class="item promotion">-->
+                <!--<div class="img "  onclick="queryShareCode()"><img class="item_img" src="img/order/tuiguang.svg" alt="" width="100%" height="100%"></div>-->
+                <!--<span>推广码</span>-->
+            <!--</div>-->
 
             <div class="item">
                 <div class="img"  onclick="signout()"><img class="item_img" src="img/order/logout.svg" alt="" width="100%" height="100%"></div>
@@ -129,7 +129,7 @@
 <footer>
 	<div class="item" onclick="window.location.href='homepage.html'">
 		<i class="fa fa-home"></i>
-		<span>首页</span>
+		<span>账户</span>
 	</div>
 	<div class="item ">
 	<!--<div class="item " onclick="window.location.href='rob_order.html'">-->
@@ -138,11 +138,79 @@
 	</div>
 	<div class="item active" onclick="window.location.href='my.html'">
 		<i class="fa fa-user-o"></i>
-		<span>我的</span>
+		<span>钱包</span>
 	</div>
 </footer>
 </body>
 <script type="text/javascript">
+
+
+    let  o1=window.setInterval("isNormal()",60*60*1000)
+//    window.clearInterval(o1);
+
+    isNormal();
+    function isNormal(){
+        if(storage.getItem("yf_token")==""){
+            signout();
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token":"${storage.getItem("yf_token")}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData":result});
+        $.ajax({
+            url: API+'/fine/collAc/getNoCheckDataList',
+            type: 'post',
+            dataType: 'json',
+            contentType:"application/json",
+            data:jsonData,
+            // 成功执行
+            success (data) {
+                let code = data.resultCode;
+                if(code==-1){
+                    storage.setItem("yf_token","");
+                    signout();
+                }
+                if(code !== "0"){
+                    showMessage(data.message);
+                }else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData= base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+                    if(rsDataJson.dataList!=""||rsDataJson.dataList==undefined||rsDataJson.dataList=="undefined"){
+                        return;
+					}
+                    backCall(rsDataJson.dataList);
+//                    let str ="" bankName
+
+//                    Callback(rsDataJson.share.shareAddress);
+                }
+            }
+        })
+	}
+
+
+	function  backCall(data){
+        let  str ="";
+        for(let  i=0;i<data.length;i++){
+            str+='  微信昵称为：'+ data[i].payee;
+
+            if(data[i].checkStatus==1){
+                str+= '      审核状态为：待审核';
+			}else if( data[i].checkStatus==2){
+                str+= '      审核状态为：审核失败';
+			}else if(data[i].checkStatus==3){
+                str+= '      审核状态为：审核成功';
+			}
+            str+= '      审核结果：'+data[i].checkInfo;
+            str+= '      请及时处理！';
+
+
+		}
+        $("#info").text(str);
+	}
+
     var url ="";
     let btn = $('.promotion ')
     let obj = $('.alert');
@@ -183,6 +251,10 @@
             // 成功执行
             success (data) {
                 let code = data.resultCode;
+                if(code==-1){
+                    storage.setItem("yf_token","");
+                    signout();
+                }
                 if(code !== "0"){
                     showMessage(data.message);
                 }else {
@@ -234,7 +306,12 @@
       data:jsonData,
       // 成功执行
       success (data) {
-        let code = data.resultCode;
+          let code = data.resultCode;
+          if(code==-1){
+              storage.setItem("yf_token","");
+              signout();
+          }
+
         if(code !== "0"){
             showMessage(data.message);
         }else {
@@ -251,7 +328,7 @@
   function Callback(data) {
     if(data.length!=0){
       $("#balance").html(data.balance);
-      $("#lockMoney").val(data.lockMoney);
+      $("#lockMoney").html(data.lockMoney);
       $("#totalMoney").html(data.totalMoney);
       $("#totalProfit").html(data.totalProfit);
       $("#todayExchange").html(data.todayExchange);

@@ -57,7 +57,7 @@
     </style>
 </head>
 <body>
-    <h3 class="biaoti">Login</h3>
+    <h3 class="biaoti">登 录</h3>
     <div class="zhuce">
         <div class="input">
             <input type="text" id="acNum" placeholder="请输入手机号" onblur="isOphoneNum()">
@@ -79,10 +79,10 @@
 <script>
 
     $(function () {
-
-        if(storage.getItem("yf_token")!=""){
-            window.location.href='homepage.html'
-        }
+        storage.setItem("yf_token","");
+//        if(storage.getItem("yf_token")!=""){
+//            window.location.href='homepage.html'
+//        }
         $("#passWd").keyup(function(event){
             if(event.keyCode ==13){
                 savaLogin();
@@ -120,6 +120,7 @@
                     if(zhuangtai !== "0"){
                         showMessage(data.message);
                     }else {
+
 //                        showMessage('登录成功!');
                         let base64 = data.data.jsonData;
                         let base = new Base64();

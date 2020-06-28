@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微信收款码</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/fountainG.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/API.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/analyticCode.js"></script>
+    <script src="js/llqrcode.js"></script>
+    <script src="js/qrcode.js"></script>
+</head>
+<style>
+    #bg{
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.3;
+        opacity:.30;
+        filter: alpha(opacity=30);
+    }
+
+    #show{
+        display: none;
+        position: absolute;
+        top: 25%;
+        left: 32%;
+        width: 33%;
+        height: auto;
+        padding: 8px;
+        border: 8px solid #E8E9F7;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+    }
+</style>
+<body>
+
+<div class="page" >
+    <header>
+        <div class="back">
+            <i class="fa fa-angle-left"></i>
+        </div>
+        <p>微信收款码</p>
+        <span></span>
+    </header>
+    <div class="empty"></div>
+    <div class="shoukuan"  align="">
+        <!-- <div class="up">
+            <i class="fa fa-qrcode"></i>
+        </div> -->
+        <!-- <div class="link">
+            <div class="list">
+                <div class="item"><i class="fa fa-book"></i>教程攻略</div>
+                <div class="item"><i class="fa fa-lock"></i>安全密码</div>
+            </div>
+        </div> -->
+        <div class="down">
+            <div class="con">
+                <div class="content">
+                    <!--<div id="bg"></div>-->
+                    <div class="upload active" >
+                        <div id="fountainG"  style="display: none" >
+                            <div id="fountainG_1" class="fountainG">
+                            </div>
+                            <div id="fountainG_2" class="fountainG">
+                            </div>
+                            <div id="fountainG_3" class="fountainG">
+                            </div>
+                            <div id="fountainG_4" class="fountainG">
+                            </div>
+                            <div id="fountainG_5" class="fountainG">
+                            </div>
+                            <div id="fountainG_6" class="fountainG">
+                            </div>
+                            <div id="fountainG_7" class="fountainG">
+                            </div>
+                            <div id="fountainG_8" class="fountainG">
+                            </div>
+                        </div>
+
+                        <div class="img" id="divImg">
+
+                            <from id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >
+                                <input type="file" hidden name="image" accept="image/*" id="image" style="display:none;"
+                                       onchange="excptions(1)" autofocus="autofocus" />
+                                <input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"
+                                       id="mmQrCode"/>
+                            </from>
+
+                            <!--<div style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"-->
+                            <div style="display: flex;justify-content: center;align-items: center;height: 20rem; width: 20rem;text-align: center"
+                                 onclick="jQuery('#image').click()">
+                                <img src="img/jh.jpg" id="imgwechar"
+                                     style="display: flex;justify-content: center;align-items: center;height: 3rem; width: 3rem;text-align: center" />
+                            </div>
+                        </div>
+                        <p style="display: flex;justify-content: space-around;text-align: center;font-size: 13px;"><span style="color: #a94442">微信收款码可以多次上传</span></p>
+
+                        <input type="hidden" id="wxAdd"/>
+
+                        <div class="input">
+                            <span>有效码次数:</span>
+                            <div id="fileName">
+                            </div>
+                        </div>
+                        <!--<div class="input">-->
+                        <!--<span>微信昵称:</span>-->
+                        <!--<input type="" id="payee" placeholder="请输入微信昵称"/>-->
+                        <!--</div>-->
+                        <!--<div >-->
+                        <!--<span style="color: #a94442">微信昵称必须要和上传码保持一致，不能有特殊符号</span>-->
+                        <!--<input type="hidden">-->
+                        <!--</div>-->
+                        <div class="input">
+                            <span>类&nbsp;&nbsp;型:</span>
+                            <input type="radio" name="acType" value="1" checked/> 一次性码
+                            <!--<input type="radio" name="acType" value="2"/> 标牌固码-->
+                            <input type="radio" name="acType" value="3"/> 认证商家码
+                        </div>
+                        <div class="btn" style="display: flex;justify-content: center;">
+                            <button type="button" id="btn_sava">保存</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="jieshi">
+                <p style="color: #a92826">* 1.上传的微信收款二维码必须是一个人的</p>
+                <p style="color: #a92826">* 2.微信名称必须不能有特殊字符，若有修改昵称后再进行提交</p>
+                <p style="color: #a92826">* 3.同一个微信二维码只能提交一个微信号，如被查出同一个微信对应到2个微信号的码，我们将冻结金额200元作为处罚，结果直接按照给出订单当成功处理。</p>
+                <p style="color: #a92826">* 4.给出3-4收款码,没有订单成功,我们会提示自动锁定该账户,系统会审核该用户二维码的情况。</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    let array =new Array();
+    let mmQrCodeList =new Array();
+
+    var test =window.location.href;
+    var idList=test.split("?id=");
+    var id=0;
+    if(idList.length!=2){
+        showMessage('用户信息错误！');
+    }else{
+        var id=idList[1];
+    }
+
+    let filenameList =new Array();
+    let errorCode = "error decoding QR Code";
+    let wxQrCodeAds = "";
+    //         $('#imgwechar').attr("src", "https://t11.baidu.com/it/u=3989969920,3929699066&fm=76");
+    $(function () {
+        $(".back").on('click', function () {
+            window.location.href = 'homepage.html';
+        });
+
+        if (null == storage.getItem("yf_token") || storage.getItem("yf_token") == "") {
+            window.location.href = 'login.html'
+        }
+
+        $("#btn_sava").click(function () {
+
+            if(id==0||id==""){
+                showMessage('没有用户需要保持！');
+                return;
+            }
+
+            if(storage.getItem("yf_token")==""){
+                showMessage('token 失效，请重新登陆！');
+                signout();
+            }
+            if(array.length==0){
+                showMessage('请上传二维码！');
+                return;
+            }
+            let acType=  $("input[name='acType']:checked").val();
+
+
+
+            let businessType = 1;
+
+            let timestamp = Date.parse(new Date());
+
+
+            let     date="[";
+            for(let i=0;i<array.length;i++){
+//          let     dateList = new Map();
+                date+='{"ddQrCode" :"'+array[i]+'",'
+                date+='"dataType":"'+acType+'",';
+                date+='"mmQrCode":"'+mmQrCodeList[i]+'"';
+                if(i==array.length-1){
+                    date+="}";
+                }else{
+                    date+="},";
+                }
+
+            }
+            date+="]";
+
+            let base64 = `{"token": "${storage.getItem("yf_token")}","collectionAccountId": "${id}","dataList":${date},"acType":${acType},"businessType": ${businessType},"wxQrCodeAds": "${wxQrCodeAds}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+            console.log("参数：" + base64);
+            let base = new Base64();
+            let result = base.encode(base64);
+            let jsonData = JSON.stringify({"jsonData": result});
+            $.ajax({
+                url: API + '/fine/collAcQrCode/add',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                data: jsonData,
+                // 成功执行
+                success(data) {
+                    let code = data.resultCode;
+                    if (code !== "0") {
+                        showMessage(data.message);
+                    } else {
+                        showMessage('保存成功!');
+                        cleanfrom();
+                    }
+                },
+            })
+
+        })
+
+        //清空数据
+        function cleanfrom() {
+            $("#fileName").html("");
+            $("input[name='acType']:checked").val(1);
+        }
+
+
+    })
+
+    var getObjectURL = function (file) {
+
+        var url = null;
+
+        if (window.createObjectURL != undefined) { // basic
+
+            url = window.createObjectURL(file);
+
+        } else if (window.URL != undefined) { // mozilla(firefox)
+
+            url = window.URL.createObjectURL(file);
+
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+
+            url = window.webkitURL.createObjectURL(file);
+
+        }
+        return url;
+
+    }
+
+
+    function excptions(type) {
+        showDiv();
+        var fileName = $("#image").val();
+        let url = "";
+        var formData = new FormData();
+//    if (type == 1) {
+        formData.append("image", $("#image").get(0).files[0]);
+        var  file =$("#image").get(0).files[0];
+        url = getObjectURL(file);
+        let acType=  $("input[name='acType']:checked").val();
+//      debugger;
+        analyticCode.getUrl('file-url', $("#image").get(0), function (url1, url2) {
+
+            if(acType!=1&&array.length>=1){
+                showMessage("该类型只能上传一张二维码！");
+                hideDiv();
+                return;
+            }
+            if (url1 == errorCode) {
+                showMessage("请上传正确的二维码！");
+                hideDiv();
+                return;
+            } else {
+                if(url1==errorCode){
+                    showMessage("无效的二维码！");
+                    hideDiv();
+                    return
+                }
+                for(let i =0;i<array.length;i++){
+                    if(array[i]==url1){
+                        showMessage("该二维码已经上传过了！");
+                        hideDiv();
+                        return;
+                    }
+                }
+                var strFileName = fileName.substring(fileName.lastIndexOf("\\")+1);
+                array.push(url1);
+                filenameList.push(strFileName);
+                showFileName(file);
+//
+            }
+        });
+
+
+        $.ajax({
+            url: API + '/fine/stg/qiniuUpload',
+            type: 'POST',
+            contentType: "multipart/form-data",
+            data: formData,
+            cache: false,
+            contentType: false,    //不可缺
+            processData: false,    //
+            success: function (data) {
+                let code = data.resultCode;
+                if (code !== "0") {
+                    hideDiv();
+                    showMessage(data.message);
+                } else {
+//                    debugger;
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData = base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+                    mmQrCode = rsDataJson.qiNiu.url;
+                    mmQrCodeList.push(mmQrCode);
+                }
+            }
+        });
+        hideDiv();
+
+    }
+
+    function  showFileName(file) {
+        var filename ="";
+//      if(window.FileReader) {
+//          var fr = new FileReader();
+//          var portrait = document.getElementById('imgwechar');
+//          fr.onloadend = function(e) {
+//              portrait.src = e.target.result;
+//          };
+//          fr.readAsDataURL(file);
+//      }
+
+//        filename+="<table>";
+
+//        for(let i=0;i<filenameList.length;i++){
+//            filename+="<tr>";
+//            filename+="<td>"+filenameList[i]+"</td>";
+//            filename+="</tr>";
+//        }
+//        filename+="</table>";
+
+        $("#fileName").html("=======>"+filenameList.length+"<=======");
+    }
+
+    function showDiv() {
+        document.getElementById("fountainG").style.display ="";
+        document.getElementById("divImg").style.display ="none";
+    };
+
+    function hideDiv(){
+        document.getElementById("fountainG").style.display ="none";
+        document.getElementById("divImg").style.display ="";
+    };
+
+    $(document).ready(function() {
+        $('input[type=radio][name=acType]').change(function() {
+            array=[];
+            filenameList=[];
+            mmQrCodeList=[];
+            $("#fileName").html("");
+        });
+    });
+
+</script>
+</html>

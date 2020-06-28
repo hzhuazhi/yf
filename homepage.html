@@ -4,87 +4,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
-    <link rel="stylesheet" href="css/font-awesome1.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap1.min.css">
-    <link rel="stylesheet" href="css/css1.css">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1862569_a47k8bou03l.css">
+    <title>账户</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" type="text/css" href="css/radio-checkbox.css"/>
+    <link rel="stylesheet" href="css/css.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/base64.js"></script>
     <script src="js/API.js"></script>
+    <!---->
     <script src="js/toast.js"></script>
+    <style>
+        .h_name {
+            width: 60px;
+            border: none;
+            border-bottom: 1px solid;
+            outline: 0;
+            white-space: nowrap;overflow: hidden;text-overflow: ellipsis
+        }
+        .h_nameTwo{
+            display: inline-block;width: 40px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+        }
+        .h_status{
+            display: inline-block;width: 44px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+        }
+        label.bui-switch-label .bui-switch{
+            width: 40px;
+            height: 20px;
+        }
+        label.bui-switch-label .bui-switch:before{
+            width: 19px;
+            height: 18px;
+        }
+        .h_opt{
+            display: inline-block;width: 34px;text-align: center;
+        }
+        .glyphicon-check{
+            color:#088cfc;
+            width:80%
+        }
+        .glyphicon-remove{
+            color:#eb9707;
+        }
+        table>tbody>tr:last-of-type{
+            border-bottom: 1px solid #ddd;
+        }
+
+
+
+
+        .h_wrap {
+            background-color: rgb(247, 244, 242);
+            padding: 10px;
+        }
+
+        .h_list_top {
+            padding: 10px 0 0 10px;
+        }
+
+        .h_t {
+            margin: 10px 0;
+            padding-bottom: 10px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .h_list {
+            width: 100%;
+            height: 11rem;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+
+        .h_list_bottom {
+            display: flex;
+        }
+
+        .h_list_left {
+            width: 8rem;
+            padding: 0 10px;
+        }
+
+        .list_item {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            /*background: url("img/order/touxiang.svg") no-repeat;*/
+        }
+
+        .h_list_center {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .h_title {
+            margin-bottom: 20px;
+        }
+
+        .h_list_right {
+            width: 10rem;
+            text-align: right;
+            font-size: 17px;
+            padding: 0 10px;
+        }
+    </style>
 </head>
-<body class="index">
-<div class="index">
-    <header>云易赚</header>
+<body>
+<div class="page">
+    <!--<header>-->
+        <!--<div class="back">-->
+            <!--<i class="fa fa-angle-left"></i>-->
+        <!--</div>-->
+        <!--<p>账户</p>-->
+        <!--<span></span>-->
+    <!--</header>-->
     <div class="empty"></div>
-    <div class="method">
-        <div class="item" onclick="window.location.href='wechar_wallet.html'">
-            <!--<div class="img" datasrc="/img/wx.jpg"></div>-->
-            <div class="img"><img src="img/weixin.svg" alt="" width="100%" height="100%"></div>
-            <span>微信</span>
-        </div>
-        <!--<div class="item">-->
-            <!--<div class="img"><img class="item_img" src="img/zhifubao.svg" alt="" width="100%" height="100%"></div>-->
-            <!--<span>支付宝</span>-->
-        <!--</div>-->
-        <!--<div class="item">-->
-            <!--<div class="img"><img class="item_img" src="img/yunshanfu-da.svg" alt="" width="100%" height="100%"></div>-->
-            <!--<span>云闪付</span>-->
-        <!--</div>-->
-        <!--<div class="item">-->
-            <!--<div class="img"><img class="item_img" src="img/yinhangqia.svg" alt="" width="100%" height="100%"></div>-->
-            <!--<span>银行卡</span>-->
-        <!--</div>-->
-    </div>
-    <div class="adver">
-        <div class="img">用闲钱赚大钱</div>
-        <!--div class="notice_active">
-            <div class="rela">
-                <a href=""><i class="fa fa-bullhorn"></i>用户183****2030提现<span>55.00</span>元</a>
-                <a href=""><i class="fa fa-bullhorn"></i>用户182****2040提现<span>100.00</span>元</a>
-                <a href=""><i class="fa fa-bullhorn"></i>用户181****2050提现<span>150.00</span>元</a>
-            </div>
-        </div -->
-    </div>
-    <div class="caozuo">
-        <h4>&nbsp;操作指南</h4>
-        <div class="list">
-            <div class="item" onclick="window.location.href='page.html'">
-                <div class="img"><img class="item_img" src="img/gongzuoliucheng.svg" alt="" width="100%" height="100%"></div>
-                <div class="word">
-                    <h5>总流程图</h5>
-                    <span>总流程图</span>
+    <div class="shoukuan" >
+        <div class="down">
+            <!--<div class="img" id="divImg">-->
+
+                <!--<from id="fileForm" name="fileForm" method="POST" enctype="multipart/form-data" >-->
+                    <!--<input type="file" hidden name="image" accept="image/*" id="image" style="display:none;"-->
+                           <!--onchange="excptions(1)" autofocus="autofocus" />-->
+                    <!--<input type="text" hidden name="path" id="path" onfocus="jQuery('#image').click()"-->
+                           <!--id="mmQrCode"/>-->
+                <!--</from>-->
+
+                <!--<div style="display: flex;justify-content: center;align-items: center;height: 12rem;text-align: center"-->
+                <div style="display: flex;justify-content: center;align-items: center;height: 10rem; text-align: center;background-color:#f6f4e5 "
+                     onclick="add()" align="center">
+                    <img src="img/jh.jpg" id="imgwechar" style="display: flex;justify-content: center;align-items: center;height: 2rem; width: 2rem;text-align: center" onclick="add()" />
                 </div>
-            </div>
-            <div class="item">
-                <div class="img" onclick="window.location.href='page.html'"><img class="item_img" src="img/shoukuan.svg" alt="" width="100%" height="100%"></div>
-                <div class="word">
-                    <h5>收款渠道</h5>
-                    <span>收款渠道教程</span>
-                </div>
-            </div>
-            <div class="item" onclick="window.location.href='xwpage.html'">
-                <div class="img"><img class="item_img" src="img/huoqu.svg" alt="" width="100%" height="100%"></div>
-                <div class="word">
-                    <h5>小微获取</h5>
-                    <span>小微获取教程</span>
-                </div>
-            </div>
-            <div class="item">
-                <div class="img" onclick="window.location.href='rule_page.html'"><img class="item_img" src="img/chongzhi.svg" alt="" width="100%" height="100%"></div>
-                <div class="word">
-                    <h5>奖励规则</h5>
-                    <span>奖励规则教程</span>
-                </div>
-            </div>
-            <div class="item">
-                <div class="img"><img class="item_img" src="img/celve.svg" alt="" width="100%" height="100%"></div>
-                <div class="word">
-                    <h5>策略规范</h5>
-                    <span>平台策略教程</span>
+            <!--</div>-->
+
+            <div align="center" style="background-color: #f6f4e5"></div>
+            <br>
+            <div class="con" style="width: 100%">
+                <div class="content" id="datas">
+                    <!--<table style="border-bottom: 1px solid #ddd;border-collapse:separate; border-spacing:0px 10px;"  width="100%">-->
+                        <!--<tr>-->
+                            <!--<td align="center" > <i class="glyphicon glyphicon-plus" onclick="add()"></i>-->
+
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td style="border: 1px solid #f6f4e5; padding: 1px; background-color: #f6f4e5">-->
+                                <!--<table  border="0" width="100%" style="border-bottom: 0px solid #ddd;">-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>微信昵称  &nbsp;&nbsp;<input size="8"></div></td>-->
+                                        <!--<td width="10%"><div><i class="glyphicon glyphicon-pencil"></i></div></td>-->
+                                    <!--</tr>-->
+                                    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<td width="100%" colspan="1"><span style="color: #a94442">名字必须与微信昵称一致，且不允许有特殊字符</span></td>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>备   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;注 &nbsp;<input size="8"></div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>类型 &nbsp;一次性收款码</div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>可用次数 &nbsp;<span style="color: #c91e1c">20</span></div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>审核状态 &nbsp;晓红</div></td>-->
+                                        <!--<td width="10%"><div><i class="glyphicon glyphicon-remove"></i></div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="100%" colspan="2"><div>审核结果 &nbsp;正常</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td align="right" width="100%" colspan="2">-->
+                                            <!--<div style="float:left;"><span style="color: #00B066">开启</span></div>-->
+
+                                            <!--&lt;!&ndash;<div ><span align="center" ><label class="bui-switch-label bui-switch-anim"> <input type="checkbox" name="s" checked /><i class="bui-switch"></i></label></div>&ndash;&gt;-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                <!--</table>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr style="border: 1px solid #ddd; padding: 1px">-->
+                            <!--<td style="border: 1px solid #f6f4e5; padding: 1px; background-color: #f6f4e5">-->
+                                <!--<table border="0" width="100%" style="border-bottom: 0px solid #ddd;">-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>微信昵称 &nbsp;晓红</div></td>-->
+                                        <!--<td width="10%"><div><i class="glyphicon glyphicon-pencil"></i></div></td>-->
+                                    <!--</tr>-->
+                                    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<td width="100%" colspan="1"><span style="color: #a94442">名字必须与微信昵称一致，且不允许有特殊字符</span></td>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>备注 &nbsp;晓红</div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>类型 &nbsp;标牌固码</span></div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>可用次数 &nbsp;<span style="color: #48eb23">无限</span></div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>审核状态 &nbsp;通过</div></td>-->
+                                        <!--<td width="10%"><div><i class="glyphicon glyphicon-remove"></i></div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="100%" colspan="2"><div>审核结果 &nbsp;正常</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td align="right" width="100%" colspan="2"> <label class="bui-switch-label bui-switch-anim"> <input type="checkbox" name="s" checked /><i class="bui-switch"></i></label></td>-->
+                                    <!--</tr>-->
+                                <!--</table>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td style="border: 1px solid #f6f4e5; padding: 1px; background-color: #f6f4e5">-->
+                                <!--<table border="0" width="100%" style="border-bottom: 0px solid #ddd;">-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>微信昵称 &nbsp;晓红</div></td>-->
+                                        <!--<td width="10%"><div><i class="glyphicon glyphicon-pencil"></i></div></td>-->
+                                    <!--</tr>-->
+                                    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<td width="100%" colspan="1"><span style="color: #a94442">名字必须与微信昵称一致，且不允许有特殊字符</span></td>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>备注 &nbsp;晓红</div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>类型 &nbsp;认证商家码</div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>可用次数 &nbsp;<span style="color: #48eb23">无限</span></div></td>-->
+                                        <!--<td width="10%"><div>&nbsp;</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="90%"><div>审核状态 &nbsp;失败</div></td>-->
+                                        <!--<td width="10%"><div><i class="glyphicon glyphicon-remove"></i></div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td width="100%" colspan="2"><div>审核结果 &nbsp;正常</div></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td align="right" width="100%" colspan="2"> <label class="bui-switch-label bui-switch-anim"> <input type="checkbox" name="s" checked /><i class="bui-switch"></i></label></td>-->
+                                    <!--</tr>-->
+                                <!--</table>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+
+                    <!--</table>-->
+
                 </div>
             </div>
         </div>
@@ -94,35 +271,319 @@
 <footer>
     <div class="item active" onclick="window.location.href='homepage.html'">
         <i class="fa fa-home"></i>
-        <span>首页</span>
+        <span>账户</span>
     </div>
     <div class="item ">
-    <!--<div class="item " onclick="window.location.href='rob_order.html'">-->
+        <!--<div class="item " onclick="window.location.href='rob_order.html'">-->
         <!--<i class="fa fa-user-secret"></i>-->
         <!--<span>团队</span>-->
     </div>
     <div class="item" onclick="window.location.href='my.html'">
         <i class="fa fa-user-o"></i>
-        <span>我的</span>
+        <span>钱包</span>
     </div>
 </footer>
 </body>
 <script type="text/javascript">
-  $(function () {
-    var num = $('.notice_active').find('a').length;
-    if (num > 1) {
-      setInterval('timer(".notice_active")', 4000);
-    }
-  })
-
-  function timer(opj) {
-    $(opj).find('div.rela').animate({
-      marginTop: "-26px"
-    }, 500, function () {
-      $(this).css({
-        marginTop: "0"
-      }).find("a:first").appendTo(this);
+    $(function () {
+        $(".back").on('click', function () {
+//            history.back(-1);
+            window.location.href = 'wechar_wallet.html';
+        });
+        queryUserInfo();
     })
-  }
+    
+    
+    function  add() {
+        window.location.href = 'wechar_collectioncode_new.html';
+    }
+
+    function queryUserInfo(){
+        if (null == storage.getItem("yf_token") || storage.getItem("yf_token") == "" || storage.getItem("yf_token") == undefined||storage.getItem("yf_token") == "undefined") {
+            window.location.href = 'login.html';
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","pageNumber": 1,"pageSize": 20,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData": result});
+        $.ajax({
+            url: API + '/fine/collAc/getDataList',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: jsonData,
+            // 成功执行
+            success(data) {
+                let code = data.resultCode;
+                if (code !== "0") {
+                    window.location.href = 'login.html';
+                    showMessage(data.message);
+                } else {
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData = base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+//                    if(rsDataJson.dataList==undefined||rsDataJson.dataList==""){
+//                        $("#datas").html("");
+//                        return;
+//                    }
+                    Callback(rsDataJson.dataList);
+//                        showMessage('保存成功!');
+                }
+            },
+        })
+    }
+
+
+
+
+
+
+    function Callback(data) {
+
+      let table ="";
+//      table+= '<div class="content" id="datas" >';
+      table+= '<table style="border-bottom: 1px solid #ddd;border-collapse:separate; border-spacing:0px 10px;"  width="100%">';
+//      table+= ' <tr>';
+//            table+= '<td align="center" > <img src="img/jh.jpg" id="imgwechar"\n' +
+//                '                                     style="display: flex;justify-content: center;align-items: center;height: 2rem; width: 2rem;text-align: center" onclick="add() /></td>';
+//      table+= '</tr>';
+      if(data!=undefined&&data!="undefined"){
+          for(let  i=0;i<data.length;i++){
+              let inpName = "inp" + i;
+              table+= ' <tr>';
+              table+= '<td style="border: 2px solid #f6f4e5; padding: 1px; background-color: #f6f4e5">';
+
+
+              table+= ' <table  border="0" width="100%" style="border-bottom: 0px solid #ddd;">';
+              table+= ' <tr>';
+              table+= '<td width="90%"><div>微信昵称  &nbsp;&nbsp;<input size="8" value="'+data[i].payee+'" id="'+ inpName + '"></div></td>';
+              table+= '<td width="10%"><div><i class="glyphicon glyphicon-pencil" onclick="updateInfn('+ data[i].id + ',' + inpName + ')"></i></div></td>';
+              table+= ' </tr>';
+              table+= ' <tr>';
+              if(data[i].checkStatus!=3){
+                  table+= ' <td width="100%" colspan="2"><div  style="float:left;">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 注&nbsp;&nbsp; '+data[i].acName+' </div><div style="float:right;" onclick="updateSmall('+ data[i].id + ',\''+data[i].payee+'\')">小薇上传  <i class="glyphicon glyphicon-qrcode" ></i> </div></td>';
+              }else{
+                  table+= ' <td width="100%" colspan="2"><div  style="float:left;">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 注&nbsp;&nbsp; '+data[i].acName+' </div></td>';
+              }
+
+//                          table+= '<td width="10%"><div> <i class="glyphicon glyphicon-qrcode" onclick="add()"></i></td>';
+              table+= '</td>';
+              table+= ' </tr>';
+
+
+              table+= ' <tr>';
+              table+= ' ';
+              if(data[i].dataType==1){
+                  table+= '<td width="90%"> <div>类型 &nbsp;一次性码</div></td>';
+              }else if(data[i].dataType==2){
+                  table+= ' <td width="90%"><div>类型 &nbsp;标准固码</div></td>';
+              }else if(data[i].dataType==3){
+                  table+= '<td width="90%"> <div>类型 &nbsp;固定金额码</div></td>';
+              }else if(data[i].dataType==4){
+                  table+= '<td width="90%"><div>类型 &nbsp;认证商家码</div></td>';
+              }else{
+                  table+= ' <td width="90%">类型   空</td>';
+              }
+
+              table+= ' <td width="10%"><div>&nbsp;</div></td>';
+              table+= ' </tr>';
+              table+= ' <tr>';
+              if(data[i].dataType==1){
+                  table+= '  <td width="100%" colspan="2"><div style="float:left;" > 可用次数 &nbsp;<span style="color: #c91e1c">'+data[i].limitNum+'</span> </div><div  style="float:right;"><a onclick="addQRcode('+data[i].id+')">添加次数</a> &nbsp;&nbsp;<a  onclick="deleteNum('+data[i].id+')">清空次数</a></div></td>';
+              }else if(data[i].dataType==0){
+                  table+= '  <td width="100%" colspan="2"><div style="float:left;">可用次数 &nbsp;<span style="color: #c91e1c">无</span></div> <div  style="float:right;"><a  onclick="addQRcode('+data[i].id+')">添加次数</a> &nbsp;&nbsp;<a   onclick="deleteNum("'+data[i].id+'")">清空次数</a></div></td>';
+              }else{
+                  table+= '  <td width="100%" colspan="2"><div style="float:left;">可用次数 &nbsp;<span style="color: #6cc922">不限</span> </div><div  style="float:right;"><a  onclick="addQRcode('+data[i].id+')">添加次数</a> &nbsp;&nbsp;<a   onclick="deleteNum("'+data[i].id+'")">清空次数</a></div></td>';
+              }
+//                      table+= '<td width="50%"><a>添加二维码</a><a>清空二维码</a></td>';
+              table+= ' </tr>';
+              table+= ' <tr>';
+              if(data[i].checkStatus==1) {
+                  table += '<td width="90%"><div>审核状态 &nbsp;初始化</div></td>';
+              }else if(data[i].checkStatus==2){
+                  table += '<td width="90%"><div >审核状态 &nbsp;<span style="color: #c91e1c">审核失败</span></div></td>';
+              }else if(data[i].checkStatus==3){
+                  table += '<td width="90%"><div>审核状态 &nbsp;<span style="color: #6cc922">审核成功</span></div></td>';
+              }else {
+                  table += '<td width="90%"><div>审核状态 &nbsp;<span style="color: #c91e1c">未上传小薇</span></div></td>';
+              }
+              table+= '<td width="10%"><div><i class="glyphicon glyphicon-remove" onclick="deleteInfn('+data[i].id+')"></i></div></td>';
+              table+= ' </tr>';
+
+              table+= ' <tr>';
+              table+= ' <td width="100%" colspan="2"><div>审核结果 &nbsp;'+data[i].checkInfo+'</div></td>';
+              table+= ' </tr>';
+
+              table+= ' <tr>';
+              table+= '   <td align="right" width="100%" colspan="2">';
+              if(data[i].useStatus==1){
+                  table+= '   <div style="float:left;"><span style="color: #00B066">开启</span></div>';
+                  table+= '   <div style="float:right;"><label class="bui-switch-label bui-switch-anim"> <input type="checkbox" name="s" checked  onchange="updateStatus(' + data[i].id + ',2)"/><i class="bui-switch"></i></label></div>';
+              }else{
+                  table+= '   <div style="float:left;"><span style="color: #c91e1c">关闭</span></div>';
+                  table+= '   <div style="float:right;"><label class="bui-switch-label bui-switch-anim"> <input type="checkbox" name="s" onchange="updateStatus(' + data[i].id + ',1)" /><i class="bui-switch"></i></label></div>';
+              }
+
+              table+= '   </td>';
+              table+= ' </tr>';
+              table+= '</table>';
+              table+= ' </td>';
+              table+= '</tr>';
+          }
+      }
+
+
+        table+= ' </table>';
+        $("#datas").html(table);
+
+    }
+
+    //操作删除记录
+    function deleteInfn(id) {
+        if (!confirm("确定要删除吗?")) {
+            return;
+        }
+        if (id == 0 || id == "") {
+            showMessage("没有合适数据进行删除！");
+            return;
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        console.log(result)
+        let jsonData = JSON.stringify({"jsonData": result});
+        $.ajax({
+            url: API + '/fine/collAc/updateUse',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: jsonData,
+            // 成功执行
+            success(data) {
+                let code = data.resultCode;
+                if (code !== "0") {
+                    showMessage(data.message);
+                } else {
+                    queryUserInfo();
+                }
+            },
+        })
+    }
+
+    //操作保存按钮
+    var updateInfn = function (id, wecharName) {
+        if (wecharName.defaultValue == wecharName.value) {
+            showMessage("该微信名没有进行修改，不能进行保存");
+            return;
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","id": ${id},"payee":"${wecharName.value}","agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        console.log("参数：" + base64);
+        let base = new Base64();
+        let result = base.encode(base64);
+        let jsonData = JSON.stringify({"jsonData": result});
+        $.ajax({
+            url: API + '/fine/collAc/update',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: jsonData,
+            // 成功执行
+            success(data) {
+                let code = data.resultCode;
+                if (code !== "0") {
+                    showMessage(data.message);
+                } else {
+                    showMessage('保存成功!');
+                    let base64 = data.data.jsonData;
+                    let base = new Base64();
+                    let rsData = base.decode(base64);
+                    let rsDataJson = JSON.parse(rsData);
+//                    loadList(rsDataJson.dataList);
+
+                }
+            },
+        })
+    }
+
+
+    function updateStatus(id, type) {
+        if (!confirm("确定要修改吗?")) {
+            return;
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","id":${id},"useStatus": ${type},"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        console.log(base64);
+        let jsonData = JSON.stringify({"jsonData": result});
+        $.ajax({
+            url: API + '/fine/collAc/updateUse',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: jsonData,
+            // 成功执行
+            success(data) {
+                let code = data.resultCode;
+                if (code !== "0") {
+//                    showMessage(data.code);
+                    showMessage(data.message);
+                } else {
+                    queryUserInfo();
+                }
+            },
+        })
+    }
+
+
+    function  deleteNum(id){
+        if (!confirm("确定删除该微信昵称下的二维码吗?")) {
+            return;
+        }
+        if (id == 0 || id == "") {
+            showMessage("没有合适数据进行删除！");
+            return;
+        }
+        let timestamp = Date.parse(new Date());
+        let base64 = `{"token": "${storage.getItem("yf_token")}","collectionAccountId":${id},"yn": 1,"agtVer":${publicMap.get("agtVer")},"clientVer":${publicMap.get("clientVer")},"clientType":${publicMap.get("clientType")},"ctime": ${timestamp}}`;
+        let base = new Base64();
+        let result = base.encode(base64);
+        console.log(result)
+        let jsonData = JSON.stringify({"jsonData": result});
+        $.ajax({
+            url: API + '/fine/collAcQrCode/batchUpdateUse',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: jsonData,
+            // 成功执行
+            success(data) {
+                let code = data.resultCode;
+                if (code !== "0") {
+                    showMessage(data.message);
+                } else {
+                    queryUserInfo();
+                }
+            },
+        })
+    }
+
+
+    function updateSmall(id,name){
+        window.location.href = 'update_smailImage.html?name='+name+'&id='+id;
+    }
+
+
+    function  addQRcode(id){
+        window.location.href = 'wechar_collectioncode_update.html?id='+id;
+    }
+
+
+
+
 </script>
 </html>
